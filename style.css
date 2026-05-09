@@ -2980,6 +2980,16 @@ ul, ol {
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.55);
   max-width: 44ch;
+  margin: 0 0 0.75rem;
+}
+
+.surreal-row__story {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.32);
+  max-width: 48ch;
   margin: 0 0 1.75rem;
 }
 

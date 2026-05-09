@@ -113,7 +113,8 @@ function renderStorySection(pieces, container) {
   const rows = pieces.map((piece, i) => {
     const num     = sanitize(padNum(i + 1));
     const title   = sanitize(piece.title || '');
-    const preview = sanitize(piece.storyPreview || piece.story || '');
+    const preview = sanitize(piece.storyPreview || '');
+    const story   = sanitize(piece.story || '');
     const year    = sanitize(String(piece.year || ''));
     const mood    = sanitize(piece.mood || '');
     const accent  = /^#[0-9a-fA-F]{3,8}$/.test(piece.accentColor || '')
@@ -125,6 +126,7 @@ function renderStorySection(pieces, container) {
       `  <h2 class="surreal-row__title">${title}</h2>`,
       `  <div class="surreal-row__divider" aria-hidden="true"></div>`,
       preview ? `  <p class="surreal-row__preview">${preview}</p>` : '',
+      story   ? `  <p class="surreal-row__story">${story}</p>`   : '',
       `  <span class="surreal-row__meta">${[year, mood].filter(Boolean).join(' · ')}</span>`,
       `</div>`,
     ].filter(Boolean).join('\n');
