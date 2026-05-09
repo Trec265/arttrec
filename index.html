@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cleanwell Mwalwanda — Designer & Developer</title>
+  <meta name="description" content="Portfolio of Cleanwell Mwalwanda — graphic designer, surreal digital artist, and computer science graduate. Specializing in brand identity, art direction, and visual design." />
+  <meta name="theme-color" content="#080808" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cleanwell Mwalwanda — Designer & Developer" />
+  <meta property="og:description" content="Surreal art. Refined brands. Systems that mean something." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts: Cormorant Garamond (display) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body id="top">
+
+  <!-- SVG filter for grain texture — defined once, referenced via CSS -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="grain-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+        <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+        <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blend"/>
+        <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Ambient gradient — fixed warm light-source orbs, behind all content -->
+  <div class="gradient-orbs" aria-hidden="true"></div>
+
+  <!-- Noise / Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ─── LOADING SCREEN ───────────────────────────────────────── -->
+  <div class="loader" id="loader" role="status" aria-label="Loading">
+    <div class="loader__inner">
+      <svg class="loader__mark" viewBox="0 0 360 90" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <text
+          class="loader__text"
+          x="180" y="68"
+          text-anchor="middle"
+          font-family="'Pinyon Script', cursive"
+          font-size="64"
+          fill="currentColor"
+          fill-opacity="0"
+          stroke="currentColor"
+          stroke-width="0.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >arttrec</text>
+      </svg>
+      <div class="loader__bar-track" aria-hidden="true">
+        <div class="loader__bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NAVIGATION ───────────────────────────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav-logo" aria-label="Cleanwell Mwalwanda">
+        <svg width="120" height="30" viewBox="0 0 360 90" fill="none" aria-hidden="true">
+          <text
+            x="180" y="68"
+            text-anchor="middle"
+            font-family="'Pinyon Script', cursive"
+            font-size="64"
+            fill="currentColor"
+          >arttrec</text>
+        </svg>
+      </a>
+      <nav class="nav__links" aria-label="Main navigation">
+        <a href="#work" class="nav__link">Work</a>
+        <a href="#about" class="nav__link">About</a>
+        <a href="#contact" class="nav__link">Contact</a>
+      </nav>
+      <!-- Mobile toggle -->
+      <button
+        class="nav__toggle"
+        id="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+      >
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <nav
+      class="nav__mobile"
+      id="nav-mobile"
+      aria-hidden="true"
+      aria-label="Mobile navigation"
+    >
+      <a href="#work" class="nav__mobile-link">Work</a>
+      <a href="#about" class="nav__mobile-link">About</a>
+      <a href="#contact" class="nav__mobile-link">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ─── HERO ──────────────────────────────────────────────────── -->
+    <section class="hero" id="hero" aria-labelledby="hero-name">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <div class="line-mask"><p class="hero__eyebrow">Graphic Designer &amp; Creative Developer</p></div>
+          <h1 class="hero__name" id="hero-name">
+            <span class="hero__name-word" aria-label="Cleanwell">Cleanwell</span>
+            <span class="hero__name-word hero__name-word--italic" aria-label="Mwalwanda">Mwalwanda</span>
+          </h1>
+          <div class="line-mask"><p class="hero__tagline">
+            Surreal art. Refined brands.<br class="hero__br" /> Systems that mean something.
+          </p></div>
+          <div class="line-mask"><a href="#work" class="hero__cta" aria-label="Scroll to selected work">
+            <span>Selected Work</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M7 1.5v11M1.5 7l5.5 5.5L12.5 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a></div>
+        </div>
+        <aside class="hero__meta" aria-label="Profile information">
+          <dl class="hero__meta-list">
+            <div class="hero__meta-item">
+              <dt class="hero__meta-label">Based in</dt>
+              <dd class="hero__meta-value">United States</dd>
+            </div>
+            <div class="hero__meta-item">
+              <dt class="hero__meta-label">Status</dt>
+              <dd class="hero__meta-value hero__meta-avail">
+                <span class="hero__avail-dot" aria-hidden="true"></span>Available
+              </dd>
+            </div>
+            <div class="hero__meta-item">
+              <dt class="hero__meta-label">Services</dt>
+              <dd class="hero__meta-value">Brand Identity<br>Art Direction<br>Packaging Design<br>Web Design<br>Motion &amp; Interaction<br>Visual Design</dd>
+            </div>
+          </dl>
+          <span class="hero__meta-year" aria-hidden="true">©2026</span>
+        </aside>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <div class="hero__scroll-line"></div>
+        <span class="hero__scroll-label">Scroll</span>
+      </div>
+
+    </section>
+
+    <!-- ─── MARQUEE STRIP ───────────────────────────────────────── -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span class="marquee__content">Brand Identity&nbsp;/&nbsp;Art Direction&nbsp;/&nbsp;Surreal Art&nbsp;/&nbsp;Visual Design&nbsp;/&nbsp;Typography&nbsp;/&nbsp;Packaging&nbsp;/&nbsp;Photo Manipulation&nbsp;/&nbsp;Digital Illustration&nbsp;/&nbsp;</span>
+        <span class="marquee__content" aria-hidden="true">Brand Identity&nbsp;/&nbsp;Art Direction&nbsp;/&nbsp;Surreal Art&nbsp;/&nbsp;Visual Design&nbsp;/&nbsp;Typography&nbsp;/&nbsp;Packaging&nbsp;/&nbsp;Photo Manipulation&nbsp;/&nbsp;Digital Illustration&nbsp;/&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ─── STATEMENT ───────────────────────────────────────────── -->
+    <section class="statement" aria-label="Studio statement">
+      <div class="statement__inner">
+        <div class="statement__text">
+          <div class="line-mask"><p class="statement__line">Design that speaks</p></div>
+          <div class="line-mask"><p class="statement__line statement__line--accent"><em>before you do.</em></p></div>
+        </div>
+        <div class="statement__aside" aria-hidden="true">
+          <span>Studio Philosophy</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FEATURED WORK ──────────────────────────────────────────── -->
+    <section class="featured-work" id="featured-work" aria-label="Featured projects">
+      <div class="featured-work__label">
+        <span class="section-label">Selected Work</span>
+      </div>
+      <!-- Featured project panels injected dynamically by main.js -->
+      <div id="featured-panels"></div>
+    </section>
+
+    <!-- ─── WORK ──────────────────────────────────────────────────── -->
+    <section class="work" id="work" aria-labelledby="work-heading">
+      <div class="work__header">
+        <h2 class="work__heading" id="work-heading">
+          <span class="section-label">All Work</span>
+        </h2>
+        <!-- Category filters -->
+        <div
+          class="work__filters"
+          role="group"
+          aria-label="Filter projects by category"
+        >
+          <button class="filter-btn is-active" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" data-filter="Branding" aria-pressed="false">Branding</button>
+          <button class="filter-btn" data-filter="Surreal Art" aria-pressed="false">Surreal Art</button>
+          <button class="filter-btn" data-filter="Visual Design" aria-pressed="false">Visual Design</button>
+        </div>
+      </div>
+
+      <!-- Project cards injected dynamically by main.js -->
+      <div class="work__grid" id="projects-grid" role="list" aria-live="polite" aria-label="Projects grid"></div>
+
+      <!-- ── SURREAL GALLERY: horizontal drag strip, shown when Surreal Art filter active ── -->
+      <div class="surreal-list-view" id="surreal-list-view" aria-hidden="true">
+        <div class="sr-gallery" id="sr-gallery">
+          <!-- .sr-strip panels injected by renderSurrealListView() -->
+          <div class="sr-gallery__track" id="sr-gallery-track"></div>
+          <div class="sr-gallery__hint" aria-hidden="true">Scroll / Drag</div>
+        </div>
+        <div class="sr-info-bar" id="sr-info-bar">
+          <div class="sr-info-bar__left">
+            <span class="sr-info-bar__name">Cleanwell Mwalwanda</span>
+            <span class="sr-info-bar__role">Designer &amp; Developer</span>
+          </div>
+          <div class="sr-info-bar__progress" id="sr-info-progress"></div>
+          <div class="sr-info-bar__right">
+            <span class="sr-info-bar__title" id="sr-info-title"></span>
+            <span class="sr-info-bar__year" id="sr-info-year"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ABOUT ─────────────────────────────────────────────────── -->
+    <section class="about" id="about" aria-labelledby="about-heading">
+      <div class="about__inner">
+
+        <div class="about__label-row">
+          <span class="section-label">About</span>
+          <div class="about__rule" aria-hidden="true"></div>
+        </div>
+
+        <div class="about__body-grid">
+          <div class="about__text">
+            <h2 class="about__heading" id="about-heading">
+              Designer who thinks in systems.
+              <em>Artist who works in dreams.</em>
+            </h2>
+            <p class="about__para">
+              I'm Cleanwell Mwalwanda, a computer science graduate and graphic designer working at the intersection of logic and imagination. My practice spans brand identity, surreal digital art, and visual design systems.
+            </p>
+            <p class="about__para">
+              I believe the best design doesn't announce itself. It creates conditions for feeling: a mark that stays, a composition that unsettles, an identity that holds. Whether building a brand or compositing a surreal world, I'm always looking for the thing that makes it true.
+            </p>
+
+            <div class="about__disciplines">
+              <div class="about__discipline">
+                <span class="about__discipline-label">Design</span>
+                <span class="about__discipline-items">Brand Identity &middot; Visual Systems &middot; Art Direction &middot; Typography</span>
+              </div>
+              <div class="about__discipline">
+                <span class="about__discipline-label">Digital</span>
+                <span class="about__discipline-items">Surreal Art &middot; Photo Manipulation &middot; Motion</span>
+              </div>
+              <div class="about__discipline">
+                <span class="about__discipline-label">Tech</span>
+                <span class="about__discipline-items">Next.js &middot; Sanity &middot; GSAP &middot; CSS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about__portrait">
+            <div class="about__portrait-frame">
+              <!-- Replace with your actual portrait photo -->
+              <img
+                src="assets/images/natalie-kinnear-CC2Bfvk2-tU-unsplash.jpg"
+                alt="Cleanwell Mwalwanda"
+                class="about__portrait-img"
+                loading="lazy"
+                width="480"
+                height="600"
+              />
+              <div class="about__portrait-caption">Cleanwell Mwalwanda · 2026</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── CONTACT ───────────────────────────────────────────────── -->
+    <section class="contact" id="contact" aria-label="Contact">
+      <div class="contact__inner">
+        <div class="contact__main">
+
+          <!-- Left column: giant heading + email -->
+          <div class="contact__left">
+            <h2 class="contact__heading-wrap" aria-label="Let's work together">
+              <div class="clip-mask"><span class="contact__word">Let's</span></div>
+              <div class="clip-mask"><span class="contact__word contact__word--accent">work</span></div>
+              <div class="clip-mask"><span class="contact__word">together</span></div>
+            </h2>
+            <a
+              href="mailto:cleanwelldesigns@gmail.com"
+              class="contact__email"
+              aria-label="Send email to cleanwelldesigns@gmail.com"
+            >
+              cleanwelldesigns@gmail.com
+            </a>
+          </div>
+
+          <!-- Right column: availability + social links -->
+          <div class="contact__right">
+            <div class="contact__avail">
+              <span class="contact__avail-label">Currently available for</span>
+              <ul class="contact__services">
+                <li>Brand Identity</li>
+                <li>Art Direction</li>
+                <li>Packaging Design</li>
+                <li>Web Design</li>
+                <li>Motion &amp; Interaction</li>
+                <li>Visual Design</li>
+              </ul>
+            </div>
+
+            <nav class="contact__socials" aria-label="Social links">
+              <a href="https://www.behance.net/cleanwemwalwan5" target="_blank" rel="noopener noreferrer" class="contact__social-link">
+                <span>Behance</span>
+                <span class="contact__social-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+              <a href="https://www.linkedin.com/in/cleanwell-mwalwanda-849b95266" target="_blank" rel="noopener noreferrer" class="contact__social-link">
+                <span>LinkedIn</span>
+                <span class="contact__social-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+              <a href="https://www.instagram.com/arttrecc/" target="_blank" rel="noopener noreferrer" class="contact__social-link">
+                <span>Instagram</span>
+                <span class="contact__social-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="site-footer__left">
+          <p class="site-footer__copy">&copy; 2026 Cleanwell Mwalwanda</p>
+          <p class="site-footer__credit">Designed &amp; built by Cleanwell Mwalwanda</p>
+        </div>
+        <nav class="site-footer__socials" aria-label="Footer social links">
+          <a href="https://www.behance.net/cleanwemwalwan5" target="_blank" rel="noopener noreferrer" class="site-footer__social">Behance</a>
+          <a href="https://www.linkedin.com/in/cleanwell-mwalwanda-849b95266" target="_blank" rel="noopener noreferrer" class="site-footer__social">LinkedIn</a>
+          <a href="https://www.instagram.com/arttrecc/" target="_blank" rel="noopener noreferrer" class="site-footer__social">Instagram</a>
+        </nav>
+        <a href="#top" class="site-footer__top" aria-label="Back to top">&uarr; Top</a>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/split-type.min.js"></script>
+  <script src="sanity-client.js"></script>
+  <div class="cursor-preview" id="cursor-preview" aria-hidden="true">
+    <div class="cursor-preview__inner">
+      <img class="cursor-preview__img" id="cursor-preview-img" src="" alt="" />
+    </div>
+  </div>
+
+  <!-- Surreal Art hover preview cursor -->
+  <div class="surreal-cursor" id="surreal-cursor" aria-hidden="true">
+    <div class="surreal-cursor__inner">
+      <img class="surreal-cursor__img" id="surreal-preview-img" src="" alt="" />
+    </div>
+  </div>
+
+  <!-- Page transition curtain — sits between loader and content -->
+  <div class="page-curtain" id="page-curtain" aria-hidden="true"></div>
+
+  <script src="page-transition.js"></script>
+  <script src="main.js"></script>
+  <script src="animations.js"></script>
+</body>
+</html>

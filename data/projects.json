@@ -1,0 +1,247 @@
+[
+  {
+    "id": "onira",
+    "slug": "onira",
+    "title": "Onira",
+    "subtitle": "Spirits, Art & Identity",
+    "year": "2026",
+    "category": "Branding",
+    "tags": [
+      "Brand Identity",
+      "Packaging",
+      "Art Direction"
+    ],
+    "coverImage": "assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg",
+    "heroImage": "assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg",
+    "featured": true,
+    "excerpt": "A luxury gin brand at the intersection of fine art and craft spirits, where surrealism meets nocturnal elegance.",
+    "overview": "Onira is a luxury gin brand built around a single belief — that a bottle can be a work of art. Derived from the Greek word for dream, the brand lives at the intersection of fine art and craft spirits, where surrealism meets nocturnal elegance. The brief called for an identity that could hold its own in a gallery and behind a bar simultaneously.",
+    "challenge": "Every element — the mark, the color system, the typography, the bottle — needed to function as a unified art object. The challenge was building a brand world that felt collectible without being inaccessible, and surreal without being illegible.",
+    "solution": "Each edition is conceived as a collectible, rendered with original artwork directly on the bottle, blurring the line between what you own and what you drink. The result is a brand rooted in dream philosophy, infinite geometry, and deliberate restraint — a visual language that invites before it speaks.",
+    "images": [
+      "assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg",
+      "assets/images/tianlei-wu-qZF0j72V0Bw-unsplash.jpg",
+      "assets/images/tsuyoshi-kozu-xDhSwX9iVxY-unsplash.jpg",
+      "assets/images/sophia-didonato-RDaQCHFt9QA-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "vune"
+  },
+  {
+    "id": "vune",
+    "slug": "vune",
+    "title": "Vune",
+    "subtitle": "Branding & Product Design",
+    "year": "2025",
+    "category": "Branding",
+    "tags": [
+      "Brand Identity",
+      "Product Design",
+      "Logo Design"
+    ],
+    "coverImage": "assets/images/microsoft-copilot-MJLy1fUvX_w-unsplash.jpg",
+    "heroImage": "assets/images/microsoft-copilot-MJLy1fUvX_w-unsplash.jpg",
+    "featured": true,
+    "excerpt": "Translating a ceramic oil burner's minimal, face-like form into a complete brand identity system.",
+    "overview": "Vune began as a class assignment — pick any item from Dollar Tree and create or rebrand it. I chose a ceramic oil burner. The challenge was not only to design a brand identity but to make the logo feel like the product itself: simple, recognizable, and connected to the form and purpose of the burner.",
+    "challenge": "Finding a balance between abstract design and product familiarity — making sure the logo was clean and modern but still clearly tied to the oil burner's character and function. The logo had to work across packaging, digital applications, and brand materials without losing its core personality.",
+    "solution": "I focused on translating the burner's minimal, face-like shape into a mark that could be instantly identifiable at any scale. The resulting system is built on simplicity: a logomark that feels inevitable, paired with a typographic voice that carries the same restraint.",
+    "images": [
+      "assets/images/microsoft-copilot-MJLy1fUvX_w-unsplash.jpg",
+      "assets/images/surface-GCKO2AAsTI0-unsplash.jpg",
+      "assets/images/nima-motaghian-nejad-ZANg-HVDdd4-unsplash.jpg",
+      "assets/images/natalie-kinnear-CC2Bfvk2-tU-unsplash.jpg",
+      "assets/images/jack-white-eb4f7uqeb3U-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "surreal-series"
+  },
+  {
+    "id": "surreal-series",
+    "slug": "surreal-series",
+    "title": "Surreal Photo Manipulation Series",
+    "subtitle": "Digital Art",
+    "year": "2025",
+    "category": "Surreal Art",
+    "tags": [
+      "Photo Manipulation",
+      "Digital Art",
+      "Photoshop"
+    ],
+    "coverImage": "assets/images/surreal-01-cirrus.jpg",
+    "heroImage": "assets/images/surreal-01-cirrus.jpg",
+    "featured": true,
+    "excerpt": "Five dreamlike compositions exploring consciousness, artificial intelligence, and the dark architecture of power.",
+    "overview": "A series of five surreal photo manipulations built around a single discipline: make the impossible feel inevitable. Each piece isolates a psychological or philosophical concept — thought, emptiness, consciousness, nature, dominion — and constructs a world around it.",
+    "challenge": "Creating work that genuinely unsettles. Compositions that look impossible yet familiar, where the viewer cannot immediately locate the seam between the real and the fabricated. Each piece had to carry its own internal logic.",
+    "solution": "Through layered compositing, atmospheric texture work, and deliberate tonal restraint, each image was built to reward close looking. The series shares a visual grammar — dark, cinematic, precise — while each piece maintains its own identity and emotional register.",
+    "pieces": [
+      {
+        "title": "Cirrus State of Mind",
+        "description": "A surreal landscape composition blending architecture with atmospheric textures. Designed to evoke a dreamlike world that feels both real and impossible — a place you've been to in sleep.",
+        "image": "assets/images/surreal-01-cirrus.jpg"
+      },
+      {
+        "title": "Abyss of Mind",
+        "description": "A surreal exploration of thought and emptiness, where reality bends and consciousness dissolves into the infinite. The composition is constructed around a central void that draws the eye inward.",
+        "image": "assets/images/surreal-02-abyss.jpg"
+      },
+      {
+        "title": "Neural Awakening",
+        "description": "Futuristic digital surrealism inspired by neural patterns and artificial consciousness. Glowing overlays and layered composites create a sense of awakening thought — a machine becoming aware.",
+        "image": "assets/images/surreal-03-neural.jpg"
+      },
+      {
+        "title": "Byte Bound",
+        "description": "A conceptual piece at the intersection of nature and technology. Organic textures clash with sharp digital fragments, creating a hybrid surreal world caught between two states of being.",
+        "image": "assets/images/surreal-04-byte-bound.jpg"
+      },
+      {
+        "title": "Veil of Dominion",
+        "description": "Part of the dark-series, Veil of Dominion examines how power consumes identity — leaving behind only shadows and echoes of rule. The figure is present but already dissolving.",
+        "image": "assets/images/surreal-05-veil.jpg"
+      }
+    ],
+    "images": [
+      "assets/images/surreal-01-cirrus.jpg",
+      "assets/images/surreal-02-abyss.jpg",
+      "assets/images/surreal-03-neural.jpg",
+      "assets/images/surreal-04-byte-bound.jpg",
+      "assets/images/surreal-05-veil.jpg"
+    ],
+    "nextProject": "cigarettes-candlelight"
+  },
+  {
+    "id": "cigarettes-candlelight",
+    "slug": "cigarettes-candlelight",
+    "title": "Cigarettes & Candlelight",
+    "subtitle": "Album Cover Design",
+    "year": "2025",
+    "category": "Visual Design",
+    "tags": [
+      "Album Art",
+      "Typography",
+      "Art Direction"
+    ],
+    "coverImage": "assets/images/freddie-addery-9a77nIrsajw-unsplash.jpg",
+    "heroImage": "assets/images/freddie-addery-9a77nIrsajw-unsplash.jpg",
+    "featured": false,
+    "excerpt": "Album cover design balanced between tenderness and decay — warmth that costs something.",
+    "overview": "A visual identity for an album that lives in the space between intimacy and ruin. Warmth, nostalgia, melancholy, and a certain dangerous beauty — the brief was to hold all of that in a single image.",
+    "challenge": "Capturing the full emotional range of the album without collapsing into cliché. The image had to contain multiple readings: beautiful and slightly wrong, inviting and unsettling.",
+    "solution": "Typography and imagery working in tension, neither overpowering the other. The result is a cover that rewards a second look — where the warmth is real, but so is what's burning.",
+    "images": [
+      "assets/images/freddie-addery-9a77nIrsajw-unsplash.jpg",
+      "assets/images/natalie-kinnear-CC2Bfvk2-tU-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "boarding-pass"
+  },
+  {
+    "id": "boarding-pass",
+    "slug": "boarding-pass",
+    "title": "Boarding Pass",
+    "subtitle": "Print & UI Design",
+    "year": "2025",
+    "category": "Visual Design",
+    "tags": [
+      "Print Design",
+      "UI Design",
+      "Typography"
+    ],
+    "coverImage": "assets/images/surface-GCKO2AAsTI0-unsplash.jpg",
+    "heroImage": "assets/images/surface-GCKO2AAsTI0-unsplash.jpg",
+    "featured": false,
+    "excerpt": "Reimagining the boarding pass as a considered design object — where utility becomes clarity.",
+    "overview": "A redesign of the boarding pass format, treating a thoroughly utilitarian document as an opportunity for considered typography and information design. The goal: every passenger datum organized with intention.",
+    "challenge": "Balancing rigorous information hierarchy with visual elegance in a highly constrained format. The boarding pass has an almost impossible number of competing priorities for a very small canvas.",
+    "solution": "A clean typographic system that organizes complex travel data into a readable, aesthetically intentional experience. Hierarchy through weight and spacing, never decoration.",
+    "images": [
+      "assets/images/surface-GCKO2AAsTI0-unsplash.jpg",
+      "assets/images/kumiko-shimizu-QMG3VbgVyRQ-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "posters"
+  },
+  {
+    "id": "posters",
+    "slug": "posters",
+    "title": "Posters & Visual Design",
+    "subtitle": "Photoshop & Illustrator",
+    "year": "2025",
+    "category": "Visual Design",
+    "tags": [
+      "Poster Design",
+      "Typography",
+      "Illustration"
+    ],
+    "coverImage": "assets/images/nima-motaghian-nejad-ZANg-HVDdd4-unsplash.jpg",
+    "heroImage": "assets/images/nima-motaghian-nejad-ZANg-HVDdd4-unsplash.jpg",
+    "featured": false,
+    "excerpt": "A collection of poster work spanning multiple visual languages and compositional approaches.",
+    "overview": "A collection of poster designs exploring different visual languages — from bold typographic compositions to layered illustrative work. Each piece treated as its own design problem.",
+    "challenge": "Developing breadth of visual voice without losing a coherent point of view. The challenge was to move between very different aesthetic registers while maintaining a consistent standard of compositional rigor.",
+    "solution": "Each poster built from a single strong idea, with every element subordinate to that idea. Strong compositional logic and typographic clarity as the constant across varying visual styles.",
+    "images": [
+      "assets/images/nima-motaghian-nejad-ZANg-HVDdd4-unsplash.jpg",
+      "assets/images/freddie-addery-9a77nIrsajw-unsplash.jpg",
+      "assets/images/microsoft-copilot-MJLy1fUvX_w-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "cray-profits"
+  },
+  {
+    "id": "cray-profits",
+    "slug": "cray-profits",
+    "title": "Cray Profits",
+    "subtitle": "Brand Identity",
+    "year": "2025",
+    "category": "Branding",
+    "tags": [
+      "Brand Identity",
+      "Logo Design",
+      "Visual Identity"
+    ],
+    "coverImage": "assets/images/jack-white-eb4f7uqeb3U-unsplash.jpg",
+    "heroImage": "assets/images/jack-white-eb4f7uqeb3U-unsplash.jpg",
+    "featured": false,
+    "excerpt": "A brand identity system built to communicate authority, forward momentum, and precision.",
+    "overview": "A complete brand identity designed to feel ownable and distinct in a competitive landscape. The system prioritizes clarity and scalability — an identity that reads at a favicon and commands a billboard.",
+    "challenge": "Creating a visual identity that communicates confidence without aggression, authority without rigidity. The mark had to carry personality while remaining flexible across applications.",
+    "solution": "A geometric mark built on precise construction, paired with a typographic system that scales cleanly across all applications. The identity is systematic but never cold.",
+    "images": [
+      "assets/images/jack-white-eb4f7uqeb3U-unsplash.jpg",
+      "assets/images/surface-GCKO2AAsTI0-unsplash.jpg",
+      "assets/images/tianlei-wu-qZF0j72V0Bw-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "cipher-link"
+  },
+  {
+    "id": "cipher-link",
+    "slug": "cipher-link",
+    "title": "Cipher Link",
+    "subtitle": "Brand Identity",
+    "year": "2025",
+    "category": "Visual Design",
+    "tags": [
+      "Brand Identity",
+      "Logo Design",
+      "Tech Branding"
+    ],
+    "coverImage": "assets/images/kumiko-shimizu-QMG3VbgVyRQ-unsplash.jpg",
+    "heroImage": "assets/images/kumiko-shimizu-QMG3VbgVyRQ-unsplash.jpg",
+    "featured": false,
+    "excerpt": "Brand identity for a technology-forward company where encryption and connectivity are core values.",
+    "overview": "A brand identity system for a company at the intersection of security and network technology. The brief: translate abstract concepts — encryption, connection, trust — into a visual language that feels modern without relying on clichés.",
+    "challenge": "Technology branding is saturated with predictable visual language. The challenge was to create something that felt genuinely specific to Cipher Link — not a generic tech mark dressed up with a company name.",
+    "solution": "A logotype built on interlocking forms that suggest both a cipher mechanism and a network node. The mark works at every scale and carries inherent meaning without explanation.",
+    "images": [
+      "assets/images/kumiko-shimizu-QMG3VbgVyRQ-unsplash.jpg",
+      "assets/images/jack-white-eb4f7uqeb3U-unsplash.jpg",
+      "assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg"
+    ],
+    "pieces": null,
+    "nextProject": "onira"
+  }
+]

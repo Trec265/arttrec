@@ -1,0 +1,15 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "globals": {
+    "gsap": "readonly",
+    "ScrollTrigger": "readonly",
+    "Lenis": "readonly",
+    "SplitType": "readonly"
+  },
+  "rules": {
+    "no-undef": "error"
+  }
+}

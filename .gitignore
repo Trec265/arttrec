@@ -1,0 +1,21 @@
+
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md
+
+# Dependencies
+node_modules/
+studio/node_modules/
+
+# Build outputs
+studio/dist/
+studio/.sanity/
+
+# Environment / secrets
+.env
+.env.local
+*.env
+
+# Migration script (contains no secrets but not needed in git)
+migrate-to-sanity.js
+

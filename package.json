@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "studio": "cd studio && npm run dev",
+    "deploy-studio": "cd studio && npm run deploy"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.22.0"
+  }
+}

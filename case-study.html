@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Title and meta injected by case-study.js from projects.json -->
+  <title>Case Study — Cleanwell Mwalwanda</title>
+  <meta name="description" content="Case study — Cleanwell Mwalwanda" id="meta-description" />
+  <meta name="theme-color" content="#080808" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Open Graph — injected dynamically -->
+  <meta property="og:title" content="Case Study — Cleanwell Mwalwanda" id="og-title" />
+  <meta property="og:description" content="Case study — Cleanwell Mwalwanda" id="og-description" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-case-study">
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ─── NAVIGATION ───────────────────────────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav-logo" aria-label="Cleanwell Mwalwanda">
+        <svg width="120" height="30" viewBox="0 0 360 90" fill="none" aria-hidden="true">
+          <text x="180" y="68" text-anchor="middle" font-family="'Pinyon Script', cursive" font-size="64" fill="currentColor">arttrec</text>
+        </svg>
+      </a>
+      <a href="index.html#work" class="cs-back-link" aria-label="All Work">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        All Work
+      </a>
+      <span class="cs-nav__title" id="cs-nav-title" aria-hidden="true"></span>
+      <nav class="nav__links" aria-label="Main navigation">
+        <a href="index.html#work" class="nav__link">Work</a>
+        <a href="index.html#about" class="nav__link">About</a>
+        <a href="index.html#contact" class="nav__link">Contact</a>
+      </nav>
+      <button
+        class="nav__toggle"
+        id="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+      >
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+    </div>
+    <nav class="nav__mobile" id="nav-mobile" aria-hidden="true" aria-label="Mobile navigation">
+      <a href="index.html#work" class="nav__mobile-link">Work</a>
+      <a href="index.html#about" class="nav__mobile-link">About</a>
+      <a href="index.html#contact" class="nav__mobile-link">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ─── CASE STUDY SHELL — all content injected by case-study.js ─ -->
+
+    <!-- Hero: project title + meta -->
+    <section class="cs-hero" id="cs-hero" aria-labelledby="cs-project-title">
+      <div class="cs-hero__inner">
+        <div class="cs-hero__meta" id="cs-meta">
+          <!-- Injected: category / year / tags -->
+        </div>
+        <h1 class="cs-hero__title" id="cs-project-title">
+          <!-- Injected: project title -->
+        </h1>
+        <p class="cs-hero__subtitle" id="cs-subtitle">
+          <!-- Injected: project subtitle -->
+        </p>
+      </div>
+      <!-- Full-bleed hero image -->
+      <div class="cs-hero__image-wrap" id="cs-hero-image">
+        <!-- Injected: hero image -->
+      </div>
+    </section>
+
+    <!-- Overview: details panel + introductory copy -->
+    <section class="cs-overview" id="cs-overview" aria-label="Project overview">
+      <div class="cs-overview__inner">
+        <div class="cs-overview__details" id="cs-details">
+          <!-- Injected: role / year / tags / category -->
+        </div>
+        <div class="cs-overview__text" id="cs-overview-text">
+          <!-- Injected: overview paragraph -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenge + Solution -->
+    <section class="cs-narrative" id="cs-narrative" aria-label="Project narrative">
+      <div class="cs-narrative__inner">
+        <div class="cs-narrative__block" id="cs-challenge">
+          <!-- Injected: challenge -->
+        </div>
+        <div class="cs-narrative__block" id="cs-solution">
+          <!-- Injected: solution -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery: project images (surreal fallback only — editorial uses cs-sections) -->
+    <section class="cs-gallery" id="cs-gallery" aria-label="Project images">
+      <!-- Injected: image grid -->
+    </section>
+
+    <!-- Brief — editorial 2–3 line project context (non-surreal only) -->
+    <section class="cs-brief" id="cs-brief" aria-label="Project brief" hidden>
+      <div class="cs-brief__inner">
+        <p class="cs-brief__text" id="cs-brief-text"></p>
+      </div>
+    </section>
+
+    <!-- Challenge — the design problem (non-surreal only) -->
+    <section class="cs-challenge" id="cs-challenge" aria-label="Design challenge" hidden>
+      <div class="cs-challenge__inner">
+        <span class="cs-challenge__eyebrow">Challenge</span>
+        <p class="cs-challenge__text" id="cs-challenge-text"></p>
+      </div>
+    </section>
+
+    <!-- Numbered editorial sections — image-led (non-surreal only) -->
+    <div class="cs-sections" id="cs-sections" hidden></div>
+
+    <!-- Outcome — 1–2 line result (non-surreal only) -->
+    <section class="cs-outcome" id="cs-outcome" aria-label="Project outcome" hidden>
+      <div class="cs-outcome__inner">
+        <span class="cs-outcome__eyebrow">Outcome</span>
+        <p class="cs-outcome__text" id="cs-outcome-text"></p>
+        <a class="cs-visit-link" id="cs-visit-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+          Visit Site
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 10L10 2M4 2h6v6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Pieces (series projects only — e.g. Surreal Series) -->
+    <section class="cs-pieces" id="cs-pieces" aria-label="Series pieces" hidden>
+      <div class="cs-pieces__inner">
+        <h2 class="cs-pieces__heading">The Work</h2>
+        <div class="cs-pieces__list" id="cs-pieces-list">
+          <!-- Injected: piece entries -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Project Teaser -->
+    <section class="cs-next" id="cs-next" aria-label="Next project">
+      <div class="cs-next__inner">
+        <span class="section-label">Next Project</span>
+        <a class="cs-next__link" id="cs-next-link" href="#">
+          <div class="cs-next__content">
+            <h2 class="cs-next__title" id="cs-next-title">
+              <!-- Injected: next project title -->
+            </h2>
+            <p class="cs-next__sub" id="cs-next-sub">
+              <!-- Injected: next project subtitle -->
+            </p>
+          </div>
+          <div class="cs-next__image-wrap" id="cs-next-image">
+            <!-- Injected: next project cover image -->
+          </div>
+          <div class="cs-next__arrow" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 16h20M18 8l8 8-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer site-footer--cs">
+      <a href="index.html" class="site-footer__back">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M10 6H2M6 2L2 6l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        All Work
+      </a>
+      <p class="site-footer__copy">&copy; 2026 Cleanwell Mwalwanda</p>
+    </footer>
+
+  </main>
+
+  <!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
+  <!-- Page transition curtain -->
+  <div class="page-curtain" id="page-curtain" aria-hidden="true"></div>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/split-type.min.js"></script>
+  <script src="sanity-client.js"></script>
+  <script src="page-transition.js"></script>
+  <script src="case-study.js"></script>
+  <script src="animations.js"></script>
+</body>
+</html>
