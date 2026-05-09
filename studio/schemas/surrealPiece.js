@@ -56,25 +56,25 @@ export default defineType({
 
     defineField({
       name: 'subtitle',
-      title: 'Subtitle',
+      title: 'Subtitle — Poetic one-liner (optional)',
       type: 'string',
-      description: 'Poetic one-liner',
+      description: 'A short evocative phrase shown under the title. e.g. "Where silence speaks loudest"',
     }),
 
     defineField({
       name: 'storyPreview',
-      title: 'Story Preview',
+      title: 'Hook — One punchy sentence (shown on the page, bold & bright)',
       type: 'string',
-      description: 'Under 100 characters — shown on homepage hover',
+      description: 'Max 100 characters. This is the FIRST thing visitors read. Make it personal and direct. e.g. "Made this when I couldn\'t sleep — everything felt fractured."',
       validation: Rule => Rule.max(100),
     }),
 
     defineField({
       name: 'story',
-      title: 'Story',
+      title: 'Story — Why you made this piece (shown below the hook, dimmer)',
       type: 'text',
       rows: 5,
-      description: '2–4 sentences: why this piece was made',
+      description: '2–4 sentences explaining the concept, feeling, or context behind the piece. This is where you go deeper. e.g. "I was processing a lot of noise — political, personal, digital. The layered textures represent how information overloads identity. The figure disappears not because it\'s gone, but because it stopped being seen."',
     }),
 
     defineField({
