@@ -402,11 +402,15 @@ function renderCaseStudy(project, nextProject) {
       outcomeSection.removeAttribute('hidden');
     }
 
-    // Visit link (optional)
+    // Back to top link — always shown on editorial projects
     const visitLinkEl = document.getElementById('cs-visit-link');
-    if (visitLinkEl && project.visitLink) {
-      visitLinkEl.href = sanitizeText(project.visitLink);
+    if (visitLinkEl) {
+      visitLinkEl.href = '#';
       visitLinkEl.removeAttribute('hidden');
+      visitLinkEl.addEventListener('click', e => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
 
   } else {
