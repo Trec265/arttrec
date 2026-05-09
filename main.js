@@ -384,11 +384,27 @@ function renderFeaturedWork(projects) {
    ===================================================================== */
 function initFeaturedPanelClicks() {
   document.querySelectorAll('.featured-panel').forEach(panel => {
+    const link = panel.querySelector('.featured-panel__cta');
+    if (!link) return;
+
+    // Intercept CTA link clicks to use the page-transition curtain
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      if (typeof window.navigateTo === 'function') {
+        window.navigateTo(link.href);
+      } else {
+        window.location.href = link.href;
+      }
+    });
+
+    // Clicking anywhere else on the panel also navigates with transition
     panel.addEventListener('click', e => {
-      // Let the CTA link handle its own natural click
       if (e.target.closest('.featured-panel__cta')) return;
-      const link = panel.querySelector('.featured-panel__cta');
-      if (link?.href) window.location.href = link.href;
+      if (typeof window.navigateTo === 'function') {
+        window.navigateTo(link.href);
+      } else {
+        window.location.href = link.href;
+      }
     });
   });
 }
@@ -451,7 +467,7 @@ function initSurrealThumbnailRotation(galleryItems) {
       card.src = images[current];
       card.style.opacity = '1';
     }, 400);
-  }, 30000);
+  }, 2500);
 }
 
 

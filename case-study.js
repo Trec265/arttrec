@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const lenis = initLenis();
   initNavToggle();
   initNavScroll();
+  initBackLinks();
 
   // Read project slug from URL: case-study.html?project=onira
   const slug = new URLSearchParams(window.location.search).get('project');
@@ -64,6 +65,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (metaDesc) metaDesc.setAttribute('content', description);
     const ogDesc = document.getElementById('og-description');
     if (ogDesc) ogDesc.setAttribute('content', description);
+
+    // OG image — use heroImage (absolute CDN URL or resolved local path)
+    const ogImg = document.getElementById('og-image');
+    if (ogImg && project.heroImage) {
+      const imgUrl = project.heroImage.startsWith('http')
+        ? project.heroImage
+        : `${window.location.origin}/${project.heroImage}`;
+      ogImg.setAttribute('content', imgUrl);
+    }
+    const ogUrl = document.getElementById('og-url');
+    if (ogUrl) ogUrl.setAttribute('content', window.location.href);
 
     // Render all content into the DOM
     renderCaseStudy(project, nextProject);
@@ -148,6 +160,25 @@ function initNavScroll() {
     start: 'top -80px',
     onEnter: () => nav.classList.add('is-scrolled'),
     onLeaveBack: () => nav.classList.remove('is-scrolled'),
+  });
+}
+
+/* Intercept "back to work" links, footer back link, and nav links to use page transition */
+function initBackLinks() {
+  const selectors = ['.cs-back-link', '.site-footer__back', '.nav__link', '.nav__mobile-link'];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
+        e.preventDefault();
+        if (typeof window.navigateTo === 'function') {
+          window.navigateTo(href);
+        } else {
+          window.location.href = href;
+        }
+      });
+    });
   });
 }
 
@@ -473,7 +504,19 @@ function renderCaseStudy(project, nextProject) {
     const nextSub   = document.getElementById('cs-next-sub');
     const nextImg   = document.getElementById('cs-next-image');
 
-    if (nextLink)  nextLink.href = `case-study?project=${sanitizeText(nextProject.slug || '')}`;
+    const nextSlug = sanitizeText(nextProject.slug || '');
+    const nextHref = nextSlug === 'surreal-series' ? 'surreal-series.html' : `case-study?project=${nextSlug}`;
+    if (nextLink) {
+      nextLink.href = nextHref;
+      nextLink.addEventListener('click', e => {
+        e.preventDefault();
+        if (typeof window.navigateTo === 'function') {
+          window.navigateTo(nextHref);
+        } else {
+          window.location.href = nextHref;
+        }
+      });
+    }
     if (nextTitle) nextTitle.textContent = nextProject.title || '';
     if (nextSub)   nextSub.textContent   = stripTrailingComma(nextProject.subtitle || '');
     if (nextImg) {
