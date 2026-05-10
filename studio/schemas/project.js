@@ -19,37 +19,45 @@ export default {
     },
   ],
 
+  /* ── Studio groups (tabs) ──────────────────────────────────── */
+  groups: [
+    { name: 'basics',   title: 'Basics',   default: true },
+    { name: 'images',   title: 'Images' },
+    { name: 'content',  title: 'Content' },
+    { name: 'sections', title: 'Sections' },
+    { name: 'advanced', title: 'Advanced' },
+  ],
+
   fields: [
-    /* ── Identity ──────────────────────────────────────────────── */
+    /* ── BASICS tab ────────────────────────────────────────────── */
     {
       name      : 'title',
       title     : 'Title',
       type      : 'string',
+      group     : 'basics',
       validation: Rule => Rule.required(),
     },
     {
       name   : 'slug',
       title  : 'Slug',
       type   : 'slug',
+      group  : 'basics',
       options: { source: 'title', maxLength: 96 },
       validation: Rule => Rule.required(),
-      description: 'Used in the URL: case-study?project=<slug>',
+      description: 'Auto-generated from the title. Used in the URL: /case-study?project=<slug>',
     },
     {
       name : 'subtitle',
       title: 'Subtitle',
       type : 'string',
-      description: 'e.g. "Spirits, Art & Identity" or "Digital Art"',
-    },
-    {
-      name : 'year',
-      title: 'Year',
-      type : 'string',
+      group: 'basics',
+      description: 'e.g. "Spirits, Art & Identity" — shown under the title',
     },
     {
       name   : 'category',
       title  : 'Category',
       type   : 'string',
+      group  : 'basics',
       options: {
         list: [
           { title: 'Branding',      value: 'Branding' },
@@ -60,111 +68,125 @@ export default {
       validation: Rule => Rule.required(),
     },
     {
+      name : 'year',
+      title: 'Year',
+      type : 'string',
+      group: 'basics',
+    },
+    {
       name   : 'tags',
-      title  : 'Tags',
+      title  : 'Tags / Skills',
       type   : 'array',
+      group  : 'basics',
       of     : [{ type: 'string' }],
       options: { layout: 'tags' },
-      description: 'Skills shown in the case-study details panel',
-    },
-
-    /* ── Images ────────────────────────────────────────────────── */
-    {
-      name   : 'coverImage',
-      title  : 'Cover Image',
-      type   : 'image',
-      options: { hotspot: true },
-      description: 'Shown on the project card grid',
+      description: 'e.g. Brand Identity, Typography, Packaging — shown in the case-study details panel',
     },
     {
-      name   : 'heroImage',
-      title  : 'Hero Image',
-      type   : 'image',
-      options: { hotspot: true },
-      description: 'Large hero at the top of the case-study page',
+      name : 'role',
+      title: 'Your Role',
+      type : 'string',
+      group: 'basics',
+      description: 'e.g. "Brand Designer" or "Art Director"',
     },
-    {
-      name: 'images',
-      title: 'Gallery Images',
-      type: 'array',
-      of  : [{ type: 'image', options: { hotspot: true } }],
-      description: 'Additional project images shown in the case-study gallery',
-    },
-
-    /* ── Listing flags ─────────────────────────────────────────── */
     {
       name        : 'featured',
       title       : 'Featured',
       type        : 'boolean',
+      group       : 'basics',
       initialValue: false,
-      description : 'Featured projects appear in the full-viewport panel section',
+      description : 'Featured projects appear in the large hero panel on the home page',
     },
     {
       name       : 'order',
       title      : 'Display Order',
       type       : 'number',
+      group      : 'basics',
       description: 'Lower numbers appear first (1, 2, 3 …)',
     },
 
-    /* ── Text content ──────────────────────────────────────────── */
+    /* ── IMAGES tab ────────────────────────────────────────────── */
     {
-      name : 'excerpt',
-      title: 'Excerpt',
-      type : 'text',
-      rows : 3,
-      description: 'One or two sentences shown on project cards and featured panels',
+      name   : 'coverImage',
+      title  : 'Cover Image',
+      type   : 'image',
+      group  : 'images',
+      options: { hotspot: true },
+      description: 'Shown on the project card grid and the home page featured panel',
     },
     {
-      name : 'role',
-      title: 'Role',
-      type : 'string',
-      description: 'Your role on the project, e.g. "Brand Designer" or "Art Director"',
+      name   : 'heroImage',
+      title  : 'Hero Image',
+      type   : 'image',
+      group  : 'images',
+      options: { hotspot: true },
+      description: 'Large full-bleed image at the top of the case-study page',
+    },
+    {
+      name : 'images',
+      title: 'Gallery Images',
+      type : 'array',
+      group: 'images',
+      of   : [{ type: 'image', options: { hotspot: true } }],
+      description: 'Project images used in the case-study sections. If you add Case Study Sections below, upload images there instead.',
+    },
+
+    /* ── CONTENT tab ───────────────────────────────────────────── */
+    {
+      name : 'excerpt',
+      title: 'Card Excerpt',
+      type : 'text',
+      group: 'content',
+      rows : 2,
+      description: '📌 HOME PAGE — shown on the project card in the grid and on the large featured panel. Keep it to 1–2 punchy sentences.',
     },
     {
       name : 'brief',
-      title: 'Brief',
+      title: 'Brief  ➜  appears just below the hero image',
       type : 'text',
+      group: 'content',
       rows : 3,
-      description: 'Editorial — 2–3 lines of concise project context shown below the hero (non-surreal projects). Falls back to Overview if empty.',
-    },
-    {
-      name : 'outcome',
-      title: 'Outcome',
-      type : 'text',
-      rows : 3,
-      description: 'Editorial — 1–2 lines explaining the result or significance. Falls back to Solution if empty.',
-    },
-    {
-      name : 'visitLink',
-      title: 'Visit Site URL',
-      type : 'url',
-      description: 'Optional "Visit Site" link shown at the bottom of the case study',
-    },
-    {
-      name : 'overview',
-      title: 'Overview',
-      type : 'text',
-      rows : 5,
+      description: '📄 CASE STUDY — first thing the reader sees after the hero. Set the scene: what was the project, who is it for, what was the goal. 2–3 sentences. (Branding / Visual Design only)',
     },
     {
       name : 'challenge',
-      title: 'Challenge',
+      title: 'Challenge  ➜  appears after the Brief',
       type : 'text',
-      rows : 5,
+      group: 'content',
+      rows : 4,
+      description: '📄 CASE STUDY — the design problem or tension you were solving. This sits between the Brief and the image sections. 2–4 sentences. (Branding / Visual Design only)',
     },
     {
-      name : 'solution',
-      title: 'Solution',
+      name : 'outcome',
+      title: 'Outcome  ➜  appears at the very bottom, after all images',
       type : 'text',
+      group: 'content',
+      rows : 3,
+      description: '📄 CASE STUDY — the final word. What did the work achieve or mean? 1–2 sentences max. (Branding / Visual Design only)',
+    },
+    {
+      name : 'overview',
+      title: 'Overview  ➜  main body text on the case study page',
+      type : 'text',
+      group: 'content',
       rows : 5,
+      description: '📄 CASE STUDY — used instead of Brief/Challenge/Outcome for Surreal Art projects. One block of text shown under the hero.',
+    },
+    {
+      name : 'visitLink',
+      title: 'Visit Site URL  ➜  link button at the bottom',
+      type : 'url',
+      group: 'content',
+      description: '📄 CASE STUDY — adds a "Visit Site" button at the very end. Leave blank and a "Back to top" arrow appears instead.',
     },
 
-    /* ── Editorial sections (non-surreal case studies) ─────────── */
+    /* ── SECTIONS tab ──────────────────────────────────────────── */
     {
       name       : 'sections',
       title      : 'Case Study Sections',
       type       : 'array',
-      description: 'Structured numbered sections for editorial case studies. Leave empty to auto-generate from gallery images.',
+      group      : 'sections',
+      description: 'Branding / Visual Design — upload images into each section in order. Rename or delete sections you don\'t need. Sections are numbered automatically.',
       of: [
         {
           type  : 'object',
@@ -172,16 +194,9 @@ export default {
           title : 'Section',
           fields: [
             {
-              name : 'number',
-              title: 'Number',
-              type : 'string',
-              description: 'e.g. "01", "02"',
-            },
-            {
               name      : 'title',
-              title     : 'Title',
+              title     : 'Section Title',
               type      : 'string',
-              description: 'e.g. "Identity", "Color & Typography", "In Use"',
               validation: Rule => Rule.required(),
             },
             {
@@ -189,31 +204,38 @@ export default {
               title  : 'Images',
               type   : 'array',
               of     : [{ type: 'image', options: { hotspot: true } }],
-              description: '1 image = full-width. 2 images = side-by-side pair.',
+              description: '1 image = full-width. 2 images = side-by-side.',
             },
             {
               name : 'caption',
               title: 'Caption',
               type : 'string',
-              description: 'Optional caption below the images',
+              description: 'Optional caption shown below the images',
             },
           ],
           preview: {
-            select: { title: 'title', subtitle: 'number', media: 'images.0' },
-            prepare({ title, subtitle, media }) {
-              return { title, subtitle: subtitle ? `${subtitle} \u2014 ${title}` : title, media };
+            select: { title: 'title', media: 'images.0' },
+            prepare({ title, media }) {
+              return { title, media };
             },
           },
         },
       ],
+      initialValue: [
+        { _type: 'caseSection', _key: 'identity',  title: 'Identity' },
+        { _type: 'caseSection', _key: 'color',     title: 'Color & Typography' },
+        { _type: 'caseSection', _key: 'product',   title: 'Product' },
+        { _type: 'caseSection', _key: 'packaging', title: 'Packaging' },
+        { _type: 'caseSection', _key: 'inuse',     title: 'In Use' },
+      ],
     },
 
-    /* ── Series pieces (Surreal Art) ───────────────────────────── */
     {
       name       : 'pieces',
       title      : 'Series Pieces',
       type       : 'array',
-      description: 'Individual works within a series (e.g. Surreal Photo Manipulation Series)',
+      group      : 'sections',
+      description: 'Surreal Art — individual works in the series',
       of: [
         {
           type  : 'object',
@@ -223,13 +245,6 @@ export default {
             { name: 'title',       title: 'Title',       type: 'string' },
             { name: 'description', title: 'Description', type: 'text', rows: 3 },
             { name: 'image',       title: 'Image',       type: 'image', options: { hotspot: true } },
-            {
-              name: 'localImage',
-              title: 'Original Image Path',
-              type: 'string',
-              readOnly: true,
-              description: 'Original migrated local path — upload image above then ignore',
-            },
             {
               name: 'story',
               title: 'Story',
@@ -243,6 +258,13 @@ export default {
               type: 'string',
               description: 'e.g. Photoshop · Digital Art',
             },
+            {
+              name: 'localImage',
+              title: 'Original Image Path',
+              type: 'string',
+              readOnly: true,
+              description: 'Migration reference — upload the image above and ignore this',
+            },
           ],
           preview: {
             select: { title: 'title', media: 'image' },
@@ -251,36 +273,22 @@ export default {
       ],
     },
 
-    /* ── Navigation ────────────────────────────────────────────── */
+    /* ── ADVANCED tab ──────────────────────────────────────────── */
     {
       name       : 'nextProject',
       title      : 'Next Project',
       type       : 'reference',
+      group      : 'advanced',
       to         : [{ type: 'project' }],
       description: 'Project shown in the "Next Project" footer of the case study',
     },
-
-    /* ── Migration helpers (read-only reminders of original file paths) ── */
     {
-      name       : 'localCoverImage',
-      title      : 'Original Cover Image Path',
-      type       : 'string',
-      readOnly   : true,
-      description: 'Original local path from migration — upload the image above then this field can be ignored',
-    },
-    {
-      name       : 'localHeroImage',
-      title      : 'Original Hero Image Path',
-      type       : 'string',
-      readOnly   : true,
-      description: 'Original local path from migration — upload the image above then this field can be ignored',
-    },
-    {
-      name       : 'localImages',
-      title      : 'Original Gallery Image Paths',
-      type       : 'string',
-      readOnly   : true,
-      description: 'Pipe-separated list of original local paths — upload images above then ignore',
+      name : 'solution',
+      title: 'Solution (legacy)',
+      type : 'text',
+      group: 'advanced',
+      rows : 4,
+      description: 'Legacy field — use Outcome instead. Kept as a fallback.',
     },
   ],
 
