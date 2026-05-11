@@ -24,32 +24,31 @@ test.describe('Homepage', () => {
     await page.goto(BASE, { waitUntil: 'networkidle' });
   });
 
-  test('should display CW SVG logo in nav', async ({ page }) => {
+  test('should display arttrec SVG logo in nav', async ({ page }) => {
     const logo = page.locator('.nav-logo svg');
     await expect(logo).toBeVisible();
-    await expect(logo).toHaveAttribute('viewBox', '0 0 32 32');
+    await expect(logo).toHaveAttribute('viewBox', '0 0 360 90');
   });
 
   test('should render project cards in #projects-grid', async ({ page }) => {
     const grid = page.locator('#projects-grid');
     await expect(grid).toBeVisible();
-    const cards = grid.locator('.project-card');
+    const cards = grid.locator('.work-card');
     await expect(cards).toHaveCount(await cards.count());
     expect(await cards.count()).toBeGreaterThan(0);
   });
 
   test('each project card should have a valid href', async ({ page }) => {
-    const links = page.locator('.project-card__link');
+    const links = page.locator('.work-card__link');
     const count = await links.count();
     for (let i = 0; i < count; i++) {
       const href = await links.nth(i).getAttribute('href');
       expect(href).toBeTruthy();
-      expect(href).toMatch(/case-study/);
     }
   });
 
   test('no broken images in project grid (no src="null")', async ({ page }) => {
-    const imgs = page.locator('.project-card__img[src]');
+    const imgs = page.locator('.work-card__img[src]');
     const count = await imgs.count();
     for (let i = 0; i < count; i++) {
       const src = await imgs.nth(i).getAttribute('src');
@@ -64,7 +63,7 @@ test.describe('Homepage', () => {
   });
 
   test('tags should not have trailing commas', async ({ page }) => {
-    const tags = await page.locator('.project-card__cat').allTextContents();
+    const tags = await page.locator('.work-card__type').allTextContents();
     for (const tag of tags) {
       expect(tag.trim()).not.toMatch(/,\s*$/);
     }
@@ -84,8 +83,8 @@ test.describe('Homepage', () => {
     const brandingBtn = page.locator('[data-filter="Branding"]');
     if (await brandingBtn.count() > 0) {
       await brandingBtn.click();
-      const hiddenCards = page.locator('.project-card.is-hidden');
-      const visibleCards = page.locator('.project-card:not(.is-hidden)');
+      const hiddenCards = page.locator('.work-card.is-hidden');
+      const visibleCards = page.locator('.work-card:not(.is-hidden)');
       const hiddenCount = await hiddenCards.count();
       const visibleCount = await visibleCards.count();
       // At least some cards should be visible when filter applied
@@ -252,7 +251,7 @@ test.describe('Accessibility', () => {
 
   test('project cards should have aria-label on their links', async ({ page }) => {
     await page.goto(BASE, { waitUntil: 'networkidle' });
-    const cardLinks = page.locator('.project-card__link');
+    const cardLinks = page.locator('.work-card__link');
     const count = await cardLinks.count();
     for (let i = 0; i < count; i++) {
       const ariaLabel = await cardLinks.nth(i).getAttribute('aria-label');

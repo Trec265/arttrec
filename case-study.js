@@ -77,6 +77,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ogUrl = document.getElementById('og-url');
     if (ogUrl) ogUrl.setAttribute('content', window.location.href);
 
+    // Canonical URL for this case study
+    let canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (!canonicalEl) {
+      canonicalEl = document.createElement('link');
+      canonicalEl.rel = 'canonical';
+      document.head.appendChild(canonicalEl);
+    }
+    canonicalEl.href = window.location.href.split('?')[0] + '?project=' + slug;
+
     // Render all content into the DOM
     renderCaseStudy(project, nextProject);
 
