@@ -1812,13 +1812,13 @@ ul, ol {
 
 /* Brief ------------------------------------------------------------- */
 .cs-brief {
-  padding-block: clamp(3rem, 6vw, 5rem);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
   padding-inline: var(--gutter);
   border-top: 1px solid var(--color-border);
 }
 
 .cs-brief__inner {
-  max-width: 740px;
+  max-width: 620px;
   margin-inline: auto;
 }
 
@@ -1842,7 +1842,7 @@ ul, ol {
 
 /* Challenge --------------------------------------------------------- */
 .cs-challenge {
-  padding-block: clamp(2rem, 4vw, 3.5rem);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
   padding-inline: var(--gutter);
   border-top: 1px solid var(--color-border);
 }
@@ -1941,13 +1941,13 @@ ul, ol {
 
 /* Outcome ----------------------------------------------------------- */
 .cs-outcome {
-  padding-block: clamp(3rem, 6vw, 5rem);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
   padding-inline: var(--gutter);
   border-top: 1px solid var(--color-border);
 }
 
 .cs-outcome__inner {
-  max-width: 740px;
+  max-width: 620px;
   margin-inline: auto;
 }
 
