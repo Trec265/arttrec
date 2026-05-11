@@ -618,7 +618,7 @@ function initFilterBtns(projects) {
 
         if (!prefersReducedMotion) {
           gsap.to(grid, { opacity: 0, duration: 0.3, onComplete: () => {
-            showSurrealProjectCards();
+            grid.style.display = 'none';
             gsap.set(grid, { opacity: 1 });
           }});
           if (listView) {
@@ -639,7 +639,6 @@ function initFilterBtns(projects) {
             gsap.set('.sr-strip', { opacity: 1, x: 0 });
           }
           initSurrealHover();
-          showSurrealProjectCards();
         }
         return;
       } else {
