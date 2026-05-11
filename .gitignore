@@ -19,3 +19,7 @@ studio/.sanity/
 # Migration script (contains no secrets but not needed in git)
 migrate-to-sanity.js
 
+# One-off scripts that may contain tokens
+patch-*.mjs
+patch-*.js
+

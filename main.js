@@ -1300,6 +1300,9 @@ function initSurrealHover() {
       const clone = s.cloneNode(true);
       clone.classList.add('sr-strip-clone');
       clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('tabindex', '-1');
+      // Prevent any focusable children inside the clone from being reachable
+      clone.querySelectorAll('a, button, [tabindex]').forEach(el => el.setAttribute('tabindex', '-1'));
       track.appendChild(clone);
     });
     const firstReal  = track.querySelector('.sr-strip:not(.sr-strip-clone)');

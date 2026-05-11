@@ -143,6 +143,40 @@ button {
   color: inherit;
 }
 
+/* ── Keyboard focus indicator ──────────────────────────────────────
+   Visible only when navigating with keyboard (Tab), hidden for mouse.
+   ─────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Skip to main content ─────────────────────────────────────────
+   Hidden off-screen until focused, then slides into view.
+   ─────────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.6rem 1.2rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  font-size: var(--text-sm);
+  letter-spacing: 0.05em;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid rgba(255,255,255,0.75);
+  outline-offset: 2px;
+}
+
 ul, ol {
   list-style: none;
 }
