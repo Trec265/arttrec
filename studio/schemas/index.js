@@ -5,5 +5,6 @@
 
 import project from './project';
 import surrealPiece from './surrealPiece';
+import about from './about';
 
-export const schemaTypes = [project, surrealPiece];
+export const schemaTypes = [project, surrealPiece, about];

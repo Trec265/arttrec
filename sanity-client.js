@@ -89,6 +89,19 @@
     '}',
   ].join('\n');
 
+  /* ── GROQ query — about singleton ────────────────────────────── */
+  var ABOUT_QUERY = [
+    '*[_type == "about" && _id == "singleton-about"][0] {',
+    '  heading,',
+    '  headingAccent,',
+    '  bio,',
+    '  "portraitImage": portraitImage.asset->url,',
+    '  portraitAlt,',
+    '  portraitCaption,',
+    '  "disciplines": disciplines[] { label, items }',
+    '}',
+  ].join('\n');
+
   /* ── Public API ────────────────────────────────────────────────── */
   async function fetchProjects() {
     var timeout = new Promise(function(_, reject) {
@@ -102,9 +115,22 @@
     return json.result || [];
   }
 
+  async function fetchAbout() {
+    var timeout = new Promise(function(_, reject) {
+      setTimeout(function() { reject(new Error('[SanityClient] timeout')); }, 4000);
+    });
+    var res = await Promise.race([fetch(buildQueryUrl(ABOUT_QUERY)), timeout]);
+    if (!res.ok) {
+      throw new Error('[SanityClient] API error ' + res.status);
+    }
+    var json = await res.json();
+    return json.result || null;
+  }
+
   global.SanityClient = {
     isConfigured : isConfigured,
     fetchProjects: fetchProjects,
+    fetchAbout   : fetchAbout,
     /** Exposed so other scripts can read the config if needed */
     projectId    : function () { return SANITY_PROJECT_ID; },
     dataset      : function () { return SANITY_DATASET; },

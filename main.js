@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Safety timeout — never leave user stuck on loader
   const loaderTimeout = setTimeout(() => skipLoader(), 5000);
 
+  // Kick off about fetch in parallel — will be applied before animations start
+  const aboutFetchPromise = fetchAbout().catch(() => null);
+
   // Fetch and render projects — Sanity with 4s timeout, falls back to local JSON
   try {
     let projects;
@@ -105,6 +108,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       grid.innerHTML = '<p style="color:var(--color-text-muted);padding:2rem 0">Projects unavailable. Please check back soon.</p>';
     }
   }
+
+  // Apply about data before animations start so SplitType picks up the correct text
+  const aboutData = await aboutFetchPromise;
+  applyAboutData(aboutData);
 
   // MAD-style cinematic entrance — loader panel wipes off screen, then hero reveals
   if (!prefersReducedMotion) {
@@ -174,6 +181,87 @@ async function fetchProjects() {
   const res = await fetch('data/projects.json');
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
+}
+
+/**
+ * Fetch the About singleton from Sanity.
+ * Returns null if Sanity is unconfigured or the document doesn't exist yet.
+ */
+async function fetchAbout() {
+  if (window.SanityClient && window.SanityClient.isConfigured()) {
+    return window.SanityClient.fetchAbout();
+  }
+  return null;
+}
+
+/**
+ * Apply about data returned from Sanity to the #about section DOM.
+ * All text is set via textContent / node creation to prevent XSS.
+ * Falls back gracefully — any missing field is simply skipped.
+ */
+function applyAboutData(data) {
+  if (!data) return;
+
+  /* -- Heading -------------------------------------------------------- */
+  const headingEl = document.querySelector('.about__heading');
+  if (headingEl) {
+    if (data.heading) {
+      headingEl.textContent = data.heading;
+      if (data.headingAccent) {
+        headingEl.appendChild(document.createElement('br'));
+        const em = document.createElement('em');
+        em.textContent = data.headingAccent;
+        headingEl.appendChild(em);
+      }
+    }
+  }
+
+  /* -- Bio paragraphs ------------------------------------------------- */
+  const textEl = document.querySelector('.about__text');
+  if (textEl && Array.isArray(data.bio) && data.bio.length) {
+    textEl.querySelectorAll('.about__para').forEach(p => p.remove());
+    const disciplinesEl = textEl.querySelector('.about__disciplines');
+    data.bio.forEach(text => {
+      const p = document.createElement('p');
+      p.className = 'about__para';
+      p.textContent = text;
+      textEl.insertBefore(p, disciplinesEl);
+    });
+  }
+
+  /* -- Disciplines ---------------------------------------------------- */
+  const disciplinesEl = document.querySelector('.about__disciplines');
+  if (disciplinesEl && Array.isArray(data.disciplines) && data.disciplines.length) {
+    disciplinesEl.textContent = '';
+    data.disciplines.forEach(d => {
+      const row   = document.createElement('div');
+      row.className = 'about__discipline';
+      const label = document.createElement('span');
+      label.className = 'about__discipline-label';
+      label.textContent = d.label || '';
+      const items = document.createElement('span');
+      items.className = 'about__discipline-items';
+      items.textContent = d.items || '';
+      row.appendChild(label);
+      row.appendChild(items);
+      disciplinesEl.appendChild(row);
+    });
+  }
+
+  /* -- Portrait image ------------------------------------------------- */
+  if (data.portraitImage) {
+    const img = document.querySelector('.about__portrait-img');
+    if (img) {
+      img.src = data.portraitImage;
+      if (data.portraitAlt) img.alt = data.portraitAlt;
+    }
+  }
+
+  /* -- Portrait caption ----------------------------------------------- */
+  if (data.portraitCaption) {
+    const caption = document.querySelector('.about__portrait-caption');
+    if (caption) caption.textContent = data.portraitCaption;
+  }
 }
 
 /**
