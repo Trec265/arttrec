@@ -121,7 +121,7 @@ function renderStorySection(pieces, container) {
       ? piece.accentColor
       : pickFallbackAccent(piece.imageUrl);
     return [
-      `<div class="surreal-row" data-index="${i}" data-accent="${accent}" role="listitem">`,
+      `<div class="surreal-row" id="piece-${sanitize(piece.slug || String(i))}" data-index="${i}" data-accent="${accent}" role="listitem">`,
       `  <span class="surreal-row__num" aria-label="Piece ${num} of ${sanitize(padNum(total))}">${num} / ${sanitize(padNum(total))}</span>`,
       `  <h2 class="surreal-row__title">${title}</h2>`,
       `  <div class="surreal-row__divider" aria-hidden="true"></div>`,
@@ -341,4 +341,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   ScrollTrigger.refresh();
+
+  // Scroll to a specific piece if URL has a hash (e.g. surreal-series.html#piece-abyss)
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) {
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+    }
+  }
 });

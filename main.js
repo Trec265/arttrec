@@ -288,7 +288,7 @@ async function fetchSurrealGalleryItems() {
         title      : p.title,
         coverImage : p.imageUrl || '',
         year       : p.year ? String(p.year) : '2025',
-        slug       : 'surreal-series',
+        slug       : p.slug || '',
         category   : 'Surreal Art',
       }));
     }
@@ -303,7 +303,7 @@ async function fetchSurrealGalleryItems() {
         title      : piece.title,
         coverImage : piece.image,
         year       : entry.year || '2025',
-        slug       : 'surreal-series',
+        slug       : piece.title ? piece.title.toLowerCase().replace(/\s+/g, '-') : '',
         category   : 'Surreal Art',
       }));
     }
@@ -511,13 +511,14 @@ function renderSurrealListView(projects) {
     const year   = sanitizeText(project.year  || '');
     const imgSrc = sanitizeText(project.coverImage || '');
     const slug   = sanitizeText(project.slug || project.id || '');
+    const href   = slug ? `surreal-series.html#piece-${slug}` : 'surreal-series.html';
     const imgTag = imgSrc
       ? `<img src="${imgSrc}" alt="${title}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">`
       : '';
     return [
-      `<div class="sr-strip" data-index="${i}" data-slug="${slug}" data-title="${title}" data-year="${year}">`,
+      `<a class="sr-strip" href="${href}" data-index="${i}" data-slug="${slug}" data-title="${title}" data-year="${year}" aria-label="View ${title}">`,
       imgTag,
-      `</div>`,
+      `</a>`,
     ].join('\n');
   }).join('\n');
 

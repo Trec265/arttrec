@@ -914,6 +914,9 @@ ul, ol {
   overflow: hidden;
   cursor: pointer;
   background: var(--color-surface);
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .sr-strip:first-child {
