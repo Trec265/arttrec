@@ -154,49 +154,49 @@ test.describe('Case Study — Onira (Branding)', () => {
     const nextLink = page.locator('#cs-next-link');
     if (await nextLink.count() > 0) {
       const href = await nextLink.getAttribute('href');
-      expect(href).toMatch(/case-study\?project=/);
-      expect(href).not.toContain('null');
+      // '#' means no next project configured — acceptable
+      // Otherwise must be a valid project or surreal-series link
+      if (href && href !== '#') {
+        expect(href).toMatch(/case-study\?project=|surreal-series/);
+        expect(href).not.toContain('null');
+      }
     }
   });
 });
 
 /* =====================================================================
-   CASE STUDY TESTS — Surreal Art (gallery mode)
+   SURREAL SERIES PAGE TESTS
    ===================================================================== */
 
-test.describe('Case Study — Surreal Series (Gallery Mode)', () => {
+test.describe('Surreal Series Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}/case-study?project=surreal-series`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/surreal-series`, { waitUntil: 'networkidle' });
   });
 
-  test('should render in gallery mode (cs-pieces--gallery class)', async ({ page }) => {
-    const piecesSection = page.locator('.cs-pieces--gallery');
-    await expect(piecesSection).toBeVisible();
+  test('should render the surreal series page', async ({ page }) => {
+    await expect(page).toHaveTitle(/surreal/i);
   });
 
-  test('should not render narrative section in gallery mode', async ({ page }) => {
-    const narrative = page.locator('#cs-narrative');
-    if (await narrative.count() > 0) {
-      await expect(narrative).toBeHidden();
-    }
+  test('should render piece sections', async ({ page }) => {
+    const pieces = page.locator('.ss-piece, [id^="piece-"]');
+    expect(await pieces.count()).toBeGreaterThan(0);
   });
 
   test('piece images should not have src="null"', async ({ page }) => {
-    const imgs = page.locator('.piece-row__img[src]');
+    const imgs = page.locator('img[src]');
     const count = await imgs.count();
     for (let i = 0; i < count; i++) {
       const src = await imgs.nth(i).getAttribute('src');
       expect(src).not.toBe('null');
+      expect(src).not.toBe('');
     }
   });
 
-  test('title should not merge words (no missing space)', async ({ page }) => {
-    const title = await page.locator('#cs-project-title').textContent();
-    // Confirm title has proper spaces between words
-    if (title) {
-      const words = title.trim().split(/\s+/);
-      expect(words.length).toBeGreaterThan(1);
-    }
+  test('should have no horizontal overflow', async ({ page }) => {
+    const hasOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth
+    );
+    expect(hasOverflow).toBe(false);
   });
 });
 
