@@ -13,7 +13,7 @@
 
 const { test, expect } = require('@playwright/test');
 
-const BASE = 'http://localhost:3000';
+const BASE = process.env.BASE_URL || 'https://arttrec.com';
 
 /* =====================================================================
    HOMEPAGE TESTS
