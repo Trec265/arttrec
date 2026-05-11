@@ -231,7 +231,7 @@
     ],
     "coverImage": "assets/images/kumiko-shimizu-QMG3VbgVyRQ-unsplash.jpg",
     "heroImage": "assets/images/kumiko-shimizu-QMG3VbgVyRQ-unsplash.jpg",
-    "featured": false,
+    "featured": true,
     "excerpt": "Brand identity for a technology-forward company where encryption and connectivity are core values.",
     "overview": "A brand identity system for a company at the intersection of security and network technology. The brief: translate abstract concepts — encryption, connection, trust — into a visual language that feels modern without relying on clichés.",
     "challenge": "Technology branding is saturated with predictable visual language. The challenge was to create something that felt genuinely specific to Cipher Link — not a generic tech mark dressed up with a company name.",
