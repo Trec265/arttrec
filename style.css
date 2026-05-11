@@ -1647,6 +1647,38 @@ ul, ol {
   /* Project metadata panel */
 }
 
+/* Horizontal strip layout — used in editorial (non-gallery) mode */
+.cs-overview--strip {
+  padding-block: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cs-overview--strip .cs-overview__inner {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.cs-overview--strip .cs-overview__details {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--color-border);
+}
+
+.cs-overview--strip .cs-detail-row {
+  flex: 1 1 140px;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: none;
+  border-right: 1px solid var(--color-border);
+}
+
+.cs-overview--strip .cs-detail-row:first-child {
+  border-top: none;
+}
+
+.cs-overview--strip .cs-detail-row:last-child {
+  border-right: none;
+}
+
 .cs-detail-row {
   padding-block: var(--space-sm);
   border-bottom: 1px solid var(--color-border);

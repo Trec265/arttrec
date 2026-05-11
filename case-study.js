@@ -368,9 +368,13 @@ function renderCaseStudy(project, nextProject) {
   if (!isGalleryMode) {
     /* ====== EDITORIAL MODE (non-surreal projects) ====== */
 
-    // Hide old sections — replaced by editorial shells
+    // Keep details panel visible; hide only the text block (Brief replaces it)
     const overviewSection = document.getElementById('cs-overview');
-    if (overviewSection) overviewSection.hidden = true;
+    if (overviewSection) {
+      overviewSection.classList.add('cs-overview--strip');
+      const overviewText = overviewSection.querySelector('.cs-overview__text');
+      if (overviewText) overviewText.hidden = true;
+    }
 
     // Brief (project.brief preferred; falls back to overview)
     const briefContent = project.brief || project.overview || '';
