@@ -1822,12 +1822,21 @@ ul, ol {
   margin-inline: auto;
 }
 
+.cs-brief__eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-sm);
+}
+
 .cs-brief__text {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
   font-weight: var(--fw-light);
-  line-height: 1.65;
-  color: var(--color-text);
+  line-height: 1.8;
+  color: var(--color-text-dim);
   letter-spacing: 0.01em;
 }
 
