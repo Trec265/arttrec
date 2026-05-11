@@ -1646,18 +1646,21 @@ ul, ol {
 
 /* Full-bleed hero image */
 .cs-hero__image-wrap {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   margin-inline: auto;
-  overflow: hidden;
+  /* clip-path instead of overflow:hidden — GSAP removes overflow:hidden during
+     scale transforms but never touches clip-path. */
+  clip-path: inset(0);
   background-color: var(--color-surface-2);
 }
 
 .cs-hero__image-wrap img {
-  width: auto;
+  width: 100%;
   max-width: 100%;
   height: auto;
   max-height: 80vh;
+  object-fit: cover;
   display: block;
 }
 

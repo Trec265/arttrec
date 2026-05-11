@@ -344,9 +344,7 @@ function renderCaseStudy(project, nextProject) {
     heroImgWrap.innerHTML = imgOrPlaceholder(
       project.heroImage,
       `${project.title || ''} \u2014 ${project.subtitle || ''}`,
-      '',
-      '1400',
-      '600'
+      ''
     );
   }
 
@@ -596,7 +594,7 @@ function initCaseStudyAnimations() {
   const heroImg = document.querySelector('.cs-hero__image-wrap img');
   if (heroImg) {
     gsap.fromTo(heroImg,
-      { y: 0, scale: 1.06 },
+      { y: 0 },
       {
         scrollTrigger: {
           trigger: '.cs-hero__image-wrap',
@@ -605,7 +603,6 @@ function initCaseStudyAnimations() {
           scrub: true,
         },
         y: -60,
-        scale: 1,
         ease: 'none',
       }
     );
