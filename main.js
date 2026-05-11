@@ -530,7 +530,7 @@ function initFilterBtns(projects) {
 
         if (!prefersReducedMotion) {
           gsap.to(grid, { opacity: 0, duration: 0.3, onComplete: () => {
-            grid.style.display = 'none';
+            showSurrealProjectCards();
             gsap.set(grid, { opacity: 1 });
           }});
           if (listView) {
@@ -551,6 +551,7 @@ function initFilterBtns(projects) {
             gsap.set('.sr-strip', { opacity: 1, x: 0 });
           }
           initSurrealHover();
+          showSurrealProjectCards();
         }
         return;
       } else {
@@ -573,7 +574,8 @@ function initFilterBtns(projects) {
           });
         }
 
-        // Animate filtered cards in
+        // Animate filtered cards in — always reset opacity/transform first
+        // so cards that were already animated by ScrollTrigger (once:true) don't stay invisible
         const visible = Array.from(grid.querySelectorAll('.work-card:not(.is-hidden)'));
         if (visible.length) {
           if (!prefersReducedMotion) {
@@ -587,6 +589,9 @@ function initFilterBtns(projects) {
             gsap.set(visible, { opacity: 1, y: 0 });
           }
         }
+        // Also reset any hidden cards so they don't retain stale GSAP inline styles
+        const hidden = Array.from(grid.querySelectorAll('.work-card.is-hidden'));
+        gsap.set(hidden, { opacity: 0, y: 20 });
       }
 
       ScrollTrigger.refresh();
