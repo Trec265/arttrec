@@ -1661,13 +1661,13 @@ ul, ol {
 .cs-overview--strip .cs-overview__details {
   display: flex;
   flex-wrap: wrap;
-  border-top: 1px solid var(--color-border);
 }
 
 .cs-overview--strip .cs-detail-row {
-  flex: 1 1 140px;
-  padding: var(--space-sm) var(--space-md);
+  flex: 1 1 120px;
+  padding: 1.1rem var(--space-md);
   border-bottom: none;
+  border-top: none;
   border-right: 1px solid var(--color-border);
 }
 
@@ -1677,6 +1677,17 @@ ul, ol {
 
 .cs-overview--strip .cs-detail-row:last-child {
   border-right: none;
+}
+
+.cs-overview--strip .cs-detail-label {
+  font-size: 0.6rem;
+  margin-bottom: 0.3em;
+  letter-spacing: 0.2em;
+}
+
+.cs-overview--strip .cs-detail-value {
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 .cs-detail-row {
