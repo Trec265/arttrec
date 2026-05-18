@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     } else {
       renderProjects(projects);
+      renderHeroSlides(projects);
       renderFeaturedWork(projects);
       initFeaturedPanelClicks();
       // Populate gallery strip with individual surrealPiece docs from Sanity
@@ -413,6 +414,38 @@ function renderProjects(projects) {
 }
 
 
+
+/* =====================================================================
+   RENDER: HERO BACKGROUND SLIDESHOW
+   Pulls heroImage (or coverImage) from the first 5 projects and injects
+   <img class="hero__bg-slide"> elements into #hero-bg-slides.
+   Works whether images come from Sanity CDN or local fallback paths.
+   Called once during bootstrap, before playLoader().
+   ===================================================================== */
+function renderHeroSlides(projects) {
+  const container = document.getElementById('hero-bg-slides');
+  if (!container) return;
+
+  // Take up to 5 projects that have an image
+  const slides = projects
+    .filter(p => p.heroImage || p.coverImage)
+    .slice(0, 5);
+
+  if (!slides.length) return;
+
+  const fragment = document.createDocumentFragment();
+  slides.forEach((p, i) => {
+    const img = document.createElement('img');
+    img.className = 'hero__bg-slide';
+    img.src = p.heroImage || p.coverImage;
+    img.alt = '';
+    img.decoding = 'async';
+    img.loading = i === 0 ? 'eager' : 'lazy';
+    fragment.appendChild(img);
+  });
+
+  container.appendChild(fragment);
+}
 
 /* =====================================================================
    RENDER: FEATURED WORK PANELS
