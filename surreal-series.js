@@ -117,6 +117,7 @@ function renderStorySection(pieces, container) {
     const story   = sanitize(piece.story || '');
     const year    = sanitize(String(piece.year || ''));
     const mood    = sanitize(piece.mood || '');
+    const imgSrc  = piece.imageUrl || '';
     const accent  = /^#[0-9a-fA-F]{3,8}$/.test(piece.accentColor || '')
       ? piece.accentColor
       : pickFallbackAccent(piece.imageUrl);
@@ -125,6 +126,7 @@ function renderStorySection(pieces, container) {
       `  <span class="surreal-row__num" aria-label="Piece ${num} of ${sanitize(padNum(total))}">${num} / ${sanitize(padNum(total))}</span>`,
       `  <h2 class="surreal-row__title">${title}</h2>`,
       `  <div class="surreal-row__divider" aria-hidden="true"></div>`,
+      imgSrc ? `  <img class="surreal-row__img" src="${imgSrc}" alt="${title}" loading="lazy" decoding="async">` : '',
       preview ? `  <p class="surreal-row__preview">${preview}</p>` : '',
       story   ? `  <p class="surreal-row__story">${story}</p>`   : '',
       `  <span class="surreal-row__meta">${[year, mood].filter(Boolean).join(' · ')}</span>`,
@@ -246,6 +248,76 @@ function initHeroEntrance() {
 }
 
 /* ────────────────────────────────────────────────────────────────────
+   MOBILE ROW ANIMATIONS — per-row timeline reveal (≤ 1023px only)
+   ─────────────────────────────────────────────────────────────────── */
+function initMobileAnimations() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  const mm = gsap.matchMedia();
+
+  mm.add('(max-width: 1023px)', () => {
+    document.querySelectorAll('.surreal-row').forEach(row => {
+      const img     = row.querySelector('.surreal-row__img');
+      const num     = row.querySelector('.surreal-row__num');
+      const title   = row.querySelector('.surreal-row__title');
+      const divider = row.querySelector('.surreal-row__divider');
+      const textEls = Array.from(row.querySelectorAll(
+        '.surreal-row__preview, .surreal-row__story, .surreal-row__meta'
+      ));
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: row, start: 'top 88%', once: true }
+      });
+
+      // 1. Image — scale-fade reveal (pulls in from slight zoom)
+      if (img) {
+        tl.fromTo(img,
+          { autoAlpha: 0, scale: 1.06, transformOrigin: 'center center' },
+          { autoAlpha: 1, scale: 1,    duration: 1.1,  ease: 'power3.out' },
+          0
+        );
+      }
+
+      // 2. Piece number — slide from left
+      if (num) {
+        tl.fromTo(num,
+          { autoAlpha: 0, x: -14 },
+          { autoAlpha: 1, x: 0,   duration: 0.55, ease: 'power2.out' },
+          0.12
+        );
+      }
+
+      // 3. Title — slide up
+      if (title) {
+        tl.fromTo(title,
+          { autoAlpha: 0, y: 22 },
+          { autoAlpha: 1, y: 0,   duration: 0.7,  ease: 'power3.out' },
+          0.2
+        );
+      }
+
+      // 4. Divider — horizontal line wipe
+      if (divider) {
+        tl.fromTo(divider,
+          { scaleX: 0, transformOrigin: 'left center' },
+          { scaleX: 1, duration: 0.65, ease: 'expo.out' },
+          0.35
+        );
+      }
+
+      // 5. Body text & meta — cascade fade-up
+      if (textEls.length) {
+        tl.fromTo(textEls,
+          { autoAlpha: 0, y: 14 },
+          { autoAlpha: 1, y: 0, stagger: 0.09, duration: 0.6, ease: 'power2.out' },
+          0.42
+        );
+      }
+    });
+  });
+}
+
+/* ────────────────────────────────────────────────────────────────────
    SMOOTH SCROLL (Lenis — mirrors main.js pattern)
    ─────────────────────────────────────────────────────────────────── */
 function initLenis() {
@@ -335,6 +407,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!prefersReducedMotion) {
     initHeroEntrance();
     initStoryLayout(false);
+    initMobileAnimations();
   } else {
     // Reduced motion: static first image, no transitions
     initStoryLayout(true);

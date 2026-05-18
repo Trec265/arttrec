@@ -593,6 +593,68 @@ ul, ol {
   color: var(--color-text-dim);
 }
 
+/* ─── Hero: full-bleed image slideshow ─────────────────────────────── */
+.hero__images {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep hero content above the image layer */
+.hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__scroll {
+  position: absolute;
+  z-index: 1;
+}
+
+/* All slides stacked on top of each other, clipped to hero bounds */
+.hero__bg-slides {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero__bg-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.9) brightness(0.44);
+  opacity: 0;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+/* Dark overlay with warm gold accent tint */
+.hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 50% at 4% 96%, rgba(200, 168, 130, 0.22) 0%, transparent 62%),
+    /* Always-dark base: rgba(0,0,0,0.38) at center, heavier at edges */
+    radial-gradient(ellipse at 50% 50%, rgba(8, 8, 8, 0.38) 0%, rgba(8, 8, 8, 0.62) 75%, rgba(8, 8, 8, 0.92) 100%),
+    linear-gradient(to bottom, rgba(8, 8, 8, 0.48) 0%, rgba(8, 8, 8, 0.3) 26%, rgba(8, 8, 8, 0.3) 70%, rgba(8, 8, 8, 0.55) 100%);
+}
+
+/* Text-shadow insurance — legible over any background image, light or dark */
+.hero__name {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 4px 32px rgba(0, 0, 0, 0.6);
+}
+
+.hero__eyebrow,
+.hero__tagline,
+.hero__meta-label,
+.hero__meta-value,
+.hero__meta-year {
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+}
+
 /* Hero status bar — single-line summary at bottom of hero viewport */
 .hero__statusbar {
   position: absolute;
@@ -1462,6 +1524,24 @@ ul, ol {
   text-transform: uppercase;
   color: var(--color-text-dim);
   margin-bottom: var(--space-md);
+}
+
+/* Pulsing availability status dot */
+.contact__avail-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf74;
+  margin-right: 0.55em;
+  vertical-align: middle;
+  animation: pulse-dot 2.6s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 116, 0.55); }
+  55%       { box-shadow: 0 0 0 6px rgba(76, 175, 116, 0); }
 }
 
 .contact__services {
@@ -2478,7 +2558,19 @@ ul, ol {
   .work__header {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-sm);
   }
+
+  /* Scrollable filter row — no wrapping, hidden scrollbar */
+  .work__filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    width: 100%;
+    padding-bottom: 2px; /* prevent border clipping */
+  }
+  .work__filters::-webkit-scrollbar { display: none; }
 
   .contact__heading {
     font-size: var(--text-3xl);
@@ -3151,6 +3243,11 @@ ul, ol {
   background: rgba(255, 255, 255, 0.03);
 }
 
+/* ── Per-row inline image (hidden on desktop, revealed ≤ 1023px) ─────────── */
+.surreal-row__img {
+  display: none;
+}
+
 /* ── Responsive: stack on tablet/mobile ────────────────────────────────── */
 @media (max-width: 1023px) {
   .story-section {
@@ -3158,19 +3255,7 @@ ul, ol {
   }
 
   .sr-right-panel {
-    position: relative;
-    height: auto;
-    width: 100%;
-    max-width: 100%;
-    padding: 2rem 1.5rem 0;
-  }
-
-  .sr-photo-stage {
-    height: auto;
-    aspect-ratio: 3 / 4;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
+    display: none;
   }
 
   .surreal-list {
@@ -3183,6 +3268,20 @@ ul, ol {
     min-height: unset;
     padding: 4rem 0 6rem;
     opacity: 1;
+  }
+
+  .surreal-row__img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    max-height: 60vh;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.5),
+      0 20px 60px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -3268,4 +3367,68 @@ ul, ol {
 /* ── Reduced motion ─────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .ss-hero__scroll-line { animation: none; }
+}
+
+/* ── Mobile fixes ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .featured-panel        { padding-block: var(--space-lg); }
+  .statement__inner      { padding-inline: var(--space-lg); }
+  .work__header          { margin-bottom: var(--space-md); }
+  .works-grid            { padding-top: var(--space-sm); }
+  .surreal-row           { padding: 2rem 0 3rem; }
+  .sr-photo-stage        { max-height: 60vh; margin-bottom: 1rem; }
+  .work-card:active      { transform: scale(0.97); transition: transform 0.05s; }
+
+  /* Contact */
+  .contact              { padding-top: var(--space-lg); }
+  .contact__right       { gap: var(--space-md); }
+  .contact__heading-wrap { margin-bottom: var(--space-md); }
+  .contact__email       { font-size: clamp(1.1rem, 4.5vw, 1.5rem); display: block; }
+}
+
+@media (hover: hover) {
+  .work-card:hover { transform: translateY(-4px); transition: transform 0.2s ease; }
+}
+
+/* ── Landscape mobile fixes (phones rotated) ────────────────────────────── */
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Gallery strip: enough height to be usable */
+  .surreal-list-view,
+  .work.has-gallery .surreal-list-view {
+    height: 80vh;
+    min-height: 260px;
+  }
+
+  /* Surreal series rows: switch to 2-col grid, image left / text right */
+  .surreal-row {
+    display: grid;
+    grid-template-columns: clamp(160px, 32%, 260px) 1fr;
+    grid-template-areas:
+      "img num"
+      "img title"
+      "img divider"
+      "img preview"
+      "img story"
+      "img meta";
+    column-gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+    padding: 2.5rem 0;
+    min-height: unset;
+  }
+
+  .surreal-row__img {
+    grid-area: img;
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 3 / 4;
+    align-self: start;
+    margin-bottom: 0;
+  }
+
+  .surreal-row__num     { grid-area: num; }
+  .surreal-row__title   { grid-area: title; }
+  .surreal-row__divider { grid-area: divider; }
+  .surreal-row__preview { grid-area: preview; }
+  .surreal-row__story   { grid-area: story; }
+  .surreal-row__meta    { grid-area: meta; }
 }

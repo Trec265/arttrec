@@ -874,6 +874,72 @@ function initHeroAnimations() {
     duration: 0.5,
     ease: 'power2.out',
   }, '-=0.3');
+
+  // Full-bleed slideshow — Ken Burns zoom + crossfade rotation + scroll parallax
+  const heroSlides = document.querySelectorAll('.hero__bg-slide');
+  if (heroSlides.length) {
+    const SHOW = 4.5;  // seconds each slide is fully visible
+    const FADE = 1.6;  // crossfade duration
+    const ZOOM = 0.06; // Ken Burns: scale(1) → scale(1.06)
+
+    gsap.set(heroSlides, { opacity: 0, scale: 1 });
+
+    if (!prefersReducedMotion) {
+      let current = 0;
+
+      const advance = () => {
+        const cur = heroSlides[current];
+        const nextIdx = (current + 1) % heroSlides.length;
+        const nxt = heroSlides[nextIdx];
+
+        // Ken Burns: slowly zoom the active slide over its full display time
+        gsap.fromTo(cur,
+          { scale: 1 },
+          { scale: 1 + ZOOM, duration: SHOW + FADE, ease: 'none' }
+        );
+
+        // After SHOW seconds, crossfade to the next slide
+        gsap.delayedCall(SHOW, () => {
+          gsap.set(nxt, { opacity: 0, scale: 1 });
+          gsap.to(nxt, { opacity: 1, duration: FADE, ease: 'power2.inOut' });
+          gsap.to(cur, {
+            opacity: 0,
+            duration: FADE,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              current = nextIdx;
+              advance();
+            },
+          });
+        });
+      };
+
+      // Fade in first slide on load, then start the loop
+      gsap.to(heroSlides[0], {
+        opacity: 1,
+        duration: FADE,
+        ease: 'power2.inOut',
+        delay: 0.15,
+        onComplete: advance,
+      });
+
+      // Scroll parallax: slides drift upward slightly slower than the page
+      gsap.to('.hero__bg-slides', {
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+        y: -80,
+        ease: 'none',
+      });
+
+    } else {
+      // Reduced motion: just show the first slide
+      gsap.set(heroSlides[0], { opacity: 1 });
+    }
+  }
 }
 
 
@@ -1517,3 +1583,4 @@ function initSurrealHover() {
     _triggerSurrealHoverAtCursor = null;
   };
 }
+

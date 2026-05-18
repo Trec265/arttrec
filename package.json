@@ -5,6 +5,7 @@
     "deploy-studio": "cd studio && npm run deploy"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "sharp": "^0.34.5"
   },
   "dependencies": {
