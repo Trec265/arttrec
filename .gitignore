@@ -1,7 +1,7 @@
 
 
-#Ignore vscode AI rules
-.github\instructions\codacy.instructions.md
+# Ignore vscode AI rules
+.github/instructions/codacy.instructions.md
 
 # Dependencies
 node_modules/
@@ -32,3 +32,18 @@ test-results/
 .vscode/
 *.vsix
 
+# AI / Copilot skill definitions — local dev tooling, not project code
+.agents/
+
+# Backup / archive files
+_archive/
+
+# Original uncompressed source images — compressed versions are in assets/images/
+assets/images/_originals/
+
+# Debug screenshots committed by mistake
+assets/images/_compressed/debug-*
+assets/images/_compressed/statusbar-zoom.png
+
+# Temp files left by compress-images script
+assets/images/*.tmp
