@@ -9,9 +9,9 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-const INPUT_DIR = path.join(__dirname, 'assets/images');
-const BACKUP_DIR = path.join(__dirname, 'assets/images/_originals');
-const OUT_DIR = path.join(__dirname, 'assets/images/_compressed');
+const INPUT_DIR  = path.join(__dirname, '../assets/images');
+const BACKUP_DIR = path.join(__dirname, '../assets/images/_originals');
+const OUT_DIR    = path.join(__dirname, '../assets/images/_compressed');
 
 if (!fs.existsSync(BACKUP_DIR)) fs.mkdirSync(BACKUP_DIR, { recursive: true });
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });

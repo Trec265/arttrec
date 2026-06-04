@@ -70,13 +70,15 @@ test.describe('Homepage', () => {
   });
 
   test('contact heading should be a single h2 element', async ({ page }) => {
-    const contactHeadings = page.locator('.contact h2');
-    await expect(contactHeadings).toHaveCount(1);
+    await page.goto(`${BASE}/contact`);
+    const contactHeading = page.locator('.cp-hero__h1');
+    await expect(contactHeading).toHaveCount(1);
   });
 
   test('contact heading should have aria-label', async ({ page }) => {
-    const h2 = page.locator('.contact__heading-wrap');
-    await expect(h2).toHaveAttribute('aria-label');
+    await page.goto(`${BASE}/contact`);
+    const section = page.locator('section.cp-hero');
+    await expect(section).toHaveAttribute('aria-labelledby');
   });
 
   test('filter buttons should hide/show cards by category', async ({ page }) => {
@@ -129,6 +131,14 @@ test.describe('Case Study — Onira (Branding)', () => {
   });
 
   test('should render project title', async ({ page }) => {
+    // Wait for JS to populate the title (async after Sanity or JSON fetch)
+    await page.waitForFunction(
+      () => {
+        const el = document.getElementById('cs-project-title');
+        return el && el.textContent.trim().length > 0;
+      },
+      { timeout: 10000 }
+    );
     const title = page.locator('#cs-project-title');
     await expect(title).toBeVisible();
     const text = await title.textContent();

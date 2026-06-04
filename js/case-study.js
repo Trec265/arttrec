@@ -126,7 +126,12 @@ function initLenis() {
    ===================================================================== */
 async function fetchProjects() {
   if (window.SanityClient && window.SanityClient.isConfigured()) {
-    return window.SanityClient.fetchProjects();
+    try {
+      const sanityProjects = await window.SanityClient.fetchProjects();
+      if (sanityProjects && sanityProjects.length > 0) return sanityProjects;
+    } catch (_) {
+      // Sanity unavailable — fall through to local JSON
+    }
   }
   const res = await fetch('data/projects.json');
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

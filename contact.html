@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Cleanwell Mwalwanda</title>
+  <meta name="description" content="Get in touch with Cleanwell Mwalwanda — available for brand identity, art direction, and creative development." />
+  <meta name="theme-color" content="#080808" />
+  <link rel="icon" type="image/svg+xml" href="assets/url_at.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- styles in style.css -->
+</head>
+<body id="top">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <svg class="svg-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><filter id="grain-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/><feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blend"/><feComposite in="blend" in2="SourceGraphic" operator="in"/></filter></defs></svg>
+  <div class="gradient-orbs" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Email copied!</div>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav-logo" aria-label="Cleanwell Mwalwanda — home">
+        <svg width="120" height="30" viewBox="0 0 360 90" fill="none" aria-hidden="true"><text x="180" y="68" text-anchor="middle" font-family="'Pinyon Script', cursive" font-size="64" fill="currentColor">arttrec</text></svg>
+      </a>
+      <nav class="nav__links" aria-label="Main navigation">
+        <a href="index.html" class="nav__link">Work</a>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="contact.html" class="nav__link" aria-current="page">Contact</a>
+      </nav>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-mobile"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+    </div>
+    <nav class="nav__mobile" id="nav-mobile" aria-hidden="true" aria-label="Mobile navigation">
+      <a href="index.html" class="nav__mobile-link">Work</a>
+      <a href="about.html" class="nav__mobile-link">About</a>
+      <a href="contact.html" class="nav__mobile-link">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ── HERO ────────────────────────────────────────────────────── -->
+    <section class="cp cp-hero" aria-labelledby="contact-page-heading">
+      <div class="cp__inner">
+        <div class="cp-hero__top">
+          <span class="cp-hero__index">Contact</span>
+          <span class="cp-hero__status"><span class="cp-hero__status-dot" aria-hidden="true"></span>Available for work</span>
+        </div>
+        <h1 class="cp-hero__h1" id="contact-page-heading">Let's <em>work</em><br>together.</h1>
+        <div class="cp-hero__sub">
+          <p class="cp-hero__sub-text">I'm open to branding projects, art direction briefs, and creative web builds. Let's make something that holds.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EMAIL ───────────────────────────────────────────────────── -->
+    <div class="cp cp-email-block">
+      <div class="cp__inner">
+        <span class="cp-email-block__label">Direct line</span>
+        <button class="cp-email-block__link" id="emailBtn" aria-label="Copy email address cleanwelldesigns@gmail.com" data-email="cleanwelldesigns@gmail.com">
+          cleanwelldesigns@gmail.com
+          <span class="cp-email__icon" aria-hidden="true">Copy</span>
+        </button>
+        <p class="cp-email-block__hint">Click to copy &middot; or <a href="mailto:cleanwelldesigns@gmail.com" style="color:inherit;border-bottom:1px solid var(--color-border);">open mail client</a></p>
+      </div>
+    </div>
+
+    <!-- ── FORM ────────────────────────────────────────────────────── -->
+    <section class="cp cp-form-section" aria-label="Send a message">
+      <div class="cp__inner">
+        <p class="cp-form-section__hint">Fill out the form and I'll get back to you within 24–48 hours.</p>
+        <form class="cp-fields" id="contactForm" novalidate>
+
+          <div class="cp-field-row">
+            <div class="cp-field">
+              <label class="cp-field__label" for="f-name">Name</label>
+              <input class="cp-field__input" type="text" id="f-name" name="name" placeholder="Your name" autocomplete="name" required />
+            </div>
+            <div class="cp-field">
+              <label class="cp-field__label" for="f-email">Email</label>
+              <input class="cp-field__input" type="email" id="f-email" name="email" placeholder="your@email.com" autocomplete="email" required />
+            </div>
+          </div>
+
+          <fieldset class="cp-fieldset">
+            <legend class="cp-field__label">What type of project?</legend>
+            <div class="cp-type-group">
+              <label class="cp-type-option"><input type="radio" name="project_type" value="Brand Identity" /><span>Brand Identity</span></label>
+              <label class="cp-type-option"><input type="radio" name="project_type" value="Art Direction" /><span>Art Direction</span></label>
+              <label class="cp-type-option"><input type="radio" name="project_type" value="Packaging" /><span>Packaging</span></label>
+              <label class="cp-type-option"><input type="radio" name="project_type" value="Web Design" /><span>Web Design</span></label>
+              <label class="cp-type-option"><input type="radio" name="project_type" value="Other" /><span>Something else</span></label>
+            </div>
+          </fieldset>
+
+          <div class="cp-field">
+            <label class="cp-field__label" for="f-message">What are you building — and what's pushing you to act on it now?</label>
+            <textarea class="cp-field__textarea" id="f-message" name="message" placeholder="Your work, your audience, and what the project might involve." rows="5" required></textarea>
+          </div>
+
+          <div class="cp-field">
+            <label class="cp-field__label" for="f-timeframe">When are you hoping to get started?</label>
+            <div class="cp-select-wrap">
+              <select class="cp-field__select" id="f-timeframe" name="timeframe">
+                <option value="" disabled selected>Choose a timeframe</option>
+                <option value="ASAP">As soon as possible</option>
+                <option value="1-3 months">Within the next 1–3 months</option>
+                <option value="Later this year">Later this year</option>
+                <option value="Just exploring">Just exploring ideas for now</option>
+              </select>
+              <span class="cp-select-arrow" aria-hidden="true">↓</span>
+            </div>
+          </div>
+
+          <button type="submit" class="cp-submit" id="submitBtn">
+            <span id="submitLabel">Send message</span>
+            <span class="cp-submit__arrow" aria-hidden="true">&rarr;</span>
+          </button>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" style="padding-inline: var(--gutter);">
+    <div class="site-footer__left">
+      <p class="site-footer__copy">&copy; 2026 Cleanwell Mwalwanda</p>
+      <p class="site-footer__credit">Designed &amp; built by Cleanwell Mwalwanda</p>
+    </div>
+    <nav class="site-footer__socials" aria-label="Footer social links">
+      <a href="https://www.behance.net/cleanwemwalwan5" target="_blank" rel="noopener noreferrer" class="site-footer__social">Behance</a>
+      <a href="https://www.linkedin.com/in/cleanwell-mwalwanda-849b95266" target="_blank" rel="noopener noreferrer" class="site-footer__social">LinkedIn</a>
+      <a href="https://www.instagram.com/arttrecc/" target="_blank" rel="noopener noreferrer" class="site-footer__social">Instagram</a>
+    </nav>
+    <a href="#top" class="site-footer__top" aria-label="Back to top">&uarr; Top</a>
+  </footer>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/split-type.min.js"></script>
+  <script>
+    'use strict';
+    gsap.registerPlugin(ScrollTrigger);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lenis;
+    if (!reduced) {
+      lenis = new Lenis({ lerp: 0.1, duration: 1.2 });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((t) => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+    const nav = document.getElementById('nav');
+    ScrollTrigger.create({ start: 'top -60', onToggle: (s) => nav.classList.toggle('is-scrolled', s.isActive) });
+    const toggle = document.getElementById('nav-toggle');
+    const mobileNav = document.getElementById('nav-mobile');
+    if (toggle && mobileNav) {
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        mobileNav.setAttribute('aria-hidden', String(open));
+        mobileNav.classList.toggle('is-open', !open);
+      });
+    }
+
+    /* Copy email */
+    const emailBtn = document.getElementById('emailBtn');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    if (emailBtn) {
+      emailBtn.addEventListener('click', () => {
+        const email = emailBtn.dataset.email;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(email).then(showToast).catch(() => {
+            window.location.href = 'mailto:' + email;
+          });
+        } else {
+          window.location.href = 'mailto:' + email;
+        }
+      });
+    }
+    function showToast() {
+      if (!toast) return;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2500);
+    }
+
+    /* Form — Formspree submission
+       1. Sign up at https://formspree.io
+       2. Create a new form → copy the form ID (e.g. "xpzgkwqr")
+       3. Replace YOUR_FORM_ID below with that ID
+    */
+    const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitLabel = document.getElementById('submitLabel');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        if (FORMSPREE_ID === 'YOUR_FORM_ID') {
+          alert('Form not yet connected. Replace YOUR_FORM_ID in contact.html with your Formspree form ID.');
+          return;
+        }
+        submitBtn.disabled = true;
+        submitLabel.textContent = 'Sending…';
+        try {
+          const data = Object.fromEntries(new FormData(form));
+          const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (res.ok) {
+            submitLabel.textContent = 'Sent!';
+            form.reset();
+            setTimeout(() => { submitLabel.textContent = 'Send message'; submitBtn.disabled = false; }, 3000);
+          } else {
+            const json = await res.json().catch(() => ({}));
+            throw new Error(json.error || 'Submission failed');
+          }
+        } catch (err) {
+          submitLabel.textContent = 'Failed — try again';
+          submitBtn.disabled = false;
+          console.error('Form error:', err);
+        }
+      });
+    }
+
+    /* Animations */
+    window.addEventListener('DOMContentLoaded', () => {
+      if (reduced) return;
+
+      // ── Page entrance ────────────────────────────────────────────────
+      gsap.from('.nav__inner', { y: -24, opacity: 0, duration: 0.7, ease: 'power3.out', delay: 0.05 });
+      gsap.from('.cp-hero__top > *', { y: -10, opacity: 0, duration: 0.5, ease: 'power2.out', stagger: 0.07, delay: 0.22 });
+
+      // ── Hero heading — word clip reveal ──────────────────────────────
+      const h1 = document.querySelector('.cp-hero__h1');
+      if (h1) {
+        const split = new SplitType(h1, { types: 'lines,words' });
+        split.lines.forEach(l => { l.style.overflow = 'hidden'; l.style.display = 'block'; });
+        gsap.from(split.words, {
+          y: '108%', duration: 1.1, ease: 'power4.out',
+          stagger: { amount: 0.45 }, delay: 0.3
+        });
+      }
+
+      // Hero subtitle strip
+      gsap.from('.cp-hero__sub > *', {
+        y: 12, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06, delay: 0.85
+      });
+
+      // ── Email block — staggered timeline ─────────────────────────────
+      const emailBlock = document.querySelector('.cp-email-block');
+      if (emailBlock) {
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: emailBlock, start: 'top 88%', once: true }
+        });
+        tl.from('.cp-email-block__label', { opacity: 0, y: 10, duration: 0.45, ease: 'power2.out' }, 0)
+          .from('.cp-email-block__link', { opacity: 0, y: 28, duration: 0.9, ease: 'power4.out' }, 0.1)
+          .from('.cp-email-block__hint', { opacity: 0, duration: 0.4, ease: 'power2.out' }, 0.55);
+      }
+
+      // ── Form section — hint fades in, groups stagger up ───────────────
+      const formSection = document.querySelector('.cp-form-section');
+      if (formSection) {
+        const hint = formSection.querySelector('.cp-form-section__hint');
+        const groups = formSection.querySelectorAll('.cp-field-row, .cp-fieldset, .cp-fields > .cp-field');
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: formSection, start: 'top 88%', once: true }
+        });
+        if (hint) tl.from(hint, { opacity: 0, y: 12, duration: 0.5, ease: 'power2.out' }, 0);
+        if (groups.length) tl.from(groups, { opacity: 0, y: 18, duration: 0.55, ease: 'power3.out', stagger: 0.1 }, 0.15);
+      }
+
+      // ── Magnetic email button ─────────────────────────────────────────
+      if (emailBtn) {
+        emailBtn.addEventListener('mousemove', (e) => {
+          const r = emailBtn.getBoundingClientRect();
+          gsap.to(emailBtn, {
+            x: (e.clientX - r.left - r.width / 2) * 0.07,
+            y: (e.clientY - r.top - r.height / 2) * 0.12,
+            duration: 0.5, ease: 'power2.out'
+          });
+        });
+        emailBtn.addEventListener('mouseleave', () => {
+          gsap.to(emailBtn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)' });
+        });
+      }
+    });
+
+    window.addEventListener('beforeunload', () => { ScrollTrigger.killAll(); if (lenis) lenis.destroy(); });
+  </script>
+</body>
+</html>
