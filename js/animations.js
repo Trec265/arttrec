@@ -10,28 +10,17 @@
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* -------------------------------------------------------------------
-     PAGE TRANSITION — curtain wipe on internal link clicks
-     Uses .page-curtain scaleY from bottom → top on exit, top → bottom
-     on load. CSS handles initial state (scaleY:0, origin:bottom).
+     PAGE TRANSITION — internal link clicks route through navigateTo()
+     The curtain itself (entry reveal, exit cover, reduced-motion and
+     first-visit-only skip logic) is owned by page-transition.js. This
+     just wires up plain <a> links — e.g. the nav bar — that don't call
+     window.navigateTo() themselves, so they get the same curtain and
+     skip-after-first-visit behavior as the JS-driven links.
   ------------------------------------------------------------------- */
   function initPageTransition() {
     const curtain = document.getElementById('page-curtain');
     if (!curtain) return;
 
-    /* Entry: reveal by wiping curtain up (scaleY 1 → 0) after load */
-    if (prefersReduced.matches) return;
-
-    gsap.set(curtain, { scaleY: 0, transformOrigin: 'top' });
-
-    const inTl = gsap.timeline({ delay: 0.05 });
-    inTl.from(curtain, {
-      scaleY: 1,
-      duration: 0.65,
-      ease: 'power3.inOut',
-      transformOrigin: 'top',
-    });
-
-    /* Exit: attach to all internal links */
     document.querySelectorAll('a[href]').forEach(link => {
       const href = link.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http')) return;
@@ -40,13 +29,11 @@
       link.addEventListener('click', function (e) {
         e.preventDefault();
         const dest = this.href;
-        gsap.set(curtain, { scaleY: 0, transformOrigin: 'bottom' });
-        gsap.to(curtain, {
-          scaleY: 1,
-          duration: 0.55,
-          ease: 'power3.inOut',
-          onComplete: () => { window.location.href = dest; },
-        });
+        if (typeof window.navigateTo === 'function') {
+          window.navigateTo(dest);
+        } else {
+          window.location.href = dest;
+        }
       });
     });
   }
@@ -68,32 +55,6 @@
         countEl.textContent = Math.round(proxy.val);
       },
     });
-  }
-
-  /* -------------------------------------------------------------------
-     WORK CARD HOVER — scale 1 → 1.05 on .project-card__img
-     Attached via delegation on the grid for dynamically-rendered cards.
-  ------------------------------------------------------------------- */
-  function initWorkCardHover() {
-    if (prefersReduced.matches) return;
-
-    const grid = document.getElementById('projects-grid');
-    if (!grid) return;
-
-    grid.addEventListener('mouseenter', handleCardEnter, true);
-    grid.addEventListener('mouseleave', handleCardLeave, true);
-
-    function handleCardEnter(e) {
-      const img = e.target.closest('.project-card__link')?.querySelector('.project-card__img');
-      if (!img) return;
-      gsap.to(img, { scale: 1.05, duration: 0.45, ease: 'power2.out' });
-    }
-
-    function handleCardLeave(e) {
-      const img = e.target.closest('.project-card__link')?.querySelector('.project-card__img');
-      if (!img) return;
-      gsap.to(img, { scale: 1, duration: 0.45, ease: 'power2.out' });
-    }
   }
 
   /* -------------------------------------------------------------------
@@ -131,32 +92,38 @@
   }
 
   /* -------------------------------------------------------------------
-     SCROLL-REVEAL — generic fade+slide for utility class .reveal
-     Replaces any duplicate scroll reveal setup that may exist in main.js.
-     Cards rendered after DOMContentLoaded are handled via initReveal().
+     SHARED SCROLL REVEAL — ScrollTrigger.batch wrapper for dynamically
+     rendered content (project cards, etc).
+     Exposed on window.PortfolioReveal so main.js / case-study.js can
+     call it *after* they've inserted DOM content — a plain init()-time
+     querySelectorAll would run before that content exists, since cards
+     are rendered async (Sanity/JSON fetch) well after DOMContentLoaded.
   ------------------------------------------------------------------- */
-  function initReveal() {
+  function batchReveal(selector, { start = 'top 92%', stagger = 0.04 } = {}) {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    if (prefersReduced.matches) return;
 
-    document.querySelectorAll('.reveal').forEach(el => {
-      gsap.fromTo(
-        el,
-        { autoAlpha: 0, y: 30 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.7,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 88%',
-            once: true,
-          },
-        }
-      );
+    const els = document.querySelectorAll(selector);
+    if (!els.length) return;
+
+    if (prefersReduced.matches) {
+      gsap.set(els, { opacity: 1, y: 0 });
+      return;
+    }
+
+    ScrollTrigger.batch(els, {
+      start,
+      once: true,
+      onEnter: batch => gsap.to(batch, {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        stagger,
+        ease: 'power3.out',
+      }),
     });
   }
+
+  window.PortfolioReveal = { batchReveal };
 
   /* -------------------------------------------------------------------
      BOOTSTRAP
@@ -166,9 +133,7 @@
 
     initPageTransition();
     initLoaderCounter();
-    initWorkCardHover();
     initGalleryCursor();
-    initReveal();
   }
 
   if (document.readyState === 'loading') {

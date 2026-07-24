@@ -27,6 +27,7 @@ const prefersReducedMotion = window.matchMedia(
 
 /* ─── Bootstrap ──────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', async () => {
+  document.body.classList.add('is-case-study');
   if (!prefersReducedMotion) {
     document.body.classList.add('js-ready');
   }
@@ -67,15 +68,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (ogDesc) ogDesc.setAttribute('content', description);
 
     // OG image — use heroImage (absolute CDN URL or resolved local path)
+    const imgUrl = project.heroImage
+      ? (project.heroImage.startsWith('http')
+          ? project.heroImage
+          : `${window.location.origin}/${project.heroImage}`)
+      : '';
     const ogImg = document.getElementById('og-image');
-    if (ogImg && project.heroImage) {
-      const imgUrl = project.heroImage.startsWith('http')
-        ? project.heroImage
-        : `${window.location.origin}/${project.heroImage}`;
-      ogImg.setAttribute('content', imgUrl);
-    }
+    if (ogImg && imgUrl) ogImg.setAttribute('content', imgUrl);
     const ogUrl = document.getElementById('og-url');
     if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+
+    // Twitter/X card tags — same values as their OG counterparts above.
+    // twitter:card already exists as a static tag in case-study.html;
+    // title/description/image have no static tag to reuse, so create
+    // them fresh and append to <head>, same as the canonical link below.
+    function setTwitterMeta(name, content) {
+      if (!content) return;
+      let el = document.querySelector(`meta[name="${name}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('name', name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    }
+    setTwitterMeta('twitter:title', document.title);
+    setTwitterMeta('twitter:description', description);
+    setTwitterMeta('twitter:image', imgUrl);
 
     // Canonical URL for this case study
     let canonicalEl = document.querySelector('link[rel="canonical"]');
@@ -85,6 +104,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.head.appendChild(canonicalEl);
     }
     canonicalEl.href = window.location.href.split('?')[0] + '?project=' + slug;
+
+    // Structured data (JSON-LD) — CreativeWork schema for this project.
+    // Reuses the same project data object as the OG/Twitter tags above,
+    // and the canonical URL/image just resolved, so nothing drifts out
+    // of sync with the tags already set.
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CreativeWork',
+      name: project.title || '',
+      creator: { '@type': 'Person', name: 'Cleanwell Mwalwanda' },
+      description,
+      url: canonicalEl.href,
+      image: imgUrl,
+      dateCreated: project.year || '',
+      keywords: (project.tags || []).join(', '),
+    });
+    document.head.appendChild(schemaScript);
 
     // Render all content into the DOM
     renderCaseStudy(project, nextProject);
@@ -123,19 +161,51 @@ function initLenis() {
    DATA
    Tries Sanity CMS first; falls back to local data/projects.json.
    Configure SANITY_PROJECT_ID in sanity-client.js to enable Sanity.
+
+   Sanity is merged with local data (not simply preferred over it) because
+   the live dataset can lag behind data/projects.json — a project that
+   exists locally but hasn't been migrated/created in Sanity yet must
+   still resolve by its documented slug, otherwise this page silently
+   redirects home for a perfectly valid ?project=.
+
+   Matching is done on normalized *title*, not slug: some projects exist
+   in both sources under different slugs (Sanity auto-generates slugs
+   from the full title), so comparing slugs directly would treat an
+   already-present project as "missing" and duplicate it.
    ===================================================================== */
+function normalizeTitleForMatch(title) {
+  return (title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function isProjectAlreadyPresent(project, existingProjects) {
+  const target = normalizeTitleForMatch(project.title);
+  if (!target) return false;
+  return existingProjects.some(p => {
+    const candidate = normalizeTitleForMatch(p.title);
+    return candidate === target || candidate.startsWith(target) || target.startsWith(candidate);
+  });
+}
+
 async function fetchProjects() {
+  let sanityProjects = [];
   if (window.SanityClient && window.SanityClient.isConfigured()) {
     try {
-      const sanityProjects = await window.SanityClient.fetchProjects();
-      if (sanityProjects && sanityProjects.length > 0) return sanityProjects;
+      sanityProjects = await window.SanityClient.fetchProjects();
     } catch (_) {
-      // Sanity unavailable — fall through to local JSON
+      // Sanity unavailable — local JSON below covers everything
+      sanityProjects = [];
     }
   }
-  const res = await fetch('data/projects.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+
+  const local = await fetch('data/projects.json').then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  });
+
+  if (!sanityProjects.length) return local;
+
+  const missingFromSanity = local.filter(p => !isProjectAlreadyPresent(p, sanityProjects));
+  return [...sanityProjects, ...missingFromSanity];
 }
 
 function redirectHome() {
@@ -170,10 +240,21 @@ function initNavToggle() {
 function initNavScroll() {
   const nav = document.getElementById('nav');
   if (!nav) return;
+  // .cs-nav__title's fade-in relies on the compound selector
+  // `.is-case-study.is-scrolled .cs-nav__title` — that requires both
+  // classes on the same element. `is-case-study` lives on <body>, so
+  // `is-scrolled` needs to be mirrored there too, not just on #nav
+  // (which still needs its own `is-scrolled` for its background style).
   ScrollTrigger.create({
     start: 'top -80px',
-    onEnter: () => nav.classList.add('is-scrolled'),
-    onLeaveBack: () => nav.classList.remove('is-scrolled'),
+    onEnter: () => {
+      nav.classList.add('is-scrolled');
+      document.body.classList.add('is-scrolled');
+    },
+    onLeaveBack: () => {
+      nav.classList.remove('is-scrolled');
+      document.body.classList.remove('is-scrolled');
+    },
   });
 }
 

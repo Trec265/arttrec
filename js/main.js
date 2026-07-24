@@ -57,10 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Safety timeout — never leave user stuck on loader
   const loaderTimeout = setTimeout(() => skipLoader(), 5000);
 
-  // Kick off about fetch in parallel — will be applied before animations start
-  const aboutFetchPromise = fetchAbout().catch(() => null);
-
-  // Fetch and render projects — Sanity with 4s timeout, falls back to local JSON
+  // Fetch and render projects — Sanity merged with local JSON fallback
   try {
     let projects;
     try {
@@ -69,17 +66,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Sanity unavailable or timed out — load local JSON directly
       const local = await fetch('data/projects.json').then(r => r.json());
       projects = local || [];
-    }
-
-    // Sanity only has surrealPiece docs — not a project doc for the series.
-    // Always ensure surreal-series appears in the grid by merging from local JSON.
-    const hasSurreal = projects.some(p => normalizeCategory(p.category) === 'Surreal Art');
-    if (!hasSurreal) {
-      try {
-        const local = await fetch('data/projects.json').then(r => r.json());
-        const entry = local.find(p => p.slug === 'surreal-series');
-        if (entry) projects.push(entry);
-      } catch (_) { /* local JSON unavailable — skip */ }
     }
 
     if (!projects.length) {
@@ -110,12 +96,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Apply about data before animations start so SplitType picks up the correct text
-  const aboutData = await aboutFetchPromise;
-  applyAboutData(aboutData);
-
-  // MAD-style cinematic entrance — loader panel wipes off screen, then hero reveals
-  if (!prefersReducedMotion) {
+  // MAD-style cinematic entrance — loader panel wipes off screen, then hero reveals.
+  // Skipped on repeat visits within the same session (see page-transition.js),
+  // so refreshing or navigating back doesn't replay the intro every time.
+  if (!prefersReducedMotion && !window.__arttrecHasVisited) {
     playLoader(() => {
       clearTimeout(loaderTimeout);
       revealPage(() => {
@@ -172,97 +156,49 @@ function initLenis() {
 
 /* =====================================================================
    DATA FETCH
-   Tries Sanity CMS first; falls back to local data/projects.json.
+   Tries Sanity CMS first, merged with local data/projects.json.
    Configure SANITY_PROJECT_ID in sanity-client.js to enable Sanity.
+
+   Sanity is merged with local data (not simply preferred over it) because
+   the live dataset can lag behind data/projects.json — e.g. Sanity only
+   has surrealPiece docs, never a project doc for the series itself, and
+   other projects may not be migrated yet. Any local project not already
+   represented in the Sanity result is appended so it still appears.
+
+   Matching is done on normalized *title*, not slug: some projects exist
+   in both sources under different slugs (Sanity auto-generates slugs
+   from the full title, e.g. "posters-and-visual-design-photoshop-and-
+   illustrator" vs the clean local slug "posters") — comparing slugs
+   directly would treat the same project as "missing" and duplicate it.
    ===================================================================== */
+function normalizeTitleForMatch(title) {
+  return (title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function isProjectAlreadyPresent(project, existingProjects) {
+  const target = normalizeTitleForMatch(project.title);
+  if (!target) return false;
+  return existingProjects.some(p => {
+    const candidate = normalizeTitleForMatch(p.title);
+    return candidate === target || candidate.startsWith(target) || target.startsWith(candidate);
+  });
+}
+
 async function fetchProjects() {
+  let sanityProjects = [];
   if (window.SanityClient && window.SanityClient.isConfigured()) {
-    return window.SanityClient.fetchProjects();
-  }
-  const res = await fetch('data/projects.json');
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-}
-
-/**
- * Fetch the About singleton from Sanity.
- * Returns null if Sanity is unconfigured or the document doesn't exist yet.
- */
-async function fetchAbout() {
-  if (window.SanityClient && window.SanityClient.isConfigured()) {
-    return window.SanityClient.fetchAbout();
-  }
-  return null;
-}
-
-/**
- * Apply about data returned from Sanity to the #about section DOM.
- * All text is set via textContent / node creation to prevent XSS.
- * Falls back gracefully — any missing field is simply skipped.
- */
-function applyAboutData(data) {
-  if (!data) return;
-
-  /* -- Heading -------------------------------------------------------- */
-  const headingEl = document.querySelector('.about__heading');
-  if (headingEl) {
-    if (data.heading) {
-      headingEl.textContent = data.heading;
-      if (data.headingAccent) {
-        headingEl.appendChild(document.createElement('br'));
-        const em = document.createElement('em');
-        em.textContent = data.headingAccent;
-        headingEl.appendChild(em);
-      }
-    }
+    sanityProjects = await window.SanityClient.fetchProjects();
   }
 
-  /* -- Bio paragraphs ------------------------------------------------- */
-  const textEl = document.querySelector('.about__text');
-  if (textEl && Array.isArray(data.bio) && data.bio.length) {
-    textEl.querySelectorAll('.about__para').forEach(p => p.remove());
-    const disciplinesEl = textEl.querySelector('.about__disciplines');
-    data.bio.forEach(text => {
-      const p = document.createElement('p');
-      p.className = 'about__para';
-      p.textContent = text;
-      textEl.insertBefore(p, disciplinesEl);
-    });
+  if (!sanityProjects.length) {
+    const res = await fetch('data/projects.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
   }
 
-  /* -- Disciplines ---------------------------------------------------- */
-  const disciplinesEl = document.querySelector('.about__disciplines');
-  if (disciplinesEl && Array.isArray(data.disciplines) && data.disciplines.length) {
-    disciplinesEl.textContent = '';
-    data.disciplines.forEach(d => {
-      const row   = document.createElement('div');
-      row.className = 'about__discipline';
-      const label = document.createElement('span');
-      label.className = 'about__discipline-label';
-      label.textContent = d.label || '';
-      const items = document.createElement('span');
-      items.className = 'about__discipline-items';
-      items.textContent = d.items || '';
-      row.appendChild(label);
-      row.appendChild(items);
-      disciplinesEl.appendChild(row);
-    });
-  }
-
-  /* -- Portrait image ------------------------------------------------- */
-  if (data.portraitImage) {
-    const img = document.querySelector('.about__portrait-img');
-    if (img) {
-      img.src = data.portraitImage;
-      if (data.portraitAlt) img.alt = data.portraitAlt;
-    }
-  }
-
-  /* -- Portrait caption ----------------------------------------------- */
-  if (data.portraitCaption) {
-    const caption = document.querySelector('.about__portrait-caption');
-    if (caption) caption.textContent = data.portraitCaption;
-  }
+  const local = await fetch('data/projects.json').then(r => r.json()).catch(() => []);
+  const missingFromSanity = local.filter(p => !isProjectAlreadyPresent(p, sanityProjects));
+  return [...sanityProjects, ...missingFromSanity];
 }
 
 /**
@@ -1015,22 +951,7 @@ function initScrollAnimations() {
   }
 
   /* -- Work cards: stagger up on enter --------------------------------- */
-  const workRows = document.querySelectorAll('.work-card');
-  if (workRows.length) {
-    ScrollTrigger.batch(workRows, {
-      start: 'top 92%',
-      once: true,
-      onEnter: batch => {
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          stagger: 0.04,
-          ease: 'power3.out',
-        });
-      },
-    });
-  }
+  window.PortfolioReveal.batchReveal('.work-card');
 
   /* -- Work section heading ------------------------------------------- */
   animateRevealUp('.work__heading', { trigger: '.work__header' });

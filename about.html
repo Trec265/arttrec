@@ -4,219 +4,738 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Cleanwell Mwalwanda</title>
-  <meta name="description" content="About Cleanwell Mwalwanda — graphic designer, surreal digital artist, and computer science graduate." />
-  <meta name="theme-color" content="#080808" />
-  <link rel="icon" type="image/svg+xml" href="assets/url_at.svg" />
+  <meta name="description" content="About Cleanwell Mwalwanda — graphic designer and surreal digital artist working at the intersection of brand identity, art direction, and dream logic." />
+  <meta name="theme-color" content="#0c0b09" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About — Cleanwell Mwalwanda" />
+  <meta property="og:description" content="Graphic designer and surreal digital artist. Systems that mean something." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://arttrec.com/about" />
+  <meta property="og:image" content="https://arttrec.com/assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About — Cleanwell Mwalwanda" />
+  <meta name="twitter:description" content="Graphic designer and surreal digital artist. Systems that mean something." />
+  <meta name="twitter:image" content="https://arttrec.com/assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg" />
+  <link rel="canonical" href="https://arttrec.com/about" />
+
+  <!-- Fonts: Cormorant Garamond (display) + Inter (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="css/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Cleanwell Mwalwanda",
+    "url": "https://arttrec.com/about",
+    "jobTitle": "Graphic Designer & Surreal Digital Artist",
+    "worksFor": { "@type": "Organization", "name": "arttrec", "url": "https://arttrec.com" },
+    "sameAs": [
+      "https://www.behance.net/cleanwemwalwan5",
+      "https://www.linkedin.com/in/cleanwell-mwalwanda-849b95266",
+      "https://www.instagram.com/arttrecc/"
+    ]
+  }
+  </script>
+
+  <!-- ─── PAGE-SCOPED STYLES ──────────────────────────────────────────
+       New tokens/components for the About & Contact "Marsea" editorial
+       redesign. Nav, footer and ambient layers (grain/orbs) are styled
+       entirely by css/style.css — only new page content lives here. -->
+  <style>
+    :root {
+      --bg: #0c0b09;
+      --bg-warm: #141210;
+      --bg-card: #1a1816;
+      --fg: #ede8e0;
+      --fg-muted: #9e958a;
+      --fg-dim: #8a8378; /* was #5c5650 — failed WCAG AA (2.72:1) on --bg; this is ~5.24:1 */
+      --accent: #c8a882;
+      --accent-soft: rgba(200, 168, 130, 0.12);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', 'Helvetica Neue', sans-serif;
+      --script: 'Pinyon Script', cursive;
+      --pad-section: clamp(100px, 14vw, 180px);
+      --pad-side: clamp(28px, 6vw, 100px);
+      --hairline: rgba(255, 255, 255, 0.06);
+      --mrs-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.pg-marsea { background-color: var(--bg); color: var(--fg); }
+
+    /* ── Shared: numbered section marker ─────────────────────────── */
+    .mrs-num {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-family: var(--serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .mrs-num::after {
+      content: '';
+      display: block;
+      width: clamp(48px, 6vw, 96px);
+      height: 1px;
+      background: var(--hairline);
+    }
+    .mrs-num--center {
+      justify-content: center;
+      margin-inline: auto;
+      max-width: 480px;
+    }
+    .mrs-num--center::before {
+      content: '';
+      display: block;
+      flex: 1 1 auto;
+      height: 1px;
+      background: var(--hairline);
+    }
+    .mrs-num--center::after { flex: 1 1 auto; width: auto; }
+
+    /* ── Shared: section rhythm ───────────────────────────────────── */
+    .mrs-section { padding: var(--pad-section) var(--pad-side); }
+    .mrs-section__inner { max-width: 1400px; margin-inline: auto; }
+    .mrs-band--warm { background-color: var(--bg-warm); }
+
+    /* ── Shared: intro metadata strip ─────────────────────────────── */
+    .mrs-intro-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 2.5rem;
+      padding: 1.15rem var(--pad-side);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .mrs-intro-strip__item {
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+    .mrs-intro-strip__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7fc98a;
+      box-shadow: 0 0 0 0 rgba(127, 201, 138, 0.5);
+      animation: mrsPulse 2.2s ease-out infinite;
+    }
+    @keyframes mrsPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(127, 201, 138, 0.45); }
+      70%  { box-shadow: 0 0 0 8px rgba(127, 201, 138, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(127, 201, 138, 0); }
+    }
+
+    /* ── Shared: decorative monogram ──────────────────────────────── */
+    .mrs-monogram {
+      font-family: var(--script);
+      color: var(--accent);
+      opacity: 0.06;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .mrs-monogram--center {
+      display: block;
+      text-align: center;
+      font-size: clamp(5rem, 14vw, 11rem);
+      margin-top: clamp(2rem, 5vw, 4rem);
+    }
+
+    /* ── Shared: marquee CTA (GSAP-driven) ────────────────────────── */
+    .mrs-marquee {
+      overflow: hidden;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding-block: clamp(1.5rem, 4vw, 2.75rem);
+      background-color: var(--bg);
+    }
+    .mrs-marquee__track {
+      display: flex;
+      width: max-content;
+      will-change: transform;
+    }
+    .mrs-marquee__group { display: flex; align-items: center; }
+    .mrs-marquee__item {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.75rem, 6vw, 4rem);
+      color: var(--fg);
+      white-space: nowrap;
+      padding-inline: 1.25rem;
+      transition: color 0.3s ease;
+    }
+    .mrs-marquee__item:hover { color: var(--accent); }
+    .mrs-marquee__sep {
+      color: var(--accent);
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      padding-inline: 0.5rem;
+    }
+
+    /* =================================================================
+       ABOUT HERO
+       ================================================================= */
+    .ab-hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      padding: clamp(120px, 16vw, 180px) var(--pad-side) clamp(64px, 9vw, 100px);
+      overflow: hidden;
+    }
+    .ab-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 65% 55% at 50% 105%, var(--accent-soft) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ab-hero__inner {
+      position: relative;
+      max-width: 1400px;
+      margin-inline: auto;
+      width: 100%;
+    }
+    .ab-hero__heading {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.25rem, 6.5vw, 5.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      max-width: 17ch;
+      color: var(--fg);
+    }
+    .ab-hero__heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* =================================================================
+       BIO — 02
+       ================================================================= */
+    .ab-bio__inner {
+      max-width: 1400px;
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 8rem);
+      align-items: start;
+    }
+    .ab-bio__title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      margin-bottom: 1.75rem;
+      color: var(--fg);
+    }
+    .ab-bio__p {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--fg-muted);
+      max-width: 46ch;
+    }
+    .ab-bio__p + .ab-bio__p { margin-top: 1.25rem; }
+    .ab-bio__p strong {
+      color: var(--fg);
+      font-weight: 400;
+    }
+    .ab-bio__facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--hairline);
+      border: 1px solid var(--hairline);
+      margin-top: clamp(2rem, 8vw, 6rem);
+    }
+    .ab-bio__fact {
+      background: var(--bg);
+      padding: 1.75rem 1.5rem;
+    }
+    .ab-bio__fact dt {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      margin-bottom: 0.6rem;
+    }
+    .ab-bio__fact dd {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      color: var(--fg);
+    }
+
+    /* =================================================================
+       PHILOSOPHY — 03
+       ================================================================= */
+    .ab-phil__inner {
+      max-width: 800px;
+      margin-inline: auto;
+      text-align: center;
+    }
+    .ab-phil__quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+      line-height: 1.5;
+      color: var(--fg);
+    }
+
+    /* =================================================================
+       JOURNEY — 04
+       ================================================================= */
+    .ab-journey__header {
+      max-width: 1400px;
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+      align-items: end;
+    }
+    .ab-journey__heading {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      color: var(--fg);
+    }
+    .ab-journey__intro {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--fg-muted);
+    }
+    .ab-journey__list { max-width: 1400px; margin-inline: auto; }
+    .ab-journey__row {
+      position: relative;
+      display: grid;
+      grid-template-columns: clamp(64px, 8vw, 110px) 1fr 2fr;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      align-items: baseline;
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--hairline);
+      overflow: hidden;
+    }
+    .ab-journey__row:last-child { border-bottom: 1px solid var(--hairline); }
+    .ab-journey__row::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-soft);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.55s var(--mrs-ease);
+      z-index: 0;
+    }
+    .ab-journey__row:hover::before,
+    .ab-journey__row:focus-within::before { transform: scaleX(1); }
+    .ab-journey__row > * { position: relative; z-index: 1; }
+    .ab-journey__year {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--fg-dim);
+    }
+    .ab-journey__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: var(--fg);
+    }
+    .ab-journey__desc {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1rem, 1.4vw, 1.1rem);
+      color: var(--fg-muted);
+    }
+
+    /* =================================================================
+       SERVICES — 05
+       ================================================================= */
+    .ab-services__header {
+      display: flex;
+      flex-direction: column;
+      max-width: 1400px;
+      margin-inline: auto;
+      margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    }
+    .ab-services__heading {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      color: var(--fg);
+    }
+    .ab-services__scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      margin-inline: calc(var(--pad-side) * -1);
+      padding-inline: var(--pad-side);
+    }
+    .ab-services__scroll::-webkit-scrollbar { display: none; }
+    .ab-services__track {
+      display: flex;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      width: max-content;
+    }
+    .ab-service-card {
+      position: relative;
+      flex: 0 0 clamp(260px, 28vw, 340px);
+      background: var(--bg-card);
+      border: 1px solid var(--hairline);
+      padding: clamp(2rem, 3.5vw, 2.75rem) clamp(1.5rem, 3vw, 2rem);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .ab-service-card__num {
+      position: absolute;
+      top: 0;
+      right: 0.75rem;
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(4.5rem, 9vw, 6.5rem);
+      line-height: 1;
+      color: var(--fg);
+      opacity: 0.05;
+      pointer-events: none;
+    }
+    .ab-service-card__label {
+      position: relative;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      margin-bottom: 1.5rem;
+    }
+    .ab-service-card__title {
+      position: relative;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+      color: var(--fg);
+      margin-bottom: 0.85rem;
+    }
+    .ab-service-card__desc {
+      position: relative;
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--fg-muted);
+      flex-grow: 1;
+    }
+    .ab-service-card__line {
+      position: relative;
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+      margin-top: 1.75rem;
+      transition: width 0.45s var(--mrs-ease);
+    }
+    .ab-service-card:hover .ab-service-card__line,
+    .ab-service-card:focus-within .ab-service-card__line { width: 100%; }
+    .ab-services__hint {
+      max-width: 1400px;
+      margin-inline: auto;
+      margin-top: 1.5rem;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+
+    /* =================================================================
+       ANIMATION INITIAL STATES — mirrors .js-ready convention in style.css
+       ================================================================= */
+    .js-ready .mrs-num,
+    .js-ready .mrs-intro-strip__item,
+    .js-ready .ab-hero__heading,
+    .js-ready .ab-bio__title,
+    .js-ready .ab-bio__p,
+    .js-ready .ab-bio__fact,
+    .js-ready .ab-phil__quote,
+    .js-ready .mrs-monogram--center,
+    .js-ready .ab-journey__heading,
+    .js-ready .ab-journey__intro,
+    .js-ready .ab-journey__row,
+    .js-ready .ab-services__heading,
+    .js-ready .ab-service-card,
+    .js-ready .ab-services__hint {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    /* =================================================================
+       RESPONSIVE
+       ================================================================= */
+    @media (max-width: 900px) {
+      .ab-bio__inner,
+      .ab-journey__header { grid-template-columns: 1fr; }
+      .ab-bio__facts { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .ab-journey__row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .mrs-intro-strip { justify-content: flex-start; }
+      .ab-bio__facts { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body id="top">
+<body id="top" class="pg-marsea">
+
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <svg class="svg-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><filter id="grain-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/><feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blend"/><feComposite in="blend" in2="SourceGraphic" operator="in"/></filter></defs></svg>
+
+  <!-- SVG filter for grain texture — defined once, referenced via CSS -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="grain-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+        <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+        <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blend"/>
+        <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Ambient gradient — fixed warm light-source orbs, behind all content -->
   <div class="gradient-orbs" aria-hidden="true"></div>
+
+  <!-- Noise / Grain overlay -->
   <div class="grain" aria-hidden="true"></div>
 
+  <!-- ─── NAVIGATION ───────────────────────────────────────────── -->
   <header class="nav" id="nav">
     <div class="nav__inner">
-      <a href="index.html" class="nav-logo" aria-label="Cleanwell Mwalwanda — home">
-        <svg width="120" height="30" viewBox="0 0 360 90" fill="none" aria-hidden="true"><text x="180" y="68" text-anchor="middle" font-family="'Pinyon Script', cursive" font-size="64" fill="currentColor">arttrec</text></svg>
+      <a href="index.html" class="nav-logo" aria-label="Cleanwell Mwalwanda">
+        <svg width="120" height="30" viewBox="0 0 360 90" fill="none" aria-hidden="true">
+          <text
+            x="180" y="68"
+            text-anchor="middle"
+            font-family="'Pinyon Script', cursive"
+            font-size="64"
+            fill="currentColor"
+          >arttrec</text>
+        </svg>
       </a>
       <nav class="nav__links" aria-label="Main navigation">
-        <a href="index.html" class="nav__link">Work</a>
+        <a href="index.html#work" class="nav__link">Work</a>
         <a href="about.html" class="nav__link" aria-current="page">About</a>
         <a href="contact.html" class="nav__link">Contact</a>
       </nav>
-      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-mobile"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <!-- Mobile toggle -->
+      <button
+        class="nav__toggle"
+        id="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+      >
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
     </div>
-    <nav class="nav__mobile" id="nav-mobile" aria-hidden="true" aria-label="Mobile navigation">
-      <a href="index.html" class="nav__mobile-link">Work</a>
-      <a href="about.html" class="nav__mobile-link">About</a>
+
+    <!-- Mobile menu -->
+    <nav
+      class="nav__mobile"
+      id="nav-mobile"
+      aria-hidden="true"
+      aria-label="Mobile navigation"
+    >
+      <a href="index.html#work" class="nav__mobile-link">Work</a>
+      <a href="about.html" class="nav__mobile-link" aria-current="page">About</a>
       <a href="contact.html" class="nav__mobile-link">Contact</a>
     </nav>
   </header>
 
   <main id="main-content">
 
-    <section class="ap ap-hero" aria-labelledby="about-page-heading">
-      <div class="ap__inner">
-        <div class="ap-hero__top">
-          <span class="ap-hero__index">About</span>
-          <span class="ap-hero__year">Est. 2021</span>
+    <!-- ─── 01 · HERO ───────────────────────────────────────────── -->
+    <section class="ab-hero" aria-labelledby="ab-hero-heading">
+      <div class="ab-hero__inner">
+        <div class="mrs-num"><span aria-hidden="true">01</span></div>
+        <h1 class="ab-hero__heading" id="ab-hero-heading">I design brands that <em>feel</em> before they explain.</h1>
+      </div>
+    </section>
+
+    <!-- ─── INTRO STRIP ─────────────────────────────────────────── -->
+    <div class="mrs-intro-strip" aria-label="Quick facts">
+      <span class="mrs-intro-strip__item">Graphic Designer &amp; Surreal Artist</span>
+      <span class="mrs-intro-strip__item">Decorah, Iowa</span>
+      <span class="mrs-intro-strip__item">Est. 2025</span>
+      <span class="mrs-intro-strip__item"><span class="mrs-intro-strip__dot" aria-hidden="true"></span>Available for projects</span>
+    </div>
+
+    <!-- ─── 02 · BIO ────────────────────────────────────────────── -->
+    <section class="mrs-section ab-bio" aria-label="The Designer">
+      <div class="ab-bio__inner">
+        <div class="ab-bio__left">
+          <div class="mrs-num"><span aria-hidden="true">02</span></div>
+          <h2 class="ab-bio__title">The Designer</h2>
+          <p class="ab-bio__p">I'm a graphic designer and surreal digital artist working where <strong>logic meets imagination</strong> — a background in computer science shapes how I structure a brand, and an instinct for the uncanny shapes how it feels.</p>
+          <p class="ab-bio__p">My practice spans brand identity, art direction, and packaging design, but the thread running through all of it is <strong>restraint</strong>. I build systems first, then look for the one image or mark that justifies the whole thing existing.</p>
+          <p class="ab-bio__p">Outside of client work, I make surreal digital art under arttrec — photo manipulation and dream logic pushed until it stops looking staged and starts looking <strong>remembered</strong>.</p>
         </div>
-        <h1 class="ap-hero__h1" id="about-page-heading">Designer who thinks<br>in systems.<br><em>Artist who works<br>in dreams.</em></h1>
-        <div class="ap-hero__meta">
-          <span class="ap-hero__role">Visual Designer &amp; Branding</span>
-          <span class="ap-hero__sep" aria-hidden="true"></span>
-          <span class="ap-hero__loc">Decorah, Iowa</span>
-          <span class="ap-hero__avail"><span class="ap-hero__avail-dot" aria-hidden="true"></span>Available for work</span>
+        <div class="ab-bio__right">
+          <dl class="ab-bio__facts">
+            <div class="ab-bio__fact">
+              <dt>Location</dt>
+              <dd>United States</dd>
+            </div>
+            <div class="ab-bio__fact">
+              <dt>Education</dt>
+              <dd>Computer Science</dd>
+            </div>
+            <div class="ab-bio__fact">
+              <dt>Focus</dt>
+              <dd>Visual Communication / Computer Science</dd>
+            </div>
+            <div class="ab-bio__fact">
+              <dt>Studio</dt>
+              <dd>arttrec</dd>
+            </div>
+          </dl>
         </div>
       </div>
     </section>
 
-    <section class="ap ap-row" aria-label="Profile">
-      <div class="ap__inner" style="display:contents;">
-        <div class="ap-row__label">
-          <span class="ap-row__num">01</span>
-          <span class="ap-row__tag">Profile</span>
+    <!-- ─── 03 · PHILOSOPHY ────────────────────────────────────────── -->
+    <section class="mrs-section mrs-band--warm ab-phil" aria-label="Philosophy">
+      <div class="ab-phil__inner">
+        <div class="mrs-num mrs-num--center"><span aria-hidden="true">03</span></div>
+        <blockquote class="ab-phil__quote">I believe the best design speaks before you do. Every project starts with intent — a reason for every mark, every color, every pause in the layout — long before it starts with decoration.</blockquote>
+        <span class="mrs-monogram mrs-monogram--center" aria-hidden="true">a</span>
+      </div>
+    </section>
+
+    <!-- ─── 04 · JOURNEY ────────────────────────────────────────────── -->
+    <section class="mrs-section ab-journey" aria-label="Journey">
+      <div class="ab-journey__header">
+        <div>
+          <div class="mrs-num"><span aria-hidden="true">04</span></div>
+          <h2 class="ab-journey__heading">Journey</h2>
         </div>
-        <div class="ap-bio">
-          <div class="ap-bio__text">
-            <h2 class="ap-bio__name">Cleanwell Mwalwanda.<br><em>Visual designer &amp; developer.</em></h2>
-            <p class="ap-bio__p">I'm a computer science graduate and graphic designer working at the intersection of logic and imagination. My practice spans brand identity, surreal digital art, and visual design systems.</p>
-            <p class="ap-bio__p">I believe the best design doesn't announce itself. It creates conditions for feeling — a mark that stays, a composition that unsettles, an identity that holds.</p>
-            <div class="ap-bio__facts" aria-label="Quick facts">
-              <div class="ap-bio__fact"><span class="ap-bio__fact-k">Degree</span><span class="ap-bio__fact-v">BA Computer Science &amp; Visual Communication</span></div>
-              <div class="ap-bio__fact"><span class="ap-bio__fact-k">University</span><span class="ap-bio__fact-v">Luther College &middot; Expected May 2026</span></div>
-              <div class="ap-bio__fact"><span class="ap-bio__fact-k">Freelance since</span><span class="ap-bio__fact-v">2020 — Present</span></div>
-              <div class="ap-bio__fact"><span class="ap-bio__fact-k">Based in</span><span class="ap-bio__fact-v">Decorah, Iowa</span></div>
-            </div>
-          </div>
-          <div class="ap-bio__portrait">
-            <img src="assets/images/natalie-kinnear-CC2Bfvk2-tU-unsplash.jpg" alt="Cleanwell Mwalwanda" class="ap-bio__img" loading="eager" width="480" height="600" />
-            <p class="ap-bio__caption">Cleanwell Mwalwanda &middot; 2026</p>
-          </div>
+        <p class="ab-journey__intro">A short, honest timeline — from a computer science classroom to a studio that makes brands and surreal art in equal measure.</p>
+      </div>
+      <div class="ab-journey__list">
+        <div class="ab-journey__row" tabindex="0">
+          <span class="ab-journey__year">2022</span>
+          <span class="ab-journey__title">CS Degree</span>
+          <span class="ab-journey__desc">Started a Computer Science degree — the systems thinking that still shapes every brand I build.</span>
+        </div>
+        <div class="ab-journey__row" tabindex="0">
+          <span class="ab-journey__year">2023</span>
+          <span class="ab-journey__title">Graphic Design discovery</span>
+          <span class="ab-journey__desc">Picked up design as a side practice and never put it back down — logo work, layout, and a growing obsession with type.</span>
+        </div>
+        <div class="ab-journey__row" tabindex="0">
+          <span class="ab-journey__year">2025</span>
+          <span class="ab-journey__title">First brands</span>
+          <span class="ab-journey__desc">Took on the first full brand identity projects — packaging, art direction, and systems built to hold under real use.</span>
+        </div>
+        <div class="ab-journey__row" tabindex="0">
+          <span class="ab-journey__year">2026</span>
+          <span class="ab-journey__title">arttrec Studio</span>
+          <span class="ab-journey__desc">Formalized the practice as arttrec — brand identity and surreal digital art under one studio name.</span>
         </div>
       </div>
     </section>
 
-    <section class="ap ap-row" aria-label="Disciplines">
-      <div class="ap__inner" style="display:contents;">
-        <div class="ap-row__label">
-          <span class="ap-row__num">02</span>
-          <span class="ap-row__tag">Disciplines</span>
-        </div>
-        <div class="ap-disc">
-          <div class="ap-disc__row">
-            <span class="ap-disc__cat">Expertise</span>
-            <div class="ap-disc__items">
-              <span class="ap-disc__item">Logo Design</span>
-              <span class="ap-disc__item">Branding &amp; Identity</span>
-              <span class="ap-disc__item">Surreal Digital Art</span>
-              <span class="ap-disc__item">Print &amp; Layout Design</span>
-              <span class="ap-disc__item">Poster &amp; Package Design</span>
-            </div>
-          </div>
-          <div class="ap-disc__row">
-            <span class="ap-disc__cat">Professional</span>
-            <div class="ap-disc__items">
-              <span class="ap-disc__item">Graphic Design</span>
-              <span class="ap-disc__item">Visual Storytelling</span>
-              <span class="ap-disc__item">Photo Editing</span>
-              <span class="ap-disc__item">Social Media Marketing</span>
-              <span class="ap-disc__item">Client Communication</span>
-            </div>
-          </div>
-          <div class="ap-disc__row">
-            <span class="ap-disc__cat">Technical</span>
-            <div class="ap-disc__items">
-              <span class="ap-disc__item">Adobe Photoshop</span>
-              <span class="ap-disc__item">Adobe Illustrator</span>
-              <span class="ap-disc__item">InDesign</span>
-              <span class="ap-disc__item">Lightroom</span>
-              <span class="ap-disc__item">Canva</span>
-            </div>
-          </div>
-          <div class="ap-disc__row">
-            <span class="ap-disc__cat">Languages</span>
-            <div class="ap-disc__items">
-              <span class="ap-disc__item">JavaScript</span>
-              <span class="ap-disc__item">Python</span>
-              <span class="ap-disc__item">Java</span>
-              <span class="ap-disc__item">HTML &amp; CSS</span>
-            </div>
-          </div>
-          <div class="ap-disc__row">
-            <span class="ap-disc__cat">Soft Skills</span>
-            <div class="ap-disc__items">
-              <span class="ap-disc__item">Creative Collaboration</span>
-              <span class="ap-disc__item">Project Management</span>
-              <span class="ap-disc__item">Deadline-driven</span>
-              <span class="ap-disc__item">Client Proposals</span>
-            </div>
-          </div>
-        </div>
+    <!-- ─── 05 · SERVICES ───────────────────────────────────────────── -->
+    <section class="mrs-section mrs-band--warm ab-services" aria-label="Services">
+      <div class="ab-services__header">
+        <div class="mrs-num"><span aria-hidden="true">05</span></div>
+        <h2 class="ab-services__heading">What I do</h2>
       </div>
+      <div class="ab-services__scroll" tabindex="0" role="group" aria-label="Services — scroll horizontally">
+        <ul class="ab-services__track">
+          <li class="ab-service-card">
+            <span class="ab-service-card__num" aria-hidden="true">01</span>
+            <span class="ab-service-card__label">Identity Systems</span>
+            <h3 class="ab-service-card__title">Brand Identity</h3>
+            <p class="ab-service-card__desc">Marks, type systems, and color logic built to hold together across every surface a brand touches.</p>
+            <span class="ab-service-card__line" aria-hidden="true"></span>
+          </li>
+          <li class="ab-service-card">
+            <span class="ab-service-card__num" aria-hidden="true">02</span>
+            <span class="ab-service-card__label">Visual Direction</span>
+            <h3 class="ab-service-card__title">Art Direction</h3>
+            <p class="ab-service-card__desc">Setting the visual world a brand lives in — photography, layout, and mood carried through every asset.</p>
+            <span class="ab-service-card__line" aria-hidden="true"></span>
+          </li>
+          <li class="ab-service-card">
+            <span class="ab-service-card__num" aria-hidden="true">03</span>
+            <span class="ab-service-card__label">Physical Design</span>
+            <h3 class="ab-service-card__title">Packaging Design</h3>
+            <p class="ab-service-card__desc">Structural and print design for products that need to earn a second look on a shelf or a screen.</p>
+            <span class="ab-service-card__line" aria-hidden="true"></span>
+          </li>
+          <li class="ab-service-card">
+            <span class="ab-service-card__num" aria-hidden="true">04</span>
+            <span class="ab-service-card__label">Personal Practice</span>
+            <h3 class="ab-service-card__title">Surreal Digital Art</h3>
+            <p class="ab-service-card__desc">Photo manipulation and dream logic — the personal work that keeps the client work honest.</p>
+            <span class="ab-service-card__line" aria-hidden="true"></span>
+          </li>
+        </ul>
+      </div>
+      <p class="ab-services__hint" aria-hidden="true">Scroll to explore →</p>
     </section>
 
-    <section class="ap ap-row" aria-label="Approach">
-      <div class="ap__inner" style="display:contents;">
-        <div class="ap-row__label">
-          <span class="ap-row__num">03</span>
-          <span class="ap-row__tag">Approach</span>
-        </div>
-        <div class="ap-values">
-          <div class="ap-val">
-            <div class="ap-val__num">— 01</div>
-            <div class="ap-val__title">Systems first</div>
-            <p class="ap-val__text">Every visual decision is part of a larger structure. I build from rules, not instinct alone — so the work scales without falling apart.</p>
-          </div>
-          <div class="ap-val">
-            <div class="ap-val__num">— 02</div>
-            <div class="ap-val__title">Feel over form</div>
-            <p class="ap-val__text">Craft that doesn't move people is decoration. I chase the moment where the composition creates something the viewer can't quite explain.</p>
-          </div>
-          <div class="ap-val">
-            <div class="ap-val__num">— 03</div>
-            <div class="ap-val__title">Made to last</div>
-            <p class="ap-val__text">Timeless over trendy. Work that holds — whether it's a brand mark five years from now or a web page without a framework to maintain.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="ap ap-row" aria-label="Experience">
-      <div class="ap__inner" style="display:contents;">
-        <div class="ap-row__label">
-          <span class="ap-row__num">04</span>
-          <span class="ap-row__tag">Experience</span>
-        </div>
-        <div class="ap-exp">
-          <div class="ap-exp__item">
-            <div class="ap-exp__header">
-              <div>
-                <span class="ap-exp__title">Photographer &amp; Editor</span>
-                <span class="ap-exp__org">Multimedia Center, Luther College</span>
-              </div>
-              <span class="ap-exp__period">2023 — 2026</span>
-            </div>
-            <ul class="ap-exp__list">
-              <li>Produced 500+ photos for official campaigns, edited in Photoshop &amp; Lightroom</li>
-              <li>Collaborated with faculty on branded assets for publications and social media</li>
-            </ul>
-          </div>
-          <div class="ap-exp__item">
-            <div class="ap-exp__header">
-              <div>
-                <span class="ap-exp__title">Freelance Graphic Designer</span>
-                <span class="ap-exp__org">Remote</span>
-              </div>
-              <span class="ap-exp__period">2020 — Present</span>
-            </div>
-            <ul class="ap-exp__list">
-              <li>Designed logos, branding kits, and digital campaigns for 15+ clients</li>
-              <li>Created surreal digital art and photo manipulations featured on Instagram &amp; Behance</li>
-              <li>Developed posters and social content strategies, increasing client engagement by up to 40%</li>
-              <li>Managed client communication, proposals, and project timelines</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ap ap-cta" aria-label="Get in touch">
-      <div class="ap__inner" style="display:contents;">
-        <p class="ap-cta__text">Ready to build something <em>worth remembering?</em></p>
-        <a href="contact.html" class="ap-cta__link">
-          Start a project
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+    <!-- ─── MARQUEE CTA ─────────────────────────────────────────────── -->
+    <div class="mrs-marquee" aria-hidden="true">
+      <div class="mrs-marquee__track" id="ab-marquee-track">
+        <span class="mrs-marquee__group">
+          <a class="mrs-marquee__item" href="contact.html" tabindex="-1">Get in touch</a>
+          <span class="mrs-marquee__sep">✦</span>
+          <a class="mrs-marquee__item" href="contact.html" tabindex="-1">Let's work together</a>
+          <span class="mrs-marquee__sep">✦</span>
+        </span>
+        <span class="mrs-marquee__group">
+          <a class="mrs-marquee__item" href="contact.html" tabindex="-1">Get in touch</a>
+          <span class="mrs-marquee__sep">✦</span>
+          <a class="mrs-marquee__item" href="contact.html" tabindex="-1">Let's work together</a>
+          <span class="mrs-marquee__sep">✦</span>
+        </span>
       </div>
     </div>
 
   </main>
 
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
   <footer class="site-footer" style="padding-inline: var(--gutter);">
     <div class="site-footer__left">
       <p class="site-footer__copy">&copy; 2026 Cleanwell Mwalwanda</p>
@@ -230,134 +749,128 @@
     <a href="#top" class="site-footer__top" aria-label="Back to top">&uarr; Top</a>
   </footer>
 
+  <!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="vendor/lenis.min.js"></script>
-  <script src="vendor/split-type.min.js"></script>
+
+  <!-- Page transition curtain — shared system, see js/page-transition.js -->
+  <div class="page-curtain" id="page-curtain" aria-hidden="true"></div>
+  <script src="js/page-transition.js"></script>
+
   <script>
     'use strict';
+
+    /* Safety: if anything throws, drop the pre-hidden .js-ready states
+       so content is never stuck invisible — mirrors main.js/case-study.js */
+    window.addEventListener('error', () => document.body.classList.remove('js-ready'));
+
     gsap.registerPlugin(ScrollTrigger);
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let lenis;
-    if (!reduced) {
-      lenis = new Lenis({ lerp: 0.09, duration: 1.3 });
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((t) => lenis.raf(t * 1000));
-      gsap.ticker.lagSmoothing(0);
-    }
 
-    const nav = document.getElementById('nav');
-    ScrollTrigger.create({ start: 'top -60', onToggle: (s) => nav.classList.toggle('is-scrolled', s.isActive) });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) document.body.classList.add('js-ready');
 
-    const toggle = document.getElementById('nav-toggle');
-    const mobileNav = document.getElementById('nav-mobile');
-    if (toggle && mobileNav) {
-      toggle.addEventListener('click', () => {
-        const open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        mobileNav.setAttribute('aria-hidden', String(open));
-        mobileNav.classList.toggle('is-open', !open);
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (reduced) return;
-
-      // ── Page entrance ────────────────────────────────────────────────
-      gsap.from('.nav__inner', { y: -24, opacity: 0, duration: 0.7, ease: 'power3.out', delay: 0.05 });
-      gsap.from('.ap-hero__index, .ap-hero__year', {
-        y: -10, opacity: 0, duration: 0.5, ease: 'power2.out', stagger: 0.07, delay: 0.22
-      });
-
-      // ── Hero heading — word clip reveal ──────────────────────────────
-      const h1 = document.querySelector('.ap-hero__h1');
-      if (h1) {
-        const split = new SplitType(h1, { types: 'lines,words' });
-        split.lines.forEach(l => { l.style.overflow = 'hidden'; l.style.display = 'block'; });
-        gsap.from(split.words, {
-          y: '108%', duration: 1.15, ease: 'power4.out',
-          stagger: { amount: 0.52 }, delay: 0.28
-        });
-      }
-
-      // Hero meta strip — stagger each item
-      gsap.from('.ap-hero__meta > *', {
-        y: 14, opacity: 0, duration: 0.65, ease: 'power3.out', stagger: 0.07, delay: 0.95
-      });
-
-      // ── Section rows — label slides left, content rises ──────────────
-      gsap.utils.toArray('.ap-row').forEach((row) => {
-        const label = row.querySelector('.ap-row__label');
-        const content = label && label.nextElementSibling;
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: row, start: 'top 86%', once: true }
-        });
-        if (label) tl.from(label, { x: -22, opacity: 0, duration: 0.6, ease: 'power3.out' }, 0);
-        if (content) tl.from(content, { y: 32, opacity: 0, duration: 0.85, ease: 'power3.out' }, 0.09);
-      });
-
-      // ── Bio image — wipe-up reveal ────────────────────────────────────
-      const img = document.querySelector('.ap-bio__img');
-      if (img) {
-        gsap.fromTo(img,
-          { clipPath: 'inset(0 0 100% 0)' },
-          { clipPath: 'inset(0 0 0% 0)', duration: 1.2, ease: 'power4.out', delay: 0.15,
-            scrollTrigger: { trigger: img, start: 'top 88%', once: true } }
-        );
-      }
-
-      // ── Discipline items — individual stagger per row ─────────────────
-      gsap.utils.toArray('.ap-disc__row').forEach((row) => {
-        const cat = row.querySelector('.ap-disc__cat');
-        const items = row.querySelectorAll('.ap-disc__item');
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: row, start: 'top 93%', once: true }
-        });
-        if (cat) tl.from(cat, { opacity: 0, x: -10, duration: 0.4, ease: 'power2.out' }, 0);
-        if (items.length) tl.from(items, { opacity: 0, y: 9, duration: 0.4, ease: 'power2.out', stagger: 0.055 }, 0.1);
-      });
-
-      // ── Approach values ───────────────────────────────────────────────
-      gsap.from('.ap-val', {
-        scrollTrigger: { trigger: '.ap-values', start: 'top 88%', once: true },
-        opacity: 0, y: 26, duration: 0.65, ease: 'power2.out', stagger: 0.13
-      });
-
-      // ── Experience — header + bullets stagger ─────────────────────────
-      gsap.utils.toArray('.ap-exp__item').forEach((item) => {
-        const header = item.querySelector('.ap-exp__header');
-        const bullets = item.querySelectorAll('li');
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: item, start: 'top 89%', once: true }
-        });
-        if (header) tl.from(header, { opacity: 0, y: 16, duration: 0.55, ease: 'power3.out' }, 0);
-        if (bullets.length) tl.from(bullets, { opacity: 0, x: -12, duration: 0.42, ease: 'power2.out', stagger: 0.07 }, 0.2);
-      });
-
-      // ── CTA ───────────────────────────────────────────────────────────
-      gsap.from('.ap-cta__text, .ap-cta__link', {
-        scrollTrigger: { trigger: '.ap-cta', start: 'top 92%', once: true },
-        opacity: 0, y: 18, duration: 0.65, ease: 'power2.out', stagger: 0.15
-      });
-
-      // ── Magnetic CTA link ─────────────────────────────────────────────
-      const ctaLink = document.querySelector('.ap-cta__link');
-      if (ctaLink) {
-        ctaLink.addEventListener('mousemove', (e) => {
-          const r = ctaLink.getBoundingClientRect();
-          gsap.to(ctaLink, {
-            x: (e.clientX - r.left - r.width / 2) * 0.22,
-            y: (e.clientY - r.top - r.height / 2) * 0.22,
-            duration: 0.45, ease: 'power2.out'
-          });
-        });
-        ctaLink.addEventListener('mouseleave', () => {
-          gsap.to(ctaLink, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
-        });
-      }
+    /* ── Lenis smooth scroll — same config as main.js's initLenis() ──── */
+    const lenis = new Lenis({
+      lerp: 0.08,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      touchMultiplier: 2,
     });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
 
-    window.addEventListener('beforeunload', () => { ScrollTrigger.killAll(); if (lenis) lenis.destroy(); });
+    /* ── Nav toggle — verbatim logic from main.js's initNavToggle() ──── */
+    (function initNavToggle() {
+      const toggle = document.getElementById('nav-toggle');
+      const mobile = document.getElementById('nav-mobile');
+      if (!toggle || !mobile) return;
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        mobile.setAttribute('aria-hidden', String(expanded));
+        mobile.classList.toggle('is-open', !expanded);
+      });
+      mobile.querySelectorAll('.nav__mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          toggle.setAttribute('aria-expanded', 'false');
+          mobile.setAttribute('aria-hidden', 'true');
+          mobile.classList.remove('is-open');
+        });
+      });
+    })();
+
+    /* ── Nav scroll class — verbatim logic from main.js's initNavScroll() ── */
+    (function initNavScroll() {
+      const nav = document.getElementById('nav');
+      if (!nav) return;
+      ScrollTrigger.create({
+        start: 'top -80px',
+        onEnter: () => nav.classList.add('is-scrolled'),
+        onLeaveBack: () => nav.classList.remove('is-scrolled'),
+      });
+    })();
+
+    /* ── Entrance + scroll reveal ─────────────────────────────────────
+       Same animation language as the homepage: y-offset + opacity:0,
+       ease power3.out, ScrollTrigger start 80-90%, stagger 0.08-0.12. */
+    function revealUp(selector, opts = {}) {
+      const els = gsap.utils.toArray(selector);
+      if (!els.length) return;
+      if (prefersReducedMotion) { gsap.set(els, { opacity: 1, y: 0 }); return; }
+      gsap.to(els, {
+        scrollTrigger: { trigger: opts.trigger || els[0], start: opts.start || 'top 85%', once: true },
+        opacity: 1,
+        y: 0,
+        duration: opts.duration || 0.7,
+        stagger: opts.stagger || 0,
+        ease: 'power3.out',
+      });
+    }
+
+    if (!prefersReducedMotion) {
+      /* Nav — .js-ready hides it off-screen (translateY(-100%)) via the
+         shared style.css rule; slide it back down, same as main.js's
+         revealPage() does on the homepage. */
+      gsap.to('#nav', { y: 0, duration: 0.9, ease: 'power3.out', delay: 0.05 });
+
+      /* Hero entrance — plays immediately on load, not scroll-gated */
+      gsap.to('.ab-hero .mrs-num, .ab-hero__heading', {
+        opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15,
+      });
+      gsap.to('.mrs-intro-strip__item', {
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out', delay: 0.55,
+      });
+    } else {
+      gsap.set('.ab-hero .mrs-num, .ab-hero__heading, .mrs-intro-strip__item', { opacity: 1, y: 0 });
+    }
+
+    revealUp('.ab-bio .mrs-num, .ab-bio__title, .ab-bio__p', { trigger: '.ab-bio', start: 'top 80%', stagger: 0.1 });
+    revealUp('.ab-bio__fact', { trigger: '.ab-bio__facts', start: 'top 85%', stagger: 0.08 });
+    revealUp('.ab-phil .mrs-num, .ab-phil__quote, .mrs-monogram--center', { trigger: '.ab-phil', start: 'top 80%', stagger: 0.12 });
+    revealUp('.ab-journey .mrs-num, .ab-journey__heading, .ab-journey__intro', { trigger: '.ab-journey__header', start: 'top 85%', stagger: 0.1 });
+    revealUp('.ab-journey__row', { trigger: '.ab-journey__list', start: 'top 90%', stagger: 0.08 });
+    revealUp('.ab-services .mrs-num, .ab-services__heading', { trigger: '.ab-services__header', start: 'top 85%', stagger: 0.1 });
+    revealUp('.ab-service-card', { trigger: '.ab-services__track', start: 'top 85%', stagger: 0.1 });
+    revealUp('.ab-services__hint', { trigger: '.ab-services__hint', start: 'top 95%' });
+
+    /* ── Marquee CTA — GSAP infinite loop ─────────────────────────────
+       x: -halfWidth, duration 35, ease none, repeat -1 (per spec). */
+    (function initMarquee() {
+      const track = document.getElementById('ab-marquee-track');
+      if (!track) return;
+      if (prefersReducedMotion) return; /* static, decorative — no motion needed */
+
+      const halfWidth = track.scrollWidth / 2;
+      gsap.to(track, { x: -halfWidth, duration: 35, ease: 'none', repeat: -1 });
+    })();
+
+    window.addEventListener('beforeunload', () => {
+      ScrollTrigger.killAll();
+      lenis.destroy();
+    });
   </script>
 </body>
 </html>
