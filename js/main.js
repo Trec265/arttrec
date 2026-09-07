@@ -67,6 +67,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       projects = [];
     }
 
+    // The series card is the one project-level local exception. Its actual
+    // pieces are standalone Sanity documents, so the card is kept in JSON
+    // until a matching project document exists in the CMS.
+    if (!projects.some(project => project.slug === 'surreal-series')) {
+      const surrealSeriesCard = await fetchLocalSurrealSeriesCard();
+      if (surrealSeriesCard) projects.push(surrealSeriesCard);
+    }
+
     if (!projects.length) {
       const grid = document.getElementById('projects-grid');
       if (grid) {
@@ -167,6 +175,15 @@ async function fetchProjects() {
 
   console.warn('[Portfolio] Sanity client is not available; no projects will be loaded.');
   return [];
+}
+
+async function fetchLocalSurrealSeriesCard() {
+  try {
+    const projects = await fetch('data/projects.json').then(res => res.json());
+    return projects.find(project => project.slug === 'surreal-series') || null;
+  } catch (_err) {
+    return null;
+  }
 }
 
 /**
