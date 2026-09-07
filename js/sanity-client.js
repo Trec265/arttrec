@@ -10,8 +10,9 @@
  * 3. Replace 'YOUR_PROJECT_ID' below with your real project ID.
  * 4. If your dataset is not named 'production', update SANITY_DATASET.
  *
- * Until SANITY_PROJECT_ID is set, the site gracefully falls back to
- * loading data from data/projects.json — nothing breaks.
+ * The site uses Sanity for project data in both local development and
+ * production, so portfolio content comes from the CMS rather than the
+ * local JSON fallback.
  * ─────────────────────────────────────────────────────────────────────
  */
 
@@ -33,8 +34,14 @@
   }
 
   function buildQueryUrl(query) {
-    // Use the CDN endpoint for read-only public queries (faster, cached)
-    var host = SANITY_PROJECT_ID + '.apicdn.sanity.io';
+    // Prefer the local proxy in development so browser requests avoid
+    // cross-origin issues when the site is served from localhost.
+    var isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (isLocalHost) {
+      return '/api/sanity/query?query=' + encodeURIComponent(query);
+    }
+
+    var host = SANITY_PROJECT_ID + '.api.sanity.io';
     return (
       'https://' + host +
       '/v' + SANITY_API_VER +

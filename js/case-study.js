@@ -159,53 +159,17 @@ function initLenis() {
 
 /* =====================================================================
    DATA
-   Tries Sanity CMS first; falls back to local data/projects.json.
-   Configure SANITY_PROJECT_ID in sanity-client.js to enable Sanity.
-
-   Sanity is merged with local data (not simply preferred over it) because
-   the live dataset can lag behind data/projects.json — a project that
-   exists locally but hasn't been migrated/created in Sanity yet must
-   still resolve by its documented slug, otherwise this page silently
-   redirects home for a perfectly valid ?project=.
-
-   Matching is done on normalized *title*, not slug: some projects exist
-   in both sources under different slugs (Sanity auto-generates slugs
-   from the full title), so comparing slugs directly would treat an
-   already-present project as "missing" and duplicate it.
+   Uses Sanity CMS as the single source of truth for portfolio projects.
+   This applies in local development and on the live site, so the local
+   JSON file is not used for portfolio entries.
    ===================================================================== */
-function normalizeTitleForMatch(title) {
-  return (title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-function isProjectAlreadyPresent(project, existingProjects) {
-  const target = normalizeTitleForMatch(project.title);
-  if (!target) return false;
-  return existingProjects.some(p => {
-    const candidate = normalizeTitleForMatch(p.title);
-    return candidate === target || candidate.startsWith(target) || target.startsWith(candidate);
-  });
-}
-
 async function fetchProjects() {
-  let sanityProjects = [];
   if (window.SanityClient && window.SanityClient.isConfigured()) {
-    try {
-      sanityProjects = await window.SanityClient.fetchProjects();
-    } catch (_) {
-      // Sanity unavailable — local JSON below covers everything
-      sanityProjects = [];
-    }
+    return window.SanityClient.fetchProjects();
   }
 
-  const local = await fetch('data/projects.json').then(r => {
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.json();
-  });
-
-  if (!sanityProjects.length) return local;
-
-  const missingFromSanity = local.filter(p => !isProjectAlreadyPresent(p, sanityProjects));
-  return [...sanityProjects, ...missingFromSanity];
+  console.warn('[Case Study] Sanity client is not available; no projects will be loaded.');
+  return [];
 }
 
 function redirectHome() {
@@ -606,7 +570,7 @@ function renderCaseStudy(project, nextProject) {
     const nextImg   = document.getElementById('cs-next-image');
 
     const nextSlug = sanitizeText(nextProject.slug || '');
-    const nextHref = nextSlug === 'surreal-series' ? 'surreal-series.html' : `case-study?project=${nextSlug}`;
+    const nextHref = nextSlug === 'surreal-series' ? 'surreal-series.html' : `case-study.html?project=${nextSlug}`;
     if (nextLink) {
       nextLink.href = nextHref;
       nextLink.addEventListener('click', e => {

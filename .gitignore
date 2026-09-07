@@ -48,8 +48,9 @@ tests/
 # ── Temp / audit / dev-only files ──
 _tmp_*.mjs
 _tmp_*.js
-BUGS.md
-DESIGN-AUDIT.md
+tmp-*.png
+docs/BUGS.md
+docs/DESIGN-AUDIT.md
 *-prompt.md
 _archive/
 

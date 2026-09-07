@@ -57,15 +57,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Safety timeout — never leave user stuck on loader
   const loaderTimeout = setTimeout(() => skipLoader(), 5000);
 
-  // Fetch and render projects — Sanity merged with local JSON fallback
+  // Fetch and render projects — Sanity only; local JSON is not used for portfolio entries.
   try {
-    let projects;
+    let projects = [];
     try {
       projects = (await fetchProjects()) || [];
     } catch (_sanityErr) {
-      // Sanity unavailable or timed out — load local JSON directly
-      const local = await fetch('data/projects.json').then(r => r.json());
-      projects = local || [];
+      console.warn('[Portfolio] Sanity unavailable; no local fallback projects will be shown.');
+      projects = [];
     }
 
     if (!projects.length) {
@@ -75,18 +74,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     } else {
       renderProjects(projects);
-      renderHeroSlides(projects);
       renderFeaturedWork(projects);
+      syncSocialPreviewWithSelectedWork(projects);
       initFeaturedPanelClicks();
-      // Populate gallery strip with individual surrealPiece docs from Sanity
-      // (falls back to local pieces[] if Sanity is unavailable)
-      const galleryItems = await fetchSurrealGalleryItems();
-      if (galleryItems.length) {
-        renderSurrealListView(galleryItems);
-        initSurrealThumbnailRotation(galleryItems);
-      }
       initFilterBtns(projects);
       initCursorPreview();
+    }
+
+    // Surreal pieces are the one intentional local exception: load the
+    // standalone Sanity pieces, with their local pieces[] fallback.
+    const galleryItems = await fetchSurrealGalleryItems();
+    if (galleryItems.length) {
+      renderSurrealListView(galleryItems);
+      initSurrealThumbnailRotation(galleryItems);
     }
   } catch (err) {
     console.error('[Portfolio] Failed to load projects:', err);
@@ -156,49 +156,17 @@ function initLenis() {
 
 /* =====================================================================
    DATA FETCH
-   Tries Sanity CMS first, merged with local data/projects.json.
-   Configure SANITY_PROJECT_ID in sanity-client.js to enable Sanity.
-
-   Sanity is merged with local data (not simply preferred over it) because
-   the live dataset can lag behind data/projects.json — e.g. Sanity only
-   has surrealPiece docs, never a project doc for the series itself, and
-   other projects may not be migrated yet. Any local project not already
-   represented in the Sanity result is appended so it still appears.
-
-   Matching is done on normalized *title*, not slug: some projects exist
-   in both sources under different slugs (Sanity auto-generates slugs
-   from the full title, e.g. "posters-and-visual-design-photoshop-and-
-   illustrator" vs the clean local slug "posters") — comparing slugs
-   directly would treat the same project as "missing" and duplicate it.
+   Uses Sanity CMS as the single source of truth for portfolio projects.
+   This applies in local development and on the live site, so the local
+   JSON file is not used for portfolio entries.
    ===================================================================== */
-function normalizeTitleForMatch(title) {
-  return (title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-function isProjectAlreadyPresent(project, existingProjects) {
-  const target = normalizeTitleForMatch(project.title);
-  if (!target) return false;
-  return existingProjects.some(p => {
-    const candidate = normalizeTitleForMatch(p.title);
-    return candidate === target || candidate.startsWith(target) || target.startsWith(candidate);
-  });
-}
-
 async function fetchProjects() {
-  let sanityProjects = [];
   if (window.SanityClient && window.SanityClient.isConfigured()) {
-    sanityProjects = await window.SanityClient.fetchProjects();
+    return window.SanityClient.fetchProjects();
   }
 
-  if (!sanityProjects.length) {
-    const res = await fetch('data/projects.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  }
-
-  const local = await fetch('data/projects.json').then(r => r.json()).catch(() => []);
-  const missingFromSanity = local.filter(p => !isProjectAlreadyPresent(p, sanityProjects));
-  return [...sanityProjects, ...missingFromSanity];
+  console.warn('[Portfolio] Sanity client is not available; no projects will be loaded.');
+  return [];
 }
 
 /**
@@ -210,7 +178,10 @@ async function fetchSurrealGalleryItems() {
   const dataset   = 'production';
   const apiVer    = '2024-01-01';
   const query     = '*[_type=="surrealPiece"]|order(number asc){title,"slug":slug.current,number,year,"imageUrl":image.asset->url}';
-  const url       = `https://${projectId}.apicdn.sanity.io/v${apiVer}/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const url = isLocalHost
+    ? `/api/sanity/query?query=${encodeURIComponent(query)}`
+    : `https://${projectId}.api.sanity.io/v${apiVer}/data/query/${dataset}?query=${encodeURIComponent(query)}`;
 
   const timeout = new Promise((_, reject) =>
     setTimeout(() => reject(new Error('surreal timeout')), 4000)
@@ -316,7 +287,7 @@ function renderProjects(projects) {
     const isSurrealSeries = slug === 'surreal-series';
     const href = isSurrealSeries
       ? 'surreal-series.html'
-      : `case-study?project=${slug}`;
+      : `case-study.html?project=${slug}`;
 
     return [
       `<li class="work-card" data-category="${category}"${isSurrealSeries ? ' data-project="surreal-series"' : ''}>`,
@@ -352,35 +323,47 @@ function renderProjects(projects) {
 
 
 /* =====================================================================
-   RENDER: HERO BACKGROUND SLIDESHOW
-   Pulls heroImage (or coverImage) from the first 5 projects and injects
-   <img class="hero__bg-slide"> elements into #hero-bg-slides.
-   Works whether images come from Sanity CDN or local fallback paths.
-   Called once during bootstrap, before playLoader().
+   SOCIAL PREVIEW META SYNC
+   Keeps og:image and twitter:image aligned with the selected-work set.
+   Uses featured projects from Sanity and rotates through their images.
    ===================================================================== */
-function renderHeroSlides(projects) {
-  const container = document.getElementById('hero-bg-slides');
-  if (!container) return;
+function syncSocialPreviewWithSelectedWork(projects) {
+  const ogImage = document.querySelector('meta[property="og:image"]');
+  const twImage = document.querySelector('meta[name="twitter:image"]');
+  if (!ogImage && !twImage) return;
 
-  // Take up to 5 projects that have an image
-  const slides = projects
-    .filter(p => p.heroImage || p.coverImage)
-    .slice(0, 5);
+  const featuredWithImage = projects
+    .filter(p => p && p.featured && (p.heroImage || p.coverImage));
+  if (!featuredWithImage.length) return;
 
-  if (!slides.length) return;
+  const toAbsoluteUrl = (src) => {
+    if (!src) return '';
+    if (/^https?:\/\//i.test(src)) return src;
+    return new URL(src, window.location.origin + '/').href;
+  };
 
-  const fragment = document.createDocumentFragment();
-  slides.forEach((p, i) => {
-    const img = document.createElement('img');
-    img.className = 'hero__bg-slide';
-    img.src = p.heroImage || p.coverImage;
-    img.alt = '';
-    img.decoding = 'async';
-    img.loading = i === 0 ? 'eager' : 'lazy';
-    fragment.appendChild(img);
-  });
+  const imageUrls = featuredWithImage
+    .map(p => toAbsoluteUrl(p.heroImage || p.coverImage))
+    .filter(Boolean);
 
-  container.appendChild(fragment);
+  if (!imageUrls.length) return;
+
+  const setPreviewImage = (url) => {
+    if (ogImage) ogImage.setAttribute('content', url);
+    if (twImage) twImage.setAttribute('content', url);
+  };
+
+  // Set an immediate Sanity-sourced preview image.
+  setPreviewImage(imageUrls[0]);
+
+  if (imageUrls.length < 2) return;
+
+  let current = 0;
+  const ROTATE_MS = 6100; // roughly matches hero crossfade cadence
+  setInterval(() => {
+    current = (current + 1) % imageUrls.length;
+    setPreviewImage(imageUrls[current]);
+  }, ROTATE_MS);
 }
 
 /* =====================================================================
@@ -403,7 +386,7 @@ function renderFeaturedWork(projects) {
     const excerpt = sanitizeText(normalizePlaceholder(project.excerpt || ''));
     const heroImg = sanitizeText(project.heroImage || '');
     const isSurrealFeatured = slug === 'surreal-series';
-    const featuredHref = isSurrealFeatured ? 'surreal-series.html' : `case-study?project=${slug}`;
+    const featuredHref = isSurrealFeatured ? 'surreal-series.html' : `case-study.html?project=${slug}`;
     return `
       <article class="featured-panel" id="featured-${slug}">
         <div class="featured-panel__inner">
@@ -478,7 +461,7 @@ function renderSurrealListView(projects) {
   track.innerHTML = projects.map((project, i) => {
     const title  = sanitizeText(project.title || '');
     const year   = sanitizeText(project.year  || '');
-    const imgSrc = sanitizeText(project.coverImage || '');
+    const imgSrc = sanitizeText(project.imageUrl || project.coverImage || '');
     const slug   = sanitizeText(project.slug || project.id || '');
     const href   = slug ? `surreal-series.html#piece-${slug}` : 'surreal-series.html';
     const imgTag = imgSrc
@@ -798,7 +781,7 @@ function initHeroAnimations() {
     splitInstances.push(st);
   });
 
-  const tl = gsap.timeline({ delay: 0.05 });
+  const tl = gsap.timeline({ delay: 0.25 });
 
   // Chars rise up from overflow-hidden clip
   const chars = document.querySelectorAll('.hero__name-word .char');
@@ -823,13 +806,6 @@ function initHeroAnimations() {
     ease: 'power4.out',
   }, '-=0.55');
 
-  // CTA line-mask emerge
-  tl.to('.hero__cta', {
-    y: 0,
-    duration: 0.65,
-    ease: 'power4.out',
-  }, '-=0.5');
-
   // Scroll indicator fades in
   tl.to('.hero__scroll', {
     opacity: 1,
@@ -844,70 +820,17 @@ function initHeroAnimations() {
     ease: 'power2.out',
   }, '-=0.3');
 
-  // Full-bleed slideshow — Ken Burns zoom + crossfade rotation + scroll parallax
-  const heroSlides = document.querySelectorAll('.hero__bg-slide');
-  if (heroSlides.length) {
-    const SHOW = 4.5;  // seconds each slide is fully visible
-    const FADE = 1.6;  // crossfade duration
-    const ZOOM = 0.06; // Ken Burns: scale(1) → scale(1.06)
+  // Static hero background: animate once, then leave project imagery to the work sections.
+  gsap.from('.hero-bg img', {
+    scale: 1.1,
+    opacity: 0,
+    duration: 2,
+    delay: 0.1,
+    ease: 'power2.out',
+  });
 
-    gsap.set(heroSlides, { opacity: 0, scale: 1 });
-
-    if (!prefersReducedMotion) {
-      let current = 0;
-
-      const advance = () => {
-        const cur = heroSlides[current];
-        const nextIdx = (current + 1) % heroSlides.length;
-        const nxt = heroSlides[nextIdx];
-
-        // Ken Burns: slowly zoom the active slide over its full display time
-        gsap.fromTo(cur,
-          { scale: 1 },
-          { scale: 1 + ZOOM, duration: SHOW + FADE, ease: 'none' }
-        );
-
-        // After SHOW seconds, crossfade to the next slide
-        gsap.delayedCall(SHOW, () => {
-          gsap.set(nxt, { opacity: 0, scale: 1 });
-          gsap.to(nxt, { opacity: 1, duration: FADE, ease: 'power2.inOut' });
-          gsap.to(cur, {
-            opacity: 0,
-            duration: FADE,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              current = nextIdx;
-              advance();
-            },
-          });
-        });
-      };
-
-      // Fade in first slide on load, then start the loop
-      gsap.to(heroSlides[0], {
-        opacity: 1,
-        duration: FADE,
-        ease: 'power2.inOut',
-        delay: 0.15,
-        onComplete: advance,
-      });
-
-      // Scroll parallax: slides drift upward slightly slower than the page
-      gsap.to('.hero__bg-slides', {
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-        y: -80,
-        ease: 'none',
-      });
-
-    } else {
-      // Reduced motion: just show the first slide
-      gsap.set(heroSlides[0], { opacity: 1 });
-    }
+  if (prefersReducedMotion) {
+    gsap.set('.hero-bg img', { opacity: 1, scale: 1 });
   }
 }
 
@@ -1440,7 +1363,7 @@ function initSurrealHover() {
     isDragging = false;
     gallery.classList.remove('is-dragging');
 
-    // Tap/click (no significant drag) — navigate to that project's case study.
+    // Tap/click (no significant drag) — navigate to that specific piece anchor.
     // We hit-test here rather than relying on a click event because
     // setPointerCapture() redirects click to the gallery element, not the strip.
     if (!pointerMoved && e) {
@@ -1451,10 +1374,12 @@ function initSurrealHover() {
         s => clickXInTrack >= s.offsetLeft && clickXInTrack < s.offsetLeft + s.offsetWidth
       );
       if (hit) {
+        const slug = hit.dataset.slug || '';
+        const target = slug ? `surreal-series.html#piece-${slug}` : 'surreal-series.html';
         if (typeof window.navigateTo === 'function') {
-          window.navigateTo('surreal-series.html');
+          window.navigateTo(target);
         } else {
-          window.location.href = 'surreal-series.html';
+          window.location.href = target;
         }
         return;
       }

@@ -14,13 +14,13 @@
   <meta property="og:description" content="Graphic designer and surreal digital artist. Systems that mean something." />
   <meta property="og:type" content="profile" />
   <meta property="og:url" content="https://arttrec.com/about" />
-  <meta property="og:image" content="https://arttrec.com/assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg" />
+  <meta property="og:image" content="https://arttrec.com/assets/images/bg.jpg" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="About — Cleanwell Mwalwanda" />
   <meta name="twitter:description" content="Graphic designer and surreal digital artist. Systems that mean something." />
-  <meta name="twitter:image" content="https://arttrec.com/assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg" />
+  <meta name="twitter:image" content="https://arttrec.com/assets/images/bg.jpg" />
   <link rel="canonical" href="https://arttrec.com/about" />
 
   <!-- Fonts: Cormorant Garamond (display) + Inter (body) -->
@@ -79,7 +79,7 @@
       font-family: var(--serif);
       font-weight: 300;
       font-style: italic;
-      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      font-size: clamp(0.8rem, 1.05vw, 1rem);
       color: var(--accent);
       letter-spacing: 0.02em;
       margin-bottom: 1.5rem;
@@ -205,6 +205,25 @@
       padding: clamp(120px, 16vw, 180px) var(--pad-side) clamp(64px, 9vw, 100px);
       overflow: hidden;
     }
+    .ab-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12,11,9,0.6) 0%, rgba(12,11,9,0.3) 40%, rgba(12,11,9,0.7) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .ab-hero .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .ab-hero .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+    }
     .ab-hero::before {
       content: '';
       position: absolute;
@@ -217,14 +236,15 @@
       max-width: 1400px;
       margin-inline: auto;
       width: 100%;
+      z-index: 3;
     }
     .ab-hero__heading {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(2.25rem, 6.5vw, 5.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-      max-width: 17ch;
+      font-size: clamp(3rem, 5.8vw, 6.25rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      max-width: 13ch;
       color: var(--fg);
     }
     .ab-hero__heading em {
@@ -246,15 +266,17 @@
     .ab-bio__title {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
-      margin-bottom: 1.75rem;
+      font-size: clamp(2rem, 3vw, 2.75rem);
+      margin-bottom: 1.6rem;
       color: var(--fg);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
     .ab-bio__p {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-      line-height: 1.65;
+      font-size: clamp(1rem, 1.45vw, 1.15rem);
+      line-height: 1.7;
       color: var(--fg-muted);
       max-width: 46ch;
     }
@@ -323,8 +345,10 @@
     .ab-journey__heading {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      font-size: clamp(2rem, 3vw, 2.75rem);
       color: var(--fg);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
     .ab-journey__intro {
       font-family: var(--serif);
@@ -390,8 +414,10 @@
     .ab-services__heading {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      font-size: clamp(2rem, 3vw, 2.75rem);
       color: var(--fg);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
     .ab-services__scroll {
       overflow-x: auto;
@@ -512,6 +538,30 @@
       .mrs-intro-strip { justify-content: flex-start; }
       .ab-bio__facts { grid-template-columns: 1fr; }
     }
+
+    @media (min-width: 56.25rem) {
+      .ab-bio__facts { margin-top: clamp(2rem, 3vw, 40px); }
+      .ab-phil { padding-block: clamp(80px, 10vw, 120px); }
+      .ab-services__header { margin-bottom: clamp(40px, 5vw, 60px); }
+      .ab-service-card { flex-basis: clamp(280px, 28vw, 380px); }
+
+      .mrs-num,
+      .mrs-intro-strip__item,
+      .ab-bio__fact dt,
+      .ab-journey__year,
+      .ab-service-card__label,
+      .ab-services__hint {
+        color: var(--fg-muted);
+        font-size: max(0.65rem, 1em);
+      }
+
+      .ab-bio__fact dd,
+      .ab-journey__title,
+      .ab-journey__desc,
+      .ab-service-card__desc {
+        font-size: max(1.1rem, 1em);
+      }
+    }
   </style>
 </head>
 <body id="top" class="pg-marsea">
@@ -585,6 +635,9 @@
 
     <!-- ─── 01 · HERO ───────────────────────────────────────────── -->
     <section class="ab-hero" aria-labelledby="ab-hero-heading">
+      <div class="hero-bg">
+        <img src="assets/images/bg.jpg" alt="" aria-hidden="true">
+      </div>
       <div class="ab-hero__inner">
         <div class="mrs-num"><span aria-hidden="true">01</span></div>
         <h1 class="ab-hero__heading" id="ab-hero-heading">I design brands that <em>feel</em> before they explain.</h1>
@@ -652,14 +705,14 @@
       </div>
       <div class="ab-journey__list">
         <div class="ab-journey__row" tabindex="0">
+          <span class="ab-journey__year">2017</span>
+          <span class="ab-journey__title">Graphic Design</span>
+          <span class="ab-journey__desc">Started graphic design — logo work, layout, and a growing obsession with type.</span>
+        </div>
+        <div class="ab-journey__row" tabindex="0">
           <span class="ab-journey__year">2022</span>
           <span class="ab-journey__title">CS Degree</span>
           <span class="ab-journey__desc">Started a Computer Science degree — the systems thinking that still shapes every brand I build.</span>
-        </div>
-        <div class="ab-journey__row" tabindex="0">
-          <span class="ab-journey__year">2023</span>
-          <span class="ab-journey__title">Graphic Design discovery</span>
-          <span class="ab-journey__desc">Picked up design as a side practice and never put it back down — logo work, layout, and a growing obsession with type.</span>
         </div>
         <div class="ab-journey__row" tabindex="0">
           <span class="ab-journey__year">2025</span>
@@ -685,29 +738,36 @@
           <li class="ab-service-card">
             <span class="ab-service-card__num" aria-hidden="true">01</span>
             <span class="ab-service-card__label">Identity Systems</span>
-            <h3 class="ab-service-card__title">Brand Identity</h3>
-            <p class="ab-service-card__desc">Marks, type systems, and color logic built to hold together across every surface a brand touches.</p>
+            <h3 class="ab-service-card__title">Brand &amp; Visual Design</h3>
+            <p class="ab-service-card__desc">Brand identity systems, logo design and logo suites, visual identity guidelines, campaign visual direction, poster and print design, editorial layout, packaging concepts, typography systems, and art direction across print and digital touchpoints. Comfortable owning a brand from concept through final rollout, translating a client brief into a cohesive visual language rather than isolated assets.</p>
             <span class="ab-service-card__line" aria-hidden="true"></span>
           </li>
           <li class="ab-service-card">
             <span class="ab-service-card__num" aria-hidden="true">02</span>
-            <span class="ab-service-card__label">Visual Direction</span>
-            <h3 class="ab-service-card__title">Art Direction</h3>
-            <p class="ab-service-card__desc">Setting the visual world a brand lives in — photography, layout, and mood carried through every asset.</p>
+            <span class="ab-service-card__label">Creative Practice</span>
+            <h3 class="ab-service-card__title">Surreal Art &amp; Photo Manipulation</h3>
+            <p class="ab-service-card__desc">Original surreal digital art built primarily through photo manipulation — combining, distorting, and reimagining photographic elements into dreamlike, conceptual compositions. This is independent creative work distributed on Instagram and Behance, distinct from client branding projects, showcasing a personal visual voice built on composite imagery, dramatic lighting, and imaginative world-building within a single frame.</p>
             <span class="ab-service-card__line" aria-hidden="true"></span>
           </li>
           <li class="ab-service-card">
             <span class="ab-service-card__num" aria-hidden="true">03</span>
-            <span class="ab-service-card__label">Physical Design</span>
-            <h3 class="ab-service-card__title">Packaging Design</h3>
-            <p class="ab-service-card__desc">Structural and print design for products that need to earn a second look on a shelf or a screen.</p>
+            <span class="ab-service-card__label">Digital Experiences</span>
+            <h3 class="ab-service-card__title">Web &amp; Interactive Design</h3>
+            <p class="ab-service-card__desc">UI implementation from design file to functioning interface, GSAP-driven animation and interaction design, and CMS-driven content workflows with Sanity for scalable, editable web builds. Bridges the gap between static design and live product — able to design a system and then build the site that delivers it.</p>
             <span class="ab-service-card__line" aria-hidden="true"></span>
           </li>
           <li class="ab-service-card">
             <span class="ab-service-card__num" aria-hidden="true">04</span>
-            <span class="ab-service-card__label">Personal Practice</span>
-            <h3 class="ab-service-card__title">Surreal Digital Art</h3>
-            <p class="ab-service-card__desc">Photo manipulation and dream logic — the personal work that keeps the client work honest.</p>
+            <span class="ab-service-card__label">Production Skills</span>
+            <h3 class="ab-service-card__title">Design Execution</h3>
+            <p class="ab-service-card__desc">Adobe Photoshop, Illustrator, InDesign, and Lightroom, with 10+ years of hands-on production experience. Skilled at moving fluidly between vector-based brand assets and raster-based photographic work, applying advanced masking, compositing, and retouching techniques that underpin both client work and personal surreal pieces.</p>
+            <span class="ab-service-card__line" aria-hidden="true"></span>
+          </li>
+          <li class="ab-service-card">
+            <span class="ab-service-card__num" aria-hidden="true">05</span>
+            <span class="ab-service-card__label">Technical Foundation</span>
+            <h3 class="ab-service-card__title">Software Engineering</h3>
+            <p class="ab-service-card__desc">Desktop application development, core CS fundamentals (data structures, algorithms), and version control practices — a technical foundation supporting more ambitious, logic-driven creative-technical projects.</p>
             <span class="ab-service-card__line" aria-hidden="true"></span>
           </li>
         </ul>
@@ -837,14 +897,21 @@
       gsap.to('#nav', { y: 0, duration: 0.9, ease: 'power3.out', delay: 0.05 });
 
       /* Hero entrance — plays immediately on load, not scroll-gated */
+      gsap.from('.hero-bg img', {
+        scale: 1.1,
+        opacity: 0,
+        duration: 2,
+        delay: 0.1,
+        ease: 'power2.out',
+      });
       gsap.to('.ab-hero .mrs-num, .ab-hero__heading', {
-        opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15,
+        opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.35,
       });
       gsap.to('.mrs-intro-strip__item', {
-        opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out', delay: 0.55,
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out', delay: 0.75,
       });
     } else {
-      gsap.set('.ab-hero .mrs-num, .ab-hero__heading, .mrs-intro-strip__item', { opacity: 1, y: 0 });
+      gsap.set('.hero-bg img, .ab-hero .mrs-num, .ab-hero__heading, .mrs-intro-strip__item', { opacity: 1, y: 0, scale: 1 });
     }
 
     revealUp('.ab-bio .mrs-num, .ab-bio__title, .ab-bio__p', { trigger: '.ab-bio', start: 'top 80%', stagger: 0.1 });
@@ -865,6 +932,41 @@
 
       const halfWidth = track.scrollWidth / 2;
       gsap.to(track, { x: -halfWidth, duration: 35, ease: 'none', repeat: -1 });
+    })();
+
+    /* ── Services strip — vertical wheel drives horizontal scroll ─────
+       Scrolling over the card strip moves it sideways; once it hits
+       either edge, the wheel event is left alone so Lenis resumes
+       normal page scroll instead of getting stuck. */
+    (function initServicesWheelScroll() {
+      const scrollEl = document.querySelector('.ab-services__scroll');
+      if (!scrollEl) return;
+
+      let target = scrollEl.scrollLeft;
+      let tween  = null;
+
+      scrollEl.addEventListener('wheel', e => {
+        const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        const max   = scrollEl.scrollWidth - scrollEl.clientWidth;
+
+        // At an edge and still scrolling that direction — let it fall
+        // through so the page scrolls past the strip instead of hijacking.
+        if ((delta > 0 && target >= max) || (delta < 0 && target <= 0)) {
+          target = scrollEl.scrollLeft;
+          return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+        target = Math.max(0, Math.min(max, target + delta));
+
+        if (prefersReducedMotion) {
+          scrollEl.scrollLeft = target;
+        } else {
+          if (tween) tween.kill();
+          tween = gsap.to(scrollEl, { scrollLeft: target, duration: 0.4, ease: 'power2.out' });
+        }
+      }, { passive: false });
     })();
 
     window.addEventListener('beforeunload', () => {

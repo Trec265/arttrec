@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Cleanwell Mwalwanda</title>
-  <meta name="description" content="Get in touch with Cleanwell Mwalwanda for brand identity, art direction, packaging design, and surreal art commissions. Replies within 48 hours." />
+  <meta name="description" content="Get in touch with Cleanwell Mwalwanda for brand and visual design, surreal art, interactive design, and software engineering. Replies within 48 hours." />
   <meta name="theme-color" content="#0c0b09" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/favicon.svg" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Contact — Cleanwell Mwalwanda" />
-  <meta property="og:description" content="Available for brand identity, art direction, and surreal art commissions. Let's build something that holds." />
+  <meta property="og:description" content="Available for brand and visual design, surreal art, interactive design, and software engineering. Let's build something that holds." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://arttrec.com/contact" />
-  <meta property="og:image" content="https://arttrec.com/assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg" />
+  <meta property="og:image" content="https://arttrec.com/assets/images/bg.jpg" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Contact — Cleanwell Mwalwanda" />
-  <meta name="twitter:description" content="Available for brand identity, art direction, and surreal art commissions. Let's build something that holds." />
-  <meta name="twitter:image" content="https://arttrec.com/assets/images/amirreza-taqavi-CD3_bC6b-iE-unsplash.jpg" />
+  <meta name="twitter:description" content="Available for brand and visual design, surreal art, interactive design, and software engineering. Let's build something that holds." />
+  <meta name="twitter:image" content="https://arttrec.com/assets/images/bg.jpg" />
   <link rel="canonical" href="https://arttrec.com/contact" />
 
   <!-- Fonts: Cormorant Garamond (display) + Inter (body) -->
@@ -131,23 +131,42 @@
     /* =================================================================
        CONTACT HERO — 06
        ================================================================= */
-    .ct-hero { padding: clamp(120px, 16vw, 180px) var(--pad-side) clamp(64px, 8vw, 96px); }
-    .ct-hero__inner { max-width: 1400px; margin-inline: auto; }
+    .ct-hero { position: relative; overflow: hidden; padding: clamp(120px, 16vw, 180px) var(--pad-side) clamp(64px, 8vw, 96px); }
+    .ct-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12,11,9,0.6) 0%, rgba(12,11,9,0.3) 40%, rgba(12,11,9,0.7) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .ct-hero .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .ct-hero .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+    }
+    .ct-hero__inner { position: relative; z-index: 3; max-width: 1400px; margin-inline: auto; }
     .ct-hero__heading {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(2.25rem, 6vw, 5rem);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-      max-width: 20ch;
+      font-size: clamp(3rem, 5.5vw, 5.75rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      max-width: 13ch;
       color: var(--fg);
       margin-bottom: 1.5rem;
     }
     .ct-hero__sub {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-      line-height: 1.6;
+      font-size: clamp(1.1rem, 1.55vw, 1.45rem);
+      line-height: 1.5;
       color: var(--fg-muted);
       max-width: 52ch;
     }
@@ -170,9 +189,11 @@
     .ct-col-title {
       font-family: var(--serif);
       font-weight: 300;
-      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      font-size: clamp(2rem, 3vw, 2.8rem);
       color: var(--fg);
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.25rem;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
 
     /* ── Form ──────────────────────────────────────────────────────── */
@@ -181,9 +202,9 @@
     .ct-field__label {
       display: block;
       font-family: var(--sans);
-      font-size: 0.7rem;
+      font-size: 0.66rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--fg-muted);
       margin-bottom: 0.6rem;
@@ -284,6 +305,13 @@
       max-width: 34ch;
     }
     .ct-success em { font-style: italic; color: var(--accent); }
+    .ct-error {
+      margin-top: 1rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #d98c6b;
+    }
     .ct-form-curtain {
       position: absolute;
       inset: -0.5rem;
@@ -397,6 +425,19 @@
     @media (max-width: 900px) {
       .ct-grid__inner { grid-template-columns: 1fr; }
     }
+
+    @media (min-width: 56.25rem) {
+      .ct-hero { padding-bottom: clamp(64px, 8vw, 72px); }
+      .ct-hero__sub { max-width: 500px; }
+      .ct-grid { padding-top: clamp(80px, 8vw, 120px); }
+      .ct-grid__inner { gap: clamp(60px, 8vw, 120px); }
+      .ct-field__input,
+      .ct-field__textarea,
+      .ct-field__select { border-bottom-color: rgba(255,255,255,0.12); }
+      .ct-field__label,
+      .ct-detail__label { color: var(--fg-muted); font-size: max(0.65rem, 1em); }
+      .ct-submit { padding: 20px 48px; border-color: rgba(255,255,255,0.15); }
+    }
   </style>
 </head>
 <body id="top" class="pg-marsea">
@@ -470,6 +511,9 @@
 
     <!-- ─── 06 · HERO ───────────────────────────────────────────── -->
     <section class="ct-hero" aria-labelledby="ct-hero-heading">
+      <div class="hero-bg">
+        <img src="assets/images/bg.jpg" alt="" aria-hidden="true">
+      </div>
       <div class="ct-hero__inner">
         <div class="mrs-num"><span aria-hidden="true">06</span></div>
         <h1 class="ct-hero__heading" id="ct-hero-heading">Have a brand that needs a voice?</h1>
@@ -487,7 +531,7 @@
           <h2 class="ct-col-title">Start a project</h2>
 
           <div class="ct-form-wrap">
-            <form class="ct-form" id="ct-form" novalidate>
+            <form class="ct-form" id="ct-form" novalidate action="https://formspree.io/f/xzdnorgb" method="POST">
               <div class="ct-field">
                 <label class="ct-field__label" for="ct-name">Name</label>
                 <input class="ct-field__input" type="text" id="ct-name" name="name" autocomplete="name" required />
@@ -523,6 +567,10 @@
               <p>Thank you — <em>message received.</em> I'll be in touch within 48 hours.</p>
             </div>
 
+            <div class="ct-error" id="ct-error" role="alert" hidden>
+              <p>Something went wrong sending your message — please try again, or email me directly.</p>
+            </div>
+
             <div class="ct-form-curtain" id="ct-form-curtain" aria-hidden="true"></div>
           </div>
         </div>
@@ -543,10 +591,11 @@
           <div class="ct-detail">
             <span class="ct-detail__label">Services</span>
             <ul class="ct-detail__list">
-              <li>Brand Identity</li>
-              <li>Art Direction</li>
-              <li>Packaging Design</li>
-              <li>Surreal Digital Art</li>
+              <li>Brand &amp; Visual Design</li>
+              <li>Surreal Art &amp; Photo Manipulation</li>
+              <li>Web &amp; Interactive Design</li>
+              <li>Design Execution</li>
+              <li>Software Engineering</li>
             </ul>
           </div>
 
@@ -678,11 +727,18 @@
       gsap.to('#nav', { y: 0, duration: 0.9, ease: 'power3.out', delay: 0.05 });
 
       /* Hero entrance — plays immediately on load, not scroll-gated */
+      gsap.from('.hero-bg img', {
+        scale: 1.1,
+        opacity: 0,
+        duration: 2,
+        delay: 0.1,
+        ease: 'power2.out',
+      });
       gsap.to('.ct-hero .mrs-num, .ct-hero__heading, .ct-hero__sub', {
-        opacity: 1, y: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out', delay: 0.15,
+        opacity: 1, y: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out', delay: 0.35,
       });
     } else {
-      gsap.set('.ct-hero .mrs-num, .ct-hero__heading, .ct-hero__sub', { opacity: 1, y: 0 });
+      gsap.set('.hero-bg img, .ct-hero .mrs-num, .ct-hero__heading, .ct-hero__sub', { opacity: 1, y: 0, scale: 1 });
     }
 
     revealUp('.ct-form-col .mrs-num, .ct-form-col .ct-col-title, .ct-field, .ct-submit', {
@@ -692,22 +748,20 @@
       trigger: '.ct-info-col', start: 'top 80%', stagger: 0.08,
     });
 
-    /* ── Contact form — success state via curtain wipe ──────────────────
+    /* ── Contact form — Formspree submit, success state via curtain wipe ──
+       POSTs to Formspree via fetch (so the curtain-wipe UX still plays);
        scaleX in (cover) → swap form for success message → scaleX out
-       (reveal) → fade the success copy in. Visual-only: no network call. */
+       (reveal) → fade the success copy in. On failure, show inline error
+       and re-enable the button instead of touching the curtain. */
     (function initContactForm() {
-      const form    = document.getElementById('ct-form');
-      const success = document.getElementById('ct-success');
-      const curtain = document.getElementById('ct-form-curtain');
+      const form      = document.getElementById('ct-form');
+      const success   = document.getElementById('ct-success');
+      const curtain   = document.getElementById('ct-form-curtain');
+      const error     = document.getElementById('ct-error');
+      const submitBtn = document.getElementById('ct-submit-btn');
       if (!form || !success || !curtain) return;
 
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
-
-        const submitBtn = document.getElementById('ct-submit-btn');
-        if (submitBtn) submitBtn.disabled = true;
-
+      function showSuccess() {
         if (prefersReducedMotion) {
           form.hidden = true;
           success.hidden = false;
@@ -735,6 +789,27 @@
             });
           },
         });
+      }
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (error) error.hidden = true;
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' },
+          });
+          if (!res.ok) throw new Error('Formspree submission failed');
+          showSuccess();
+        } catch (err) {
+          if (submitBtn) submitBtn.disabled = false;
+          if (error) error.hidden = false;
+        }
       });
     })();
 

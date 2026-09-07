@@ -2,15 +2,15 @@
  * surreal-series.js — Surreal Art Series page
  *
  * Fetches surrealPiece documents from Sanity (GROQ), with a graceful
- * fallback to the data embedded in projects.json. Builds full-screen
- * viewport-height piece sections with GSAP hover interactions.
+ * fallback to the data embedded in projects.json. Builds a sticky
+ * two-column layout: a scrolling list of full-height story rows on the
+ * left, a pinned photo stage on the right.
  *
- * Interaction model (per piece):
- *   • Image fills 100vw × 100vh, slow drift loop (sine.inOut yoyo)
- *   • mouseenter → pause drift, artwork slides to 50% left, story panel
- *     slides in from right with accent-color tint
- *   • mouseleave → reverse, resume drift
- *   • Mobile → static layout, no hover panel
+ * Interaction model (per piece), desktop ≥1024px:
+ *   • Row crosses viewport center → crossfade to that piece's photo and
+ *     tween the photo stage background to its accent color
+ *   • Mobile (<1024px) → static stacked layout, image inline per row,
+ *     no pinned panel
  */
 
 'use strict';
@@ -27,7 +27,7 @@ const FALLBACK_ACCENTS = {
   'cirrus'  : '#0a0c1a',
   'abyss'   : '#060a14',
   'neural'  : '#060d1f',
-  'byte'    : '#060d1f',
+  'byte'    : '#0d130b',
   'veil'    : '#140308',
 };
 
@@ -53,11 +53,14 @@ const SURREAL_QUERY = `
 `.trim();
 
 async function fetchSurrealPieces() {
-  const url =
-    'https://' + SS_SANITY_PROJECT_ID + '.apicdn.sanity.io' +
-    '/v' + SS_SANITY_API_VER +
-    '/data/query/' + SS_SANITY_DATASET +
-    '?query=' + encodeURIComponent(SURREAL_QUERY);
+  // Prefer local proxy in development to avoid CORS issues
+  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const url = isLocalHost
+    ? '/api/sanity/query?query=' + encodeURIComponent(SURREAL_QUERY)
+    : 'https://' + SS_SANITY_PROJECT_ID + '.api.sanity.io' +
+      '/v' + SS_SANITY_API_VER +
+      '/data/query/' + SS_SANITY_DATASET +
+      '?query=' + encodeURIComponent(SURREAL_QUERY);
 
   const res = await fetch(url);
   if (!res.ok) throw new Error('[surreal-series] Sanity error ' + res.status);
@@ -180,9 +183,6 @@ function initStoryLayout(prefersReducedMotion) {
   gsap.set(photos[0], { autoAlpha: 1 });
   if (rows[0]) rows[0].classList.add('is-active');
 
-  // ── Reduced-motion: static layout only, no further animation ─────
-  if (prefersReducedMotion) return;
-
   // ── GSAP matchMedia — per-breakpoint teardown only ───────────────────
   // CSS sticky (position: sticky; top: 70px; height: calc(100vh - 70px))
   // handles pinning on desktop natively — avoids Lenis scroll-timing lag
@@ -193,19 +193,31 @@ function initStoryLayout(prefersReducedMotion) {
     return () => {};
   });
 
-  // ── Per-row ScrollTriggers: crossfade images ──────────────────────
+  // ── Per-row ScrollTriggers: crossfade images + tint the photo stage ──
+  // Runs in both motion modes so scroll position and displayed piece stay
+  // in sync even with reduced motion — only the transition itself (tween
+  // vs instant set) branches, per the site's reduced-motion convention.
   function showPhoto(index) {
     rows.forEach(r => r.classList.remove('is-active'));
     rows[index].classList.add('is-active');
+    const accent = rows[index].dataset.accent || '#0c0c0e';
 
-    gsap.to(photos, { autoAlpha: 0, duration: 0.4 });
-    gsap.to(photos[index], { autoAlpha: 1, duration: 0.4 });
+    if (prefersReducedMotion) {
+      gsap.set(photos, { autoAlpha: 0 });
+      gsap.set(photos[index], { autoAlpha: 1 });
+      if (photoStage) gsap.set(photoStage, { backgroundColor: accent });
+      return;
+    }
+
+    gsap.to(photos, { autoAlpha: 0, duration: 0.4, overwrite: true });
+    gsap.to(photos[index], { autoAlpha: 1, duration: 0.4, overwrite: true });
 
     if (photoStage) {
       gsap.to(photoStage, {
-        backgroundColor : rows[index].dataset.accent || '#0c0c0e',
+        backgroundColor : accent,
         duration        : 0.8,
         ease            : 'power2.inOut',
+        overwrite       : true,
       });
     }
   }
@@ -409,7 +421,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initStoryLayout(false);
     initMobileAnimations();
   } else {
-    // Reduced motion: static first image, no transitions
+    // Reduced motion: photo/color still follow scroll position, just via
+    // instant gsap.set() swaps instead of animated tweens
     initStoryLayout(true);
   }
 

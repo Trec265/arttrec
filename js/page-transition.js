@@ -123,4 +123,26 @@
       },
     });
   };
+
+  window.navigateToWithHash = function navigateToWithHash(url) {
+    const target = typeof url === 'string' ? url : '';
+    if (!target) return;
+    if (
+      hasVisitedBefore ||
+      typeof gsap === 'undefined' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      window.location.href = target;
+      return;
+    }
+    gsap.set(curtain, { transformOrigin: 'left center', scaleX: 0 });
+    gsap.to(curtain, {
+      scaleX: 1,
+      duration: 0.6,
+      ease: 'power3.inOut',
+      onComplete: function () {
+        window.location.href = target;
+      },
+    });
+  };
 })();

@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "npx serve . -p 3000",
+    "start": "node scripts/server.js",
+    "serve": "npx serve . -p 3000",
     "studio": "cd studio && npm run dev",
     "deploy-studio": "cd studio && npm run deploy"
   },
