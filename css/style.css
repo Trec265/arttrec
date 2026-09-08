@@ -1665,6 +1665,7 @@ ul, ol {
 .cs-hero__image-wrap {
   width: 100%;
   max-width: 100%;
+  min-height: clamp(18rem, 48vw, 42rem);
   margin-inline: auto;
   /* clip-path instead of overflow:hidden — GSAP removes overflow:hidden during
      scale transforms but never touches clip-path. */
@@ -1676,6 +1677,7 @@ ul, ol {
   width: 100%;
   max-width: 100%;
   height: auto;
+  min-height: inherit;
   max-height: 80vh;
   object-fit: cover;
   display: block;
@@ -1911,11 +1913,17 @@ ul, ol {
   display: none;
 }
 
-/* Brief ------------------------------------------------------------- */
+/* Brief and challenge context -------------------------------------- */
+.cs-context-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--color-border);
+}
+
 .cs-brief {
   padding-block: clamp(2.5rem, 5vw, 4rem);
   padding-inline: var(--gutter);
-  border-top: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
 }
 
 .cs-brief__inner {
@@ -1941,11 +1949,9 @@ ul, ol {
   letter-spacing: 0.01em;
 }
 
-/* Challenge --------------------------------------------------------- */
 .cs-challenge {
   padding-block: clamp(2.5rem, 5vw, 4rem);
   padding-inline: var(--gutter);
-  border-top: 1px solid var(--color-border);
 }
 
 .cs-challenge__inner {
@@ -1969,6 +1975,11 @@ ul, ol {
   line-height: 1.8;
   color: var(--color-text-dim);
   letter-spacing: 0.01em;
+}
+
+.cs-context-grid .cs-brief[hidden],
+.cs-context-grid .cs-challenge[hidden] {
+  display: none;
 }
 
 /* Numbered editorial sections --------------------------------------- */
@@ -2457,6 +2468,15 @@ ul, ol {
   .cs-overview__inner {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+  }
+
+  .cs-context-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-brief {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .cs-narrative__inner {
