@@ -266,12 +266,19 @@ function normalizePlaceholder(str) {
   return str;
 }
 
+function optimizeCaseStudyImage(url, width, quality) {
+  return window.SanityClient?.imageUrl
+    ? window.SanityClient.imageUrl(url, width, quality)
+    : url;
+}
+
 /* Missing-image fallback — never a blank white rectangle. */
 function imgOrPlaceholder(src, alt, cls, width, height) {
   const safeSrc = (src && src !== 'null') ? sanitizeText(src) : '';
   const safeAlt = sanitizeText(alt || '');
   if (safeSrc) {
-    return `<img src="${safeSrc}" alt="${safeAlt}" class="${cls}" loading="lazy" width="${width}" height="${height}" />`;
+    const optimizedSrc = optimizeCaseStudyImage(safeSrc, width || 1600, 80);
+    return `<img src="${optimizedSrc}" alt="${safeAlt}" class="${cls}" loading="lazy" width="${width}" height="${height}" />`;
   }
   return `<div class="img-placeholder ${cls}" aria-hidden="true"></div>`;
 }
@@ -394,7 +401,9 @@ function renderCaseStudy(project, nextProject) {
     heroImgWrap.innerHTML = imgOrPlaceholder(
       project.heroImage,
       `${project.title || ''} \u2014 ${project.subtitle || ''}`,
-      ''
+      '',
+      '1600',
+      '900'
     );
   }
 

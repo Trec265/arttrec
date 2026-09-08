@@ -106,6 +106,14 @@ function sanitize(str) {
   return div.innerHTML;
 }
 
+function optimizeSurrealImage(url, width, quality) {
+  if (window.SanityClient?.imageUrl) {
+    return window.SanityClient.imageUrl(url, width, quality);
+  }
+  if (!url || typeof url !== 'string' || !url.includes('cdn.sanity.io')) return url;
+  return url + '?w=' + width + '&auto=format&q=' + (quality || 80);
+}
+
 function padNum(n) {
   return String(n).padStart(2, '0');
 }
@@ -120,7 +128,7 @@ function renderStorySection(pieces, container) {
     const story   = sanitize(piece.story || '');
     const year    = sanitize(String(piece.year || ''));
     const mood    = sanitize(piece.mood || '');
-    const imgSrc  = piece.imageUrl || '';
+    const imgSrc  = optimizeSurrealImage(piece.imageUrl || '', 1920, 85);
     const accent  = /^#[0-9a-fA-F]{3,8}$/.test(piece.accentColor || '')
       ? piece.accentColor
       : pickFallbackAccent(piece.imageUrl);
@@ -139,7 +147,7 @@ function renderStorySection(pieces, container) {
 
   const photos = pieces.map((piece, i) => {
     const title   = sanitize(piece.title || '');
-    const imgSrc  = piece.imageUrl || '';
+    const imgSrc  = optimizeSurrealImage(piece.imageUrl || '', 1920, 85);
     const loading = i === 0 ? 'eager' : 'lazy';
     return imgSrc
       ? `<img class="sr-photo" data-index="${i}" src="${imgSrc}" alt="${title}" loading="${loading}" decoding="async">`

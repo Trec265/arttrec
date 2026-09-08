@@ -249,6 +249,12 @@ function sanitizeText(str) {
   return el.innerHTML;
 }
 
+function optimizePortfolioImage(url, width, quality) {
+  return window.SanityClient?.imageUrl
+    ? window.SanityClient.imageUrl(url, width, quality)
+    : url;
+}
+
 /* Strips trailing commas from tag strings. */
 function stripTrailingComma(str) {
   if (typeof str !== 'string') return str;
@@ -290,7 +296,7 @@ function renderProjects(projects) {
   if (!grid) return;
 
   const cards = projects.map((project) => {
-    const imgSrc    = sanitizeText(project.coverImage || '');
+    const imgSrc    = sanitizeText(optimizePortfolioImage(project.coverImage || '', 600, 75));
     const subtitle  = sanitizeText(stripTrailingComma(project.subtitle || ''));
     const category  = normalizeCategory(project.category);
     const title     = sanitizeText(project.title || '');
@@ -401,7 +407,7 @@ function renderFeaturedWork(projects) {
     const subtitle = sanitizeText(stripTrailingComma(project.subtitle || ''));
     const slug = sanitizeText(project.slug || '');
     const excerpt = sanitizeText(normalizePlaceholder(project.excerpt || ''));
-    const heroImg = sanitizeText(project.heroImage || '');
+    const heroImg = sanitizeText(optimizePortfolioImage(project.heroImage || '', 1200, 80));
     const isSurrealFeatured = slug === 'surreal-series';
     const featuredHref = isSurrealFeatured ? 'surreal-series.html' : `case-study.html?project=${slug}`;
     return `
@@ -478,7 +484,7 @@ function renderSurrealListView(projects) {
   track.innerHTML = projects.map((project, i) => {
     const title  = sanitizeText(project.title || '');
     const year   = sanitizeText(project.year  || '');
-    const imgSrc = sanitizeText(project.imageUrl || project.coverImage || '');
+    const imgSrc = sanitizeText(optimizePortfolioImage(project.imageUrl || project.coverImage || '', 800, 80));
     const slug   = sanitizeText(project.slug || project.id || '');
     const href   = slug ? `surreal-series.html#piece-${slug}` : 'surreal-series.html';
     const imgTag = imgSrc
@@ -522,7 +528,7 @@ function initSurrealThumbnailRotation(galleryItems) {
     card.style.opacity = '0';
     setTimeout(() => {
       current = (current + 1) % images.length;
-      card.src = images[current];
+      card.src = optimizePortfolioImage(images[current], 800, 80);
       card.style.opacity = '1';
     }, 400);
   }, 2500);
@@ -1137,7 +1143,7 @@ function initCursorPreview() {
     if (!img || !img.src) return;
 
     if (!isVisible || previewImg.src !== img.src) {
-      previewImg.src = img.src;
+      previewImg.src = optimizePortfolioImage(img.src, 400, 75);
     }
 
     if (!isVisible) {
@@ -1199,7 +1205,8 @@ function initSurrealPreview() {
 
     row.addEventListener('mouseenter', e => {
       const src = row.dataset.img || '';
-      if (img.src !== src) img.src = src;
+      const optimizedSrc = optimizePortfolioImage(src, 400, 75);
+      if (img.src !== optimizedSrc) img.src = optimizedSrc;
       xTo(e.clientX);
       yTo(e.clientY);
       gsap.to(img, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });

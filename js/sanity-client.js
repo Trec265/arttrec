@@ -33,6 +33,17 @@
     );
   }
 
+  /**
+   * Append image transform parameters to a Sanity CDN URL.
+   * Local fallback paths and non-Sanity URLs pass through unchanged.
+   */
+  function imageUrl(url, width, quality) {
+    if (!url || typeof url !== 'string') return url;
+    if (!url.includes('cdn.sanity.io')) return url;
+    quality = quality || 80;
+    return url + '?w=' + width + '&auto=format&q=' + quality;
+  }
+
   function buildQueryUrl(query) {
     // Prefer the local proxy in development so browser requests avoid
     // cross-origin issues when the site is served from localhost.
@@ -136,6 +147,7 @@
 
   global.SanityClient = {
     isConfigured : isConfigured,
+    imageUrl     : imageUrl,
     fetchProjects: fetchProjects,
     fetchAbout   : fetchAbout,
     /** Exposed so other scripts can read the config if needed */
