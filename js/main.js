@@ -198,7 +198,7 @@ async function fetchSurrealGalleryItems() {
   const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const url = isLocalHost
     ? `/api/sanity/query?query=${encodeURIComponent(query)}`
-    : `https://${projectId}.api.sanity.io/v${apiVer}/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+    : `https://${projectId}.apicdn.sanity.io/v${apiVer}/data/query/${dataset}?query=${encodeURIComponent(query)}`;
 
   const timeout = new Promise((_, reject) =>
     setTimeout(() => reject(new Error('surreal timeout')), 4000)

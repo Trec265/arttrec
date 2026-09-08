@@ -57,7 +57,7 @@ async function fetchSurrealPieces() {
   const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const url = isLocalHost
     ? '/api/sanity/query?query=' + encodeURIComponent(SURREAL_QUERY)
-    : 'https://' + SS_SANITY_PROJECT_ID + '.api.sanity.io' +
+    : 'https://' + SS_SANITY_PROJECT_ID + '.apicdn.sanity.io' +
       '/v' + SS_SANITY_API_VER +
       '/data/query/' + SS_SANITY_DATASET +
       '?query=' + encodeURIComponent(SURREAL_QUERY);

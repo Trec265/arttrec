@@ -52,7 +52,7 @@
       return '/api/sanity/query?query=' + encodeURIComponent(query);
     }
 
-    var host = SANITY_PROJECT_ID + '.api.sanity.io';
+    var host = SANITY_PROJECT_ID + '.apicdn.sanity.io';
     return (
       'https://' + host +
       '/v' + SANITY_API_VER +
