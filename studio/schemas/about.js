@@ -31,6 +31,7 @@ export default defineType({
       type : 'string',
       group: 'copy',
       description: 'Main heading line, e.g. "Designer who thinks in systems."',
+      placeholder: 'e.g. Designer who thinks in systems.',
       validation: Rule => Rule.required(),
     }),
 
@@ -40,6 +41,7 @@ export default defineType({
       type : 'string',
       group: 'copy',
       description: 'Displayed as italic text on the second line, e.g. "Artist who works in dreams."',
+      placeholder: 'e.g. Artist who works in dreams.',
     }),
 
     defineField({
@@ -47,7 +49,7 @@ export default defineType({
       title: 'Bio Paragraphs',
       type : 'array',
       group: 'copy',
-      of   : [{ type: 'text', rows: 4 }],
+      of   : [{ type: 'text', rows: 4, placeholder: 'Write one paragraph about your practice...' }],
       description: 'Each item becomes a separate paragraph. Drag to reorder.',
       validation: Rule => Rule.min(1),
     }),
@@ -95,6 +97,7 @@ export default defineType({
               title: 'Label',
               type : 'string',
               description: 'Short category name, e.g. "Design"',
+              placeholder: 'e.g. Design',
               validation: Rule => Rule.required(),
             }),
             defineField({
@@ -102,6 +105,7 @@ export default defineType({
               title: 'Items',
               type : 'string',
               description: 'Skills in this area, separated by · or commas, e.g. "Brand Identity · Typography"',
+              placeholder: 'e.g. Brand Identity · Typography',
             }),
           ],
           preview: {

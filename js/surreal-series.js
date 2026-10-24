@@ -111,7 +111,7 @@ function optimizeSurrealImage(url, width, quality) {
     return window.SanityClient.imageUrl(url, width, quality);
   }
   if (!url || typeof url !== 'string' || !url.includes('cdn.sanity.io')) return url;
-  return url + '?w=' + width + '&auto=format&q=' + (quality || 80);
+  return url.split('?')[0] + '?w=' + width + '&auto=format&q=' + (quality || 80);
 }
 
 function padNum(n) {

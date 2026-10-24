@@ -41,7 +41,8 @@
     if (!url || typeof url !== 'string') return url;
     if (!url.includes('cdn.sanity.io')) return url;
     quality = quality || 80;
-    return url + '?w=' + width + '&auto=format&q=' + quality;
+    // Drop any existing transform params so re-optimizing a URL never doubles them.
+    return url.split('?')[0] + '?w=' + width + '&auto=format&q=' + quality;
   }
 
   function buildQueryUrl(query) {
