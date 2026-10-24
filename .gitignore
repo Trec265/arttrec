@@ -51,8 +51,10 @@ _tmp_*.js
 tmp-*.png
 docs/BUGS.md
 docs/DESIGN-AUDIT.md
+*-AUDIT.md
 *-prompt.md
 _archive/
+tmp-*.js
 
 # ── Agent / AI config (dev tooling, not production) ──
 .agents/
@@ -61,6 +63,12 @@ agent/
 data/skills/
 skills-lock.json
 CLAUDE.md
+.github/agents.md
+.github/copilot-instructions.md
+.github/instructions/
+
+# ── CI (runs the Playwright suite, which lives locally under tests/) ──
+.github/workflows/playwright.yml
 
 # ── Codacy ──
 .codacy/
